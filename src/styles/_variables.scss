@@ -1,0 +1,26 @@
+@use "sass:color";
+
+$color-main: #518581;
+$color-secondary: color.scale($color-main, $alpha: -30%);
+$color-btn-secondary: #d9d9d9;
+$color-btn-secondary: #ffffff;
+$color-text-main-light: #ffffff;
+$color-text-main: #151411;
+$color-text-secondary: #afadb5;
+$color-text-secondary-light: color.scale($color-text-secondary, $alpha: -85%);
+$color-multidropdown: #ffffff;
+$color-header-border: #f3f3f3;
+$color-stroke-icon: #151411;
+$color-stroke-icon-hover: #474438;
+$color-burger: #151b33;
+
+$color-background-light: #ffffff;
+$color-background-dark: #000000;
+
+$mobile: 425px;
+$tablet: 768px;
+$desktop-s: 1024px;
+$desktop-l: 1440px;
+
+$animation-m: 0.3s;
+$transition-m: 0.3s;
