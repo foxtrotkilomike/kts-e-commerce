@@ -4,6 +4,7 @@ $color-main: #518581;
 $color-secondary: color.scale($color-main, $alpha: -30%);
 $color-btn-secondary: #d9d9d9;
 $color-btn-secondary: #ffffff;
+$color-loader-secondary: #ffffff;
 $color-text-main-light: #ffffff;
 $color-text-main: #151411;
 $color-text-secondary: #afadb5;
@@ -23,4 +24,5 @@ $desktop-s: 1024px;
 $desktop-l: 1440px;
 
 $animation-m: 0.3s;
+$animation-loader: 0.6s;
 $transition-m: 0.3s;
