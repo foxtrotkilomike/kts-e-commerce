@@ -1,0 +1,65 @@
+@import '@styles/variables';
+
+.multiDropdown {
+  position: relative;
+  min-width: 368px;
+
+  &__button {
+    padding: 26px 28px;
+    width: 100%;
+    font-family: 'Eudoxus Sans', sans-serif;
+    font-weight: 500;
+    font-size: $font-lg;
+    line-height: 180%;
+    text-align: left;
+    color: $color-text-main;
+    background-color: $color-multidropdown;
+    box-shadow: 0 4px 120px 0 $color-text-secondary-light;
+
+    &:focus {
+      color: $color-text-main;
+    }
+
+    &:disabled {
+      opacity: 0.7;
+    }
+  }
+
+  &__list {
+    position: absolute;
+    top: 96px;
+    left: 0;
+    width: 100%;
+    max-height: 190px;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    background-color: $color-multidropdown;
+    box-shadow: 0 4px 120px 0 $color-text-secondary-light;
+    z-index: 20;
+
+    &::-webkit-scrollbar {
+      display: none;
+      width: 0 !important;
+    }
+
+    & input {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+  }
+
+  &__item {
+    display: block;
+    padding: 16px 15px;
+    color: $color-text-main;
+    text-align: left;
+    background-color: $color-multidropdown;
+  }
+
+  input:checked + &__item{
+    color: $color-main;
+  }
+}
