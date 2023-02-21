@@ -3,9 +3,8 @@ import React from "react";
 import Loader, { LoaderSize } from "@components/Loader";
 import classNames from "classnames";
 
-import "./Button.scss";
+import classes from "./Button.module.scss";
 
-/** Пропсы, который принимает компонент Button */
 export type ButtonProps = React.PropsWithChildren<{
   /**
    * Если true, то внутри кнопки вместе с children отображается компонент Loader
@@ -22,9 +21,9 @@ export const Button = ({
   disabled,
   ...native
 }: ButtonProps): JSX.Element => {
-  const buttonClassName = classNames(className, "button", {
-    button_disabled: loading || disabled,
-    button_loading: loading,
+  const buttonClassName = classNames(className, classes.button, {
+    [classes.button_disabled]: loading || disabled,
+    [classes.button_loading]: loading,
   });
 
   return (
@@ -33,7 +32,7 @@ export const Button = ({
       disabled={loading || disabled}
       {...native}
     >
-      {loading && <Loader className={"loader"} size={LoaderSize.s} />}
+      {loading && <Loader className={classes.loader} size={LoaderSize.s} />}
       {children}
     </button>
   );
