@@ -1,0 +1,56 @@
+@import "@styles/variables";
+
+.menu {
+  flex-basis: 724px;
+
+  @media screen and (max-width: $tablet) {
+    flex-basis: auto;
+  }
+
+  &__list {
+    display: flex;
+    gap: 60px;
+
+    @media screen and (max-width: $desktop-s) {
+      gap: 30px;
+    }
+
+    @media screen and (max-width: $tablet) {
+      flex-basis: auto;
+      flex-direction: column;
+    }
+  }
+
+  &__item {
+    font-size: 112.5%;
+    font-weight: 500;
+    line-height: 180%;
+  }
+
+  &__item_active {
+    color: $color-main;
+    position: relative;
+
+    & > a {
+      color: inherit;
+    }
+
+    &::after {
+      display: block;
+      content: '';
+      position: absolute;
+      top: 75px;
+      left: 0;
+      width: 100%;
+      border-bottom: 3px solid $color-main;
+
+      @media screen and (max-width: $desktop-s) {
+        top: 56px;
+      }
+
+      @media screen and (max-width: $tablet) {
+        display: none;
+      }
+    }
+  }
+}
