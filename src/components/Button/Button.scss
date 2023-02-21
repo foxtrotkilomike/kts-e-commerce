@@ -1,0 +1,36 @@
+@import '@styles/variables';
+
+.button {
+  padding: 16px 28px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-weight: bold;
+  font-size: 1.125em;
+  line-height: 130%;
+  border: none;
+  background-color: $color-main;
+  color: $color-text-main-light;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $color-secondary;
+  }
+  &_disabled, &_disabled:hover {
+    background-color: $color-btn-secondary;
+    opacity: 1 !important;
+  }
+  &_loading, &_loading:hover {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+.loader {
+  width: 20px;
+  height: 20px;
+  border-top-color: $color-loader-secondary;
+  border-bottom-color: $color-loader-secondary;
+  border-left-color: $color-loader-secondary;
+  transform: rotate(35deg);
+}
