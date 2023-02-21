@@ -1,0 +1,63 @@
+@import "@styles/variables";
+
+.burger {
+  display: none;
+  width: 30px;
+  height: 30px;
+  position: relative;
+  z-index: 20;
+  cursor: pointer;
+  background-color: transparent;
+
+  &_active > &__line:nth-child(1) {
+    top: 50%;
+    transform: rotate(45deg);
+    transition: top $transition-m cubic-bezier(0.21, 0.83, 0.26, 0.87),
+                transform $transition-m cubic-bezier(0.21, 0.83, 0.26, 0.87) $transition-m;
+  }
+
+  &_active > &__line:nth-child(2) {
+    opacity: 0;
+  }
+
+  &_active > &__line:nth-child(3) {
+    top: 50%;
+    transform: rotate(-45deg);
+    transition: top $transition-m cubic-bezier(0.21, 0.83, 0.26, 0.87),
+                transform $transition-m cubic-bezier(0.21, 0.83, 0.26, 0.87) $transition-m;
+  }
+
+  &__line {
+    display: block;
+    position: absolute;
+    left: 11%;
+    width: 22.5px;
+    height: 2px;
+    border: 1px solid $color-burger;
+    -webkit-border-radius: 1px;
+    -moz-border-radius: 1px;
+    border-radius: 1px;
+    transform-origin: 50%;
+    transition: top $transition-m cubic-bezier(0.21, 0.83, 0.26, 0.87) 0.3s,
+                transform $transition-m cubic-bezier(0.21, 0.83, 0.26, 0.87);
+
+    &:nth-child(1) {
+      top: 28.5%;
+    }
+
+    &:nth-child(2) {
+      top: 50%;
+    }
+    &:nth-child(3) {
+      top: 71.5%;
+    }
+  }
+
+  &:hover &__line {
+    border-color: $color-stroke-icon-hover;
+  }
+
+  @media screen and (max-width: $tablet) {
+    display: block;
+  }
+}
