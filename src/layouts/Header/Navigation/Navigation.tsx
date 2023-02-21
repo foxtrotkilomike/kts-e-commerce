@@ -1,29 +1,25 @@
-import { headerNavItems } from "@config/data";
 import { Pages } from "@config/types";
+import Menu from "@layouts/Header/Menu";
+import Toolbar from "@layouts/Header/Toolbar";
 import classNames from "classnames";
 
 import classes from "./Navigation.module.scss";
 
-export const Navigation = ({ currentPage }: HeaderNavProps): JSX.Element => {
-  const getMenuItemClassName = (page: Pages) => {
-    return classNames(classes.menu__item, {
-      [classes.menu__item_active]: page === currentPage,
-    });
-  };
-
-  const menuItems = headerNavItems.map(({ page, link, text }) => (
-    <li className={getMenuItemClassName(page)} key={page}>
-      <a href={link}>{text}</a>
-    </li>
-  ));
+export const Navigation = ({
+  isBurgerActive,
+}: NavigationProps): JSX.Element => {
+  const navigationClassName = classNames(classes.header__navigation, {
+    [classes.header__navigation_active]: isBurgerActive,
+  });
 
   return (
-    <nav className={classes.menu}>
-      <ul className={classes.menu__list}>{menuItems}</ul>
-    </nav>
+    <div className={navigationClassName}>
+      <Menu currentPage={Pages.MAIN} />
+      <Toolbar />
+    </div>
   );
 };
 
-type HeaderNavProps = {
-  currentPage: Pages;
+type NavigationProps = {
+  isBurgerActive: boolean;
 };
