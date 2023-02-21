@@ -1,0 +1,42 @@
+@import '@styles/variables';
+
+.card {
+  max-width: 394px;
+  display: flex;
+  flex-direction: column;
+  font-size: $font-lg;
+  line-height: 130%;
+  transition: all ease-out $animation-m;
+
+  &__image {
+    display: block;
+    width: 100%;
+    margin-bottom: 26px;
+    object-fit: cover;
+  }
+
+  &__category {
+    margin-bottom: 14px;
+    font-weight: 700;
+    color: $color-text-secondary;
+  }
+
+  &__title {
+    margin-bottom: 6px;
+    font-weight: 700;
+    font-size: $font-xxl;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: $color-text-main;
+  }
+
+  &__subtitle {
+    font-weight: 500;
+    line-height: 180%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: $color-text-secondary;
+  }
+}
