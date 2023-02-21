@@ -1,0 +1,22 @@
+@use "sass:color";
+@import '@styles/variables';
+
+.input {
+  padding: 26px 28px;
+  min-width: 370px;
+  font-weight: 500;
+  font-size: $font-lg;
+  line-height: 180%;
+  color: $color-text-main;
+  background-color: $color-text-main-light;
+  box-shadow: 0 4px 120px 0 rgba(175, 173, 181, 0.15);
+
+  &:focus {
+    outline: none;
+    border: 1px solid $color-main;
+  }
+}
+
+.input_disabled {
+  opacity: 0.7;
+}
