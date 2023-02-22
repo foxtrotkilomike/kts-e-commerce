@@ -1,6 +1,6 @@
-import { HeaderNavItem, Pages } from "./types";
+import { HeaderNavItem, HeroContent, Pages } from "./types";
 
-export const headerNavItems: HeaderNavItem[] = [
+const headerNavItems: HeaderNavItem[] = [
   {
     text: "Products",
     link: "#",
@@ -17,3 +17,13 @@ export const headerNavItems: HeaderNavItem[] = [
     page: Pages.ABOUT,
   },
 ];
+
+const heroContent: HeroContent = {
+  [Pages.MAIN]: {
+    heading: "Products",
+    caption:
+      "We display products based on the latest products we have, if you want to see our old products please enter the name of the item",
+  },
+};
+
+export { headerNavItems, heroContent };

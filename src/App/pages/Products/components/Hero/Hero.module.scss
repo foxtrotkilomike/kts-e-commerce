@@ -1,0 +1,23 @@
+@import "@styles/variables";
+
+.hero {
+  padding: 100px 0 80px;
+  width: 100%;
+  text-align: center;
+
+  @media screen and (max-width: $desktop-s) {
+    padding: 50px 32px 32px;
+  }
+
+  @media screen and (max-width: $mobile) {
+    padding: 50px 24px 32px;
+  }
+
+  &__heading {
+    padding-bottom: 20px;
+  }
+
+  &__caption {
+    max-width: 600px;
+  }
+}

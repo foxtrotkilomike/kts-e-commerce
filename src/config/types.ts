@@ -10,5 +10,7 @@ type HeaderNavItem = {
   page: Pages;
 };
 
+type HeroContent = Partial<Record<Pages, { heading: string; caption: string }>>;
+
 export { Pages };
-export type { HeaderNavItem };
+export type { HeaderNavItem, HeroContent };
