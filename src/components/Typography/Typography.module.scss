@@ -17,31 +17,31 @@
 
 .heading {
   &_xl {
-    font-size: 4rem;
+    font-size: $font-4xl;
     font-weight: 700;
 
     @media screen and (max-width: $desktop-s) {
-      font-size: 2.5rem;
+      font-size: $font-xxl;
     }
 
     @media screen and (max-width: $mobile) {
-      font-size: 1.625rem;
+      font-size: $font-xl;
     }
   }
   &_lg {
-    font-size: 2.75rem;
+    font-size: $font-3xl;
     font-weight: 700;
 
     @media screen and (max-width: $mobile) {
-      font-size: 1.125rem;
+      font-size: $font-lg;
     }
   }
   &_md {
-    font-size: 2.75rem;
+    font-size: $font-3xl;
     font-weight: 700;
 
     @media screen and (max-width: $mobile) {
-      font-size: 0.875rem;
+      font-size: $font-sm;
     }
   }
 }
@@ -49,15 +49,15 @@
 .paragraph {
   &_lg {}
   &_md {
-    font-size: 1.125rem;
+    font-size: $font-lg;
     line-height: 180%;
     font-weight: 500;
 
     @media screen and (max-width: $mobile) {
-      font-size: 0.875rem;
+      font-size: $font-sm;
     }
   }
   &_sm {
-    font-size: 1.125rem;
+    font-size: $font-sm;
   }
 }
