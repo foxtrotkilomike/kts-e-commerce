@@ -2,9 +2,9 @@ import { useState } from "react";
 
 import { Option } from "@components/MultiDropdown";
 import Wrapper from "@components/Wrapper";
+import { searchFilterOptions as initialOptions } from "@config/data";
 
 import classes from "./Search.module.scss";
-import { searchFilterOptions as initialOptions } from "../../../../../config/data";
 import SearchFilter from "../SearchFilter";
 import SearchInput from "../SearchInput";
 

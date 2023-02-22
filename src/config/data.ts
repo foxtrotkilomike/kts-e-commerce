@@ -37,10 +37,13 @@ const searchFilterOptions: Option[] = [
   { key: "decoration", value: "Decoration" },
 ];
 
+const productsListHeading = "Total Products";
+
 export {
   headerNavItems,
   heroContent,
   searchInputPlaceholder,
   searchButtonText,
   searchFilterOptions,
+  productsListHeading,
 };

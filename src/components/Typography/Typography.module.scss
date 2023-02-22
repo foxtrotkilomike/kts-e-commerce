@@ -32,6 +32,10 @@
     font-size: $font-3xl;
     font-weight: 700;
 
+    @media screen and (max-width: $desktop-s) {
+      font-size: $font-xl;
+    }
+
     @media screen and (max-width: $mobile) {
       font-size: $font-lg;
     }

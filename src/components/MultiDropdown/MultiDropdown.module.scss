@@ -30,13 +30,14 @@
     @include text-overflow;
 
     @media screen and (max-width: $tablet) {
+      padding: 9px 14px;
       max-width: 100%;
     }
   }
 
   &__list {
     position: absolute;
-    top: 96px;
+    top: 95px;
     right: 0;
     width: 100%;
     max-height: 400px;
@@ -46,6 +47,10 @@
     background-color: $color-multidropdown;
     box-shadow: 0 4px 20px rgba(175, 173, 181, 0.2);
     z-index: 20;
+
+    @media screen and (max-width: $tablet) {
+      top: 60px;
+    }
 
     &::-webkit-scrollbar {
       display: none;
