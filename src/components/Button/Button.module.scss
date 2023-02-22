@@ -12,6 +12,7 @@
   background-color: $color-main;
   color: $color-text-main-light;
   cursor: pointer;
+  transition: all ease $transition-m;
 
   &:hover {
     background-color: $color-secondary;

@@ -26,4 +26,12 @@ const heroContent: HeroContent = {
   },
 };
 
-export { headerNavItems, heroContent };
+const searchInputPlaceholder = "Search";
+const searchButtonText = "Find Now";
+
+export {
+  headerNavItems,
+  heroContent,
+  searchInputPlaceholder,
+  searchButtonText,
+};
