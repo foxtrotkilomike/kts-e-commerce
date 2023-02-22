@@ -2,6 +2,7 @@ import Typography, {
   TypographySize,
   TypographyTagName,
 } from "@components/Typography";
+import Wrapper from "@components/Wrapper";
 import { heroContent } from "@config/data";
 import { Pages } from "@config/types";
 
@@ -14,23 +15,25 @@ export const Hero = ({ page }: HeroProps): JSX.Element => {
   };
 
   return (
-    <section className={classes.hero}>
-      <Typography
-        className={classes.hero__heading}
-        tagName={TypographyTagName.h1}
-        size={TypographySize.xl}
-      >
-        {heading}
-      </Typography>
-      <Typography
-        className={classes.hero__caption}
-        tagName={TypographyTagName.paragraph}
-        size={TypographySize.md}
-        secondary
-      >
-        {caption}
-      </Typography>
-    </section>
+    <Wrapper centered>
+      <section className={classes.hero}>
+        <Typography
+          className={classes.hero__heading}
+          tagName={TypographyTagName.h1}
+          size={TypographySize.xl}
+        >
+          {heading}
+        </Typography>
+        <Typography
+          className={classes.hero__caption}
+          tagName={TypographyTagName.paragraph}
+          size={TypographySize.md}
+          secondary
+        >
+          {caption}
+        </Typography>
+      </section>
+    </Wrapper>
   );
 };
 
