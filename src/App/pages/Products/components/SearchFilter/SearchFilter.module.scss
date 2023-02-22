@@ -1,0 +1,30 @@
+@import "@styles/variables";
+@import "@styles/mixins";
+
+.searchFilter {
+  flex-basis: 190px;
+
+  @media screen and (max-width: $tablet) {
+    flex-basis: 0;
+  }
+
+  &__placeholder {
+    @include flex-center;
+    padding: 27px 52px;
+    gap: 12px;
+
+    @media screen and (max-width: $tablet) {
+      padding: 12px 10px;
+    }
+  }
+
+  &__icon {
+    width: 30px;
+    height: 30px;
+
+    @media screen and (max-width: $tablet) {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}

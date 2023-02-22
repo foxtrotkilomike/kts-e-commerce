@@ -1,3 +1,5 @@
+import { Option } from "@components/MultiDropdown";
+
 import { HeaderNavItem, HeroContent, Pages } from "./types";
 
 const headerNavItems: HeaderNavItem[] = [
@@ -28,10 +30,17 @@ const heroContent: HeroContent = {
 
 const searchInputPlaceholder = "Search";
 const searchButtonText = "Find Now";
+const searchFilterOptions: Option[] = [
+  { key: "chair", value: "Chair" },
+  { key: "cupboard", value: "Cupboard" },
+  { key: "table", value: "Table" },
+  { key: "decoration", value: "Decoration" },
+];
 
 export {
   headerNavItems,
   heroContent,
   searchInputPlaceholder,
   searchButtonText,
+  searchFilterOptions,
 };

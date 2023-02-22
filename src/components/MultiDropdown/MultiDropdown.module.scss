@@ -1,20 +1,19 @@
-@import '@styles/variables';
+@import "@styles/variables";
+@import "@styles/mixins";
 
 .multiDropdown {
   position: relative;
-  min-width: 368px;
 
   &__button {
-    padding: 26px 28px;
     width: 100%;
-    font-family: 'Eudoxus Sans', sans-serif;
     font-weight: 500;
     font-size: $font-lg;
     line-height: 180%;
     text-align: left;
     color: $color-text-main;
     background-color: $color-multidropdown;
-    box-shadow: 0 4px 120px 0 $color-text-secondary-light;
+    box-shadow: 0 4px 20px rgba(175, 173, 181, 0.2);
+    cursor: pointer;
 
     &:focus {
       color: $color-text-main;
@@ -25,17 +24,27 @@
     }
   }
 
+  &__summary {
+    padding: 27px 28px;
+    max-width: 190px;
+    @include text-overflow;
+
+    @media screen and (max-width: $tablet) {
+      max-width: 100%;
+    }
+  }
+
   &__list {
     position: absolute;
     top: 96px;
-    left: 0;
+    right: 0;
     width: 100%;
-    max-height: 190px;
+    max-height: 400px;
     overflow-y: scroll;
     -ms-overflow-style: none;
     scrollbar-width: none;
     background-color: $color-multidropdown;
-    box-shadow: 0 4px 120px 0 $color-text-secondary-light;
+    box-shadow: 0 4px 20px rgba(175, 173, 181, 0.2);
     z-index: 20;
 
     &::-webkit-scrollbar {
@@ -57,9 +66,10 @@
     color: $color-text-main;
     text-align: left;
     background-color: $color-multidropdown;
+    cursor: pointer;
   }
 
-  input:checked + &__item{
+  input:checked + &__item {
     color: $color-main;
   }
 }

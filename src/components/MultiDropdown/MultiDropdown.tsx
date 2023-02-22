@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import classNames from "classnames";
+
 import classes from "./MultiDropdown.module.scss";
 
 /** Вариант для выбора в фильтре */
@@ -21,6 +23,8 @@ export type MultiDropdownProps = {
   disabled?: boolean;
   /** Преобразовать выбранные значения в строку. Отображается в дропдауне в качестве выбранного значения */
   pluralizeOptions: (value: Option[]) => string;
+  placeholder?: React.ReactNode;
+  className?: string;
 };
 
 export const MultiDropdown = ({
@@ -29,8 +33,12 @@ export const MultiDropdown = ({
   onChange,
   disabled,
   pluralizeOptions,
+  placeholder = "",
+  className,
 }: MultiDropdownProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
+  const hasSelectedOptions = value.length > 0;
+  const multiDropDownClassName = classNames(classes.multiDropdown, className);
 
   const isSelected = (selectedOption: Option) =>
     !!value.find((option) => option.key === selectedOption.key);
@@ -61,14 +69,24 @@ export const MultiDropdown = ({
     ));
   };
 
+  const renderButtonContent = () => {
+    return hasSelectedOptions ? (
+      <div className={classes.multiDropdown__summary}>
+        {pluralizeOptions(value)}
+      </div>
+    ) : (
+      placeholder
+    );
+  };
+
   return (
-    <div className={classes.multiDropdown}>
+    <div className={multiDropDownClassName}>
       <button
         className={classes.multiDropdown__button}
         disabled={disabled}
         onClick={() => setIsOpen((isOpen) => !isOpen)}
       >
-        {pluralizeOptions(value)}
+        {renderButtonContent()}
       </button>
       {isOpen && !disabled && (
         <ul className={classes.multiDropdown__list}>
