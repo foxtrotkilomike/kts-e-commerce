@@ -1,0 +1,63 @@
+@import "@styles/fonts/fonts";
+@import "@styles/variables";
+
+.typography {
+  font-family: 'Eudoxus Sans', sans-serif;
+  color: $color-text-main;
+  line-height: 130%;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.secondary {
+  color: $color-text-secondary;
+}
+
+.heading {
+  &_xl {
+    font-size: 4rem;
+    font-weight: 700;
+
+    @media screen and (max-width: $desktop-s) {
+      font-size: 2.5rem;
+    }
+
+    @media screen and (max-width: $mobile) {
+      font-size: 1.625rem;
+    }
+  }
+  &_lg {
+    font-size: 2.75rem;
+    font-weight: 700;
+
+    @media screen and (max-width: $mobile) {
+      font-size: 1.125rem;
+    }
+  }
+  &_md {
+    font-size: 2.75rem;
+    font-weight: 700;
+
+    @media screen and (max-width: $mobile) {
+      font-size: 0.875rem;
+    }
+  }
+}
+
+.paragraph {
+  &_lg {}
+  &_md {
+    font-size: 1.125rem;
+    line-height: 180%;
+    font-weight: 500;
+
+    @media screen and (max-width: $mobile) {
+      font-size: 0.875rem;
+    }
+  }
+  &_sm {
+    font-size: 1.125rem;
+  }
+}
