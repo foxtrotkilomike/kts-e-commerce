@@ -8,18 +8,33 @@
   font-weight: bold;
   font-size: 1.125em;
   line-height: 130%;
-  border: none;
-  background-color: $color-main;
-  color: $color-text-main-light;
   cursor: pointer;
   transition: all ease $transition-m;
 
-  &:hover {
-    background-color: $color-secondary;
+  &_primary {
+    border: none;
+    background-color: $color-main;
+    color: $color-text-main-light;
+
+    &:hover {
+      background-color: $color-secondary;
+    }
   }
+  &_ghost {
+    border: 2px solid $color-btn-border;
+    background-color: $color-background-light;
+    color: $color-text-main;
+
+    &:hover {
+      background-color: $color-btn-border;
+    }
+  }
+
   &_disabled, &_disabled:hover {
     background-color: $color-btn-secondary;
     opacity: 1 !important;
+    border: none;
+    color: $color-text-main-light;
   }
   &_loading, &_loading:hover {
     padding-left: 20px;

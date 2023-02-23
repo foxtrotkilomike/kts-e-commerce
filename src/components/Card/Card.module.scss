@@ -23,8 +23,6 @@
 
   &__category {
     margin-bottom: 14px;
-    //font-weight: 700;
-    //color: $color-text-secondary;
     @media screen and (max-width: $desktop-s) {
       margin-bottom: 10px;
     }
@@ -37,15 +35,9 @@
   &__title {
     @include text-overflow;
     margin-bottom: 6px;
-    //font-weight: 700;
-    //font-size: $font-xxl;
-    //color: $color-text-main;
   }
 
   &__subtitle {
     @include text-overflow;
-    //font-weight: 500;
-    //line-height: 180%;
-    //color: $color-text-secondary;
   }
 }

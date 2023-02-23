@@ -151,6 +151,12 @@ const productsMock: Product[] = [
   },
 ];
 
+const relatedItemsHeading = "Related Items";
+enum ProductPageButtonsText {
+  BUY = "Buy Now",
+  ADD_CART = "Add to Cart",
+}
+
 export {
   headerNavItems,
   heroContent,
@@ -159,4 +165,6 @@ export {
   searchFilterOptions,
   productsListHeading,
   productsMock,
+  relatedItemsHeading,
+  ProductPageButtonsText,
 };

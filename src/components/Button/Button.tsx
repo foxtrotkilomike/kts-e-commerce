@@ -11,11 +11,13 @@ export type ButtonProps = React.PropsWithChildren<{
    * Также кнопка должна переходить в состояние disabled
    */
   loading?: boolean;
+  variant?: "primary" | "ghost";
 }> &
   React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const Button = ({
   loading,
+  variant = "primary",
   className,
   children,
   disabled,
@@ -24,6 +26,8 @@ export const Button = ({
   const buttonClassName = classNames(className, classes.button, {
     [classes.button_disabled]: loading || disabled,
     [classes.button_loading]: loading,
+    [classes.button_primary]: variant === "primary",
+    [classes.button_ghost]: variant === "ghost",
   });
 
   return (
