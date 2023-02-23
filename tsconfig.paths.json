@@ -6,6 +6,7 @@
       "@components/*": ["src/components/*"],
       "@config/*": ["src/config/*"],
       "@layouts/*": ["src/layouts/*"],
+      "@pages/*": ["src/App/pages/*"],
       "@styles/*": ["src/styles/*"],
       "@utils/*": ["src/utils/*"]
     }

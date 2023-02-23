@@ -1,16 +1,14 @@
 import "@styles/main.scss";
 import Header from "@layouts/Header";
+import { Outlet } from "react-router-dom";
 
 import classes from "./App.module.scss";
-import Products from "./pages/Products";
 
-export const App = (props: AppProps): JSX.Element => {
+export const App = (): JSX.Element => {
   return (
     <div className={classes.app}>
       <Header />
-      <Products />
+      <Outlet />
     </div>
   );
 };
-
-type AppProps = Record<string, string>;
