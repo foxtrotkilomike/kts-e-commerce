@@ -1,19 +1,20 @@
+import { Routes } from "@config/constants";
 import { headerNavItems } from "@config/data";
-import { Pages } from "@config/types";
 import classNames from "classnames";
+import { Link } from "react-router-dom";
 
 import classes from "./Menu.module.scss";
 
-export const Menu = ({ currentPage }: MenuProps): JSX.Element => {
-  const getMenuItemClassName = (page: Pages) => {
+export const Menu = ({ currentLocation }: MenuProps): JSX.Element => {
+  const getMenuItemClassName = (page: Routes) => {
     return classNames(classes.menu__item, {
-      [classes.menu__item_active]: page === currentPage,
+      [classes.menu__item_active]: page === currentLocation,
     });
   };
 
-  const menuItems = headerNavItems.map(({ page, link, text }) => (
-    <li className={getMenuItemClassName(page)} key={page}>
-      <a href={link}>{text}</a>
+  const menuItems = headerNavItems.map(({ link, text }) => (
+    <li className={getMenuItemClassName(link)} key={link}>
+      <Link to={link}>{text}</Link>
     </li>
   ));
 
@@ -25,5 +26,5 @@ export const Menu = ({ currentPage }: MenuProps): JSX.Element => {
 };
 
 type MenuProps = {
-  currentPage: Pages;
+  currentLocation: Routes;
 };

@@ -8,17 +8,14 @@ const headerNavItems: HeaderNavItem[] = [
   {
     text: "Products",
     link: Routes.MAIN,
-    page: Pages.MAIN,
   },
   {
     text: "Categories",
     link: Routes.CATEGORIES,
-    page: Pages.CATEGORIES,
   },
   {
     text: "About Us",
     link: Routes.ABOUT,
-    page: Pages.ABOUT,
   },
 ];
 

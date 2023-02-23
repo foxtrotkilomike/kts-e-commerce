@@ -1,3 +1,5 @@
+import { Routes } from "@config/constants";
+
 enum Pages {
   MAIN = "main",
   CATEGORIES = "categories",
@@ -6,8 +8,7 @@ enum Pages {
 
 type HeaderNavItem = {
   text: string;
-  link: string;
-  page: Pages;
+  link: Routes;
 };
 
 type HeroContent = Partial<Record<Pages, { heading: string; caption: string }>>;

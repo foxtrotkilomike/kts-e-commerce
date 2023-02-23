@@ -1,0 +1,7 @@
+@import '@styles/mixins';
+
+.wrapper {
+  @include flex-center;
+  padding: 0 20px;
+  text-align: center;
+}
