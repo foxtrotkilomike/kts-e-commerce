@@ -1,0 +1,72 @@
+@import "@styles/variables";
+@import "@styles/mixins";
+
+.container {
+  @include main-container;
+  display: flex;
+  gap: 50px;
+  padding-top: 100px;
+  padding-bottom: 50px;
+
+  @media screen and (max-width: $tablet) {
+    flex-direction: column;
+    padding-top: 60px;
+    padding-bottom: 48px;
+    gap: 30px;
+  }
+}
+
+.productContent {
+  flex-basis: 590px;
+
+  @media screen and (max-width: $tablet) {
+    flex-basis: auto;
+  }
+}
+
+.title {
+  padding-top: 32px;
+  padding-bottom: 20px;
+
+  @media screen and (max-width: $tablet) {
+    padding-top: 0;
+  }
+}
+
+.description {
+  min-height: 200px;
+
+  @media screen and (max-width: $tablet) {
+    min-height: 100px;
+  }
+
+  & p {
+    @media screen and (max-width: $mobile) {
+      font-size: $font-md;
+    }
+  }
+}
+
+.price {
+  padding-bottom: 50px;
+
+  @media screen and (max-width: $mobile) {
+    padding-bottom: 30px;
+  }
+}
+
+.buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: stretch;
+
+  & > * {
+    flex-grow: 1;
+    justify-content: center;
+  }
+
+  @media screen and (max-width: $mobile) {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
