@@ -2,12 +2,21 @@ import Typography, {
   TypographySize,
   TypographyTagName,
 } from "@components/Typography";
+import classNames from "classnames";
 
 import classes from "./Price.module.scss";
 
-export const Price = ({ price, currency = "$" }: PriceProps): JSX.Element => {
+export const Price = ({
+  price,
+  currency = "$",
+  large,
+}: PriceProps): JSX.Element => {
+  const priceClassName = classNames(classes.price, {
+    [classes.price_large]: large,
+  });
+
   return (
-    <div className={classes.price}>
+    <div className={priceClassName}>
       <Typography
         size={TypographySize.lg}
         tagName={TypographyTagName.paragraph}
@@ -23,4 +32,5 @@ export const Price = ({ price, currency = "$" }: PriceProps): JSX.Element => {
 type PriceProps = {
   price: number;
   currency?: "$" | "€";
+  large?: boolean;
 };
