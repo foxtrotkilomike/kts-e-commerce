@@ -7,6 +7,7 @@ import classes from "./Typography.module.scss";
 export enum TypographySize {
   sm = "sm",
   md = "md",
+  md_p = "md_p",
   lg = "lg",
   xl = "xl",
 }
@@ -37,6 +38,8 @@ export const Typography = ({
   const typographyClassName = classNames(classes.typography, className, {
     [classes.heading_xl]: TagName === TypographyTagName.h1,
     [classes.heading_lg]: TagName === TypographyTagName.h2,
+    [classes.heading_md_p]:
+      TagName === TypographyTagName.h3 && size === TypographySize.md_p,
     [classes.heading_md]: TagName === TypographyTagName.h3,
     [classes.paragraph_lg]:
       TagName === TypographyTagName.paragraph && size === TypographySize.lg,

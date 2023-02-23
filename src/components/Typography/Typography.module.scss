@@ -40,12 +40,24 @@
       font-size: $font-lg;
     }
   }
+  &_md_p {
+    font-size: $font-xl-p;
+    font-weight: 700;
+
+    @media screen and (max-width: $desktop-s) {
+      font-size: $font-lg-p;
+    }
+
+    @media screen and (max-width: $mobile) {
+      font-size: $font-lg;
+    }
+  }
   &_md {
     font-size: $font-xl;
     font-weight: 700;
 
     @media screen and (max-width: $desktop-s) {
-      font-size: $font-xlg;
+      font-size: $font-lg-p;
     }
 
     @media screen and (max-width: $mobile) {
@@ -56,7 +68,7 @@
 
 .paragraph {
   &_lg {
-    font-size: $font-xlg;
+    font-size: $font-lg-p;
 
     @media screen and (max-width: $desktop-s) {
       font-size: $font-lg;
