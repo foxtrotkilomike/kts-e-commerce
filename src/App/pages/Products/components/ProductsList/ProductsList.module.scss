@@ -3,13 +3,16 @@
 
 .header {
   &__container {
-    padding: 50px 100px;
+    @include main-container;
+    padding-top: 50px;
+    padding-bottom: 50px;
     display: flex;
     align-items: center;
     gap: 10px;
 
     @media screen and (max-width: $desktop-s) {
-      padding: 30px 32px;
+      padding-top: 30px;
+      padding-bottom: 30px;
     }
   }
 
