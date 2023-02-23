@@ -1,5 +1,3 @@
-import Card from "@components/Card";
-import Price from "@components/Price";
 import Typography, {
   TypographySize,
   TypographyTagName,
@@ -7,32 +5,14 @@ import Typography, {
 import Wrapper from "@components/Wrapper";
 import { productsListHeading, productsMock } from "@config/data";
 import Grid from "@layouts/Grid";
+import renderProductCards from "@utils/renderProductCards";
 
 import classes from "./ProductsList.module.scss";
 
 export const ProductsList = ({
   productsCount,
 }: ProductsListProps): JSX.Element => {
-  const products = productsMock.map((product) => {
-    const {
-      id,
-      title,
-      description,
-      images,
-      category: { name },
-      price,
-    } = product;
-    return (
-      <Card
-        image={images[0]}
-        title={title}
-        subtitle={description}
-        category={name}
-        content={<Price price={price} />}
-        key={id}
-      />
-    );
-  });
+  const products = renderProductCards(productsMock);
 
   return (
     <section>
