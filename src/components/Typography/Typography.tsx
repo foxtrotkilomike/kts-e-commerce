@@ -37,7 +37,9 @@ export const Typography = ({
 }: TypographyProps): JSX.Element => {
   const typographyClassName = classNames(classes.typography, className, {
     [classes.heading_xl]: TagName === TypographyTagName.h1,
-    [classes.heading_lg]: TagName === TypographyTagName.h2,
+    [classes.heading_lg]:
+      TagName === TypographyTagName.h2 ||
+      (TagName === TypographyTagName.h1 && size === TypographySize.lg),
     [classes.heading_md_p]:
       TagName === TypographyTagName.h3 && size === TypographySize.md_p,
     [classes.heading_md]: TagName === TypographyTagName.h3,
