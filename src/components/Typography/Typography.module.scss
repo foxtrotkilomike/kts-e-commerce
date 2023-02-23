@@ -67,6 +67,17 @@
 }
 
 .paragraph {
+  &_xl {
+    font-size: $font-xl;
+
+    @media screen and (max-width: $desktop-s) {
+      font-size: $font-lg-p;
+    }
+
+    @media screen and (max-width: $mobile) {
+      font-size: $font-md;
+    }
+  }
   &_lg {
     font-size: $font-lg-p;
 
