@@ -8,9 +8,10 @@ export const Wrapper = ({
   growing,
   centered,
   main,
+  className,
   children,
 }: WrapperProps): JSX.Element => {
-  const wrapperClassName = classNames({
+  const wrapperClassName = classNames(className, {
     [classes.growing]: main || growing,
     [classes.centered]: centered,
   });
@@ -23,4 +24,5 @@ type WrapperProps = React.PropsWithChildren<{
   growing?: boolean;
   centered?: boolean;
   main?: boolean;
+  className?: string;
 }>;
