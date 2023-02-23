@@ -4,7 +4,7 @@ import Typography, {
   TypographySize,
   TypographyTagName,
 } from "@components/Typography";
-import { Routes } from "@config/routes";
+import { Routes } from "@config/constants";
 import { Product } from "@config/types";
 import { Link } from "react-router-dom";
 

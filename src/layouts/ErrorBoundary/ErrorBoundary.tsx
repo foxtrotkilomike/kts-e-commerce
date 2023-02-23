@@ -3,8 +3,7 @@ import Typography, {
   TypographyTagName,
 } from "@components/Typography";
 import Wrapper from "@components/Wrapper";
-import { ResponseStatus } from "@config/constants";
-import { Routes } from "@config/routes";
+import { ResponseStatus, Routes } from "@config/constants";
 import { isRouteErrorResponse, Link, useRouteError } from "react-router-dom";
 
 import classes from "./ErrorBoundary.module.scss";

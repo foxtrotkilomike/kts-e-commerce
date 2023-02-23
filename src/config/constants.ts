@@ -6,4 +6,11 @@ enum ResponseStatus {
   "UNHANDLED_REJECTION" = 503,
 }
 
-export { ResponseStatus };
+enum Routes {
+  MAIN = "/",
+  PRODUCTS = "/products",
+  CATEGORIES = "/categories",
+  ABOUT = "/about",
+}
+
+export { ResponseStatus, Routes };

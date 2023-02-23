@@ -1,22 +1,23 @@
 import mockProductImage from "@assets/Rectangle23.jpg";
 import { Option } from "@components/MultiDropdown";
+import { Routes } from "@config/constants";
 
 import { HeaderNavItem, HeroContent, Pages, Product } from "./types";
 
 const headerNavItems: HeaderNavItem[] = [
   {
     text: "Products",
-    link: "#",
+    link: Routes.MAIN,
     page: Pages.MAIN,
   },
   {
     text: "Categories",
-    link: "#",
+    link: Routes.CATEGORIES,
     page: Pages.CATEGORIES,
   },
   {
     text: "About Us",
-    link: "#",
+    link: Routes.ABOUT,
     page: Pages.ABOUT,
   },
 ];
