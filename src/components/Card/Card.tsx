@@ -1,5 +1,10 @@
 import React from "react";
 
+import Typography, {
+  TypographySize,
+  TypographyTagName,
+} from "@components/Typography";
+
 import classes from "./Card.module.scss";
 
 export type CardProps = {
@@ -28,9 +33,34 @@ export const Card = ({
   return (
     <article className={classes.card} onClick={onClick}>
       <img className={classes.card__image} src={image} alt="" />
-      {category && <p className={classes.card__category}>{category}</p>}
-      <h3 className={classes.card__title}>{title}</h3>
-      <div className={classes.card__subtitle}>{subtitle}</div>
+      {category && (
+        <Typography
+          className={classes.card__category}
+          size={TypographySize.md}
+          tagName={TypographyTagName.paragraph}
+          bold
+          secondary
+        >
+          {category}
+        </Typography>
+      )}
+      <Typography
+        size={TypographySize.md}
+        tagName={TypographyTagName.h3}
+        className={classes.card__title}
+      >
+        {title}
+      </Typography>
+      {subtitle && (
+        <Typography
+          className={classes.card__subtitle}
+          size={TypographySize.md}
+          tagName={TypographyTagName.paragraph}
+          secondary
+        >
+          {subtitle}
+        </Typography>
+      )}
       {content}
     </article>
   );
