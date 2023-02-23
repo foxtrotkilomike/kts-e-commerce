@@ -8,7 +8,7 @@
 }
 
 .bold {
-  font-weight: 700;
+  font-weight: 700 !important;
 }
 
 .secondary {
@@ -41,8 +41,12 @@
     }
   }
   &_md {
-    font-size: $font-3xl;
+    font-size: $font-xl;
     font-weight: 700;
+
+    @media screen and (max-width: $desktop-s) {
+      font-size: $font-xlg;
+    }
 
     @media screen and (max-width: $mobile) {
       font-size: $font-sm;
@@ -51,14 +55,28 @@
 }
 
 .paragraph {
-  &_lg {}
+  &_lg {
+    font-size: $font-xlg;
+
+    @media screen and (max-width: $desktop-s) {
+      font-size: $font-lg;
+    }
+
+    @media screen and (max-width: $mobile) {
+      font-size: $font-sm;
+    }
+  }
   &_md {
     font-size: $font-lg;
     line-height: 180%;
     font-weight: 500;
 
+    @media screen and (max-width: $desktop-s) {
+      font-size: $font-md;
+    }
+
     @media screen and (max-width: $mobile) {
-      font-size: $font-sm;
+      font-size: $font-xs;
     }
   }
   &_sm {
