@@ -4,18 +4,15 @@ import Typography, {
   TypographySize,
   TypographyTagName,
 } from "@components/Typography";
+import { Routes } from "@config/routes";
+import { Product } from "@config/types";
+import { Link } from "react-router-dom";
 
 import classes from "./Card.module.scss";
 
 export type CardProps = {
-  /** URL изображения */
-  image: string;
-  /** Категория товара */
-  category?: string;
-  /** Заголовок карточки */
-  title: React.ReactNode;
-  /** Подзаголовок карточки */
-  subtitle: React.ReactNode;
+  /** Объект со свойствами продукта */
+  product: Product;
   /** Содержимое карточки (футер/боковая часть), может быть пустым */
   content?: React.ReactNode;
   /** Клик на карточку */
@@ -23,45 +20,52 @@ export type CardProps = {
 };
 
 export const Card = ({
-  image,
-  category,
-  title,
-  subtitle,
+  product,
   content,
   onClick = () => {},
 }: CardProps): JSX.Element => {
+  const {
+    id,
+    title,
+    description,
+    category: { name: categoryName },
+    images,
+  } = product;
+
   return (
-    <article className={classes.card} onClick={onClick}>
-      <img className={classes.card__image} src={image} alt="" />
-      {category && (
+    <Link to={`${Routes.PRODUCTS}/${id}`}>
+      <article className={classes.card} onClick={onClick}>
+        <img className={classes.card__image} src={images[0]} alt="" />
+        {categoryName && (
+          <Typography
+            className={classes.card__category}
+            size={TypographySize.md}
+            tagName={TypographyTagName.paragraph}
+            bold
+            secondary
+          >
+            {categoryName}
+          </Typography>
+        )}
         <Typography
-          className={classes.card__category}
           size={TypographySize.md}
-          tagName={TypographyTagName.paragraph}
-          bold
-          secondary
+          tagName={TypographyTagName.h3}
+          className={classes.card__title}
         >
-          {category}
+          {title}
         </Typography>
-      )}
-      <Typography
-        size={TypographySize.md}
-        tagName={TypographyTagName.h3}
-        className={classes.card__title}
-      >
-        {title}
-      </Typography>
-      {subtitle && (
-        <Typography
-          className={classes.card__subtitle}
-          size={TypographySize.md}
-          tagName={TypographyTagName.paragraph}
-          secondary
-        >
-          {subtitle}
-        </Typography>
-      )}
-      {content}
-    </article>
+        {description && (
+          <Typography
+            className={classes.card__subtitle}
+            size={TypographySize.md}
+            tagName={TypographyTagName.paragraph}
+            secondary
+          >
+            {description}
+          </Typography>
+        )}
+        {content}
+      </article>
+    </Link>
   );
 };
