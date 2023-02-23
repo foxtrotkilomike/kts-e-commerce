@@ -1,0 +1,9 @@
+@import "@styles/variables";
+
+.price {
+  padding-top: 18px;
+
+  @media screen and (max-width: $mobile) {
+    padding-top: 14px;
+  }
+}
