@@ -4,9 +4,9 @@ import Typography, {
 } from "@components/Typography";
 import { productListEndMessage } from "@config/data";
 
-import classes from "./EndMessage.module.scss";
+import classes from "./ProductsListEndMessage.module.scss";
 
-export const EndMessage = (): JSX.Element => {
+export const ProductsListEndMessage = (): JSX.Element => {
   return (
     <Typography
       className={classes.endMessage}
