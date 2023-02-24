@@ -1,4 +1,4 @@
-import mockProductImage from "@assets/Rectangle23.jpg";
+import mockProductImage from "@assets/mockProduct.jpg";
 import { Option } from "@components/MultiDropdown";
 import {
   DEFAULT_CATEGORY_ID,
@@ -60,6 +60,8 @@ enum ProductPageButtonsText {
   ADD_CART = "Add to Cart",
 }
 
+const productListEndMessage = "Yay! You have seen it all";
+
 export {
   headerNavItems,
   heroContent,
@@ -70,4 +72,5 @@ export {
   productsMock,
   relatedItemsHeading,
   ProductPageButtonsText,
+  productListEndMessage,
 };

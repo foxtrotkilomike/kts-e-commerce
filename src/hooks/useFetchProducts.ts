@@ -23,31 +23,47 @@ export type FetchFunctionParams = Parameters<
 >;
 
 const useFetchProducts = <T>(
-  initialState: T,
+  initialState: T | Array<T>,
   fetchFunction: FetchFunction,
-  params?: FetchFunctionParams
-): [T, ApiError] => {
-  const [data, setData] = useState<T>(initialState);
+  dependencies?: FetchFunctionParams
+): [T | Array<T>, ApiError] => {
+  const [data, setData] = useState<T | Array<T>>(initialState);
   const [responseError, setResponseError] = useState<ApiError>(INITIAL_ERROR);
 
   useEffect(() => {
+    let ignoreSubsequentFetch = false;
     const getProductsData = async () => {
       setResponseError(INITIAL_ERROR);
       const response = await fetchFunction();
-      if (response) {
-        if ("code" in response) {
-          setResponseError(response);
-          setData(initialState);
+      if (!response) {
+        setResponseError(API_ERRORS.serverIsNotResponding);
+        return;
+      }
+
+      if ("code" in response) {
+        setResponseError(response);
+        setData(initialState);
+        return;
+      }
+
+      if (!ignoreSubsequentFetch) {
+        if (Array.isArray(data)) {
+          setData((prevState) => [
+            ...(prevState as Array<T>),
+            ...(response as Array<T>),
+          ]);
         } else {
           setData(response as T);
         }
-      } else {
-        setResponseError(API_ERRORS.serverIsNotResponding);
       }
     };
 
     getProductsData();
-  }, [params]);
+
+    return () => {
+      ignoreSubsequentFetch = true;
+    };
+  }, [dependencies]);
 
   return [data, responseError];
 };

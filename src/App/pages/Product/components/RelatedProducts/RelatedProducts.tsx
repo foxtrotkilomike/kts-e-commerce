@@ -14,7 +14,7 @@ import {
   DEFAULT_PRODUCTS_OFFSET,
 } from "@config/constants";
 import { relatedItemsHeading } from "@config/data";
-import { Product } from "@config/types";
+import { ApiError, Product } from "@config/types";
 import useFetchProducts, { FetchFunctionParams } from "@hooks/useFetchProducts";
 import Grid from "@layouts/Grid";
 import { getProductsByCategory } from "@services/products";
@@ -36,7 +36,7 @@ export const RelatedProducts = ({
     [],
     () => getProductsByCategory(productCategoryId, offset, limit),
     fetchFunctionParams
-  );
+  ) as [Product[], ApiError];
 
   const isEmptyProducts = relatedProducts.length === 0;
   const isLoadingContent =

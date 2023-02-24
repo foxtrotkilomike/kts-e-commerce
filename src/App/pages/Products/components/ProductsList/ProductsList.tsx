@@ -11,13 +11,17 @@ import {
   DEFAULT_ERROR_STATUS,
   DEFAULT_PRODUCTS_LIMIT,
   DEFAULT_PRODUCTS_OFFSET,
+  TOTAL_PRODUCTS_COUNT,
 } from "@config/constants";
 import { productsListHeading } from "@config/data";
-import { Product } from "@config/types";
+import { ApiError, Product } from "@config/types";
 import useFetchProducts, { FetchFunctionParams } from "@hooks/useFetchProducts";
-import Grid from "@layouts/Grid";
+import gridClasses from "@layouts/Grid/Grid.module.scss";
+import EndMessage from "@pages/Products/components/EndMessage";
 import { getProductsRange } from "@services/products";
 import renderProductCards from "@utils/renderProductCards";
+import classNames from "classnames";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 import classes from "./ProductsList.module.scss";
 
@@ -31,18 +35,37 @@ export const ProductsList = ({
     () => [offset, limit] as FetchFunctionParams,
     [offset, limit]
   );
-  const [products, responseError] = useFetchProducts<Product[]>(
+  const [products, responseError] = useFetchProducts<Product>(
     [],
     () => getProductsRange(offset, limit),
     fetchFunctionParams
-  );
+  ) as [Product[], ApiError];
 
   const isEmptyProducts = products.length === 0;
   const isLoadingContent = responseError.code === DEFAULT_ERROR_STATUS;
+  const hasMore = products.length < TOTAL_PRODUCTS_COUNT;
+  const infiniteScrollClassName = classNames(
+    gridClasses.grid,
+    classes.infiniteScroll
+  );
+  const fetchNextProducts = () => setOffset(offset + limit);
 
   const renderProducts = () =>
     !isEmptyProducts ? (
-      <Grid>{renderProductCards(products)}</Grid>
+      <InfiniteScroll
+        dataLength={products.length}
+        next={fetchNextProducts}
+        hasMore={hasMore}
+        loader={
+          <div className={classes.loader}>
+            <Loader size={LoaderSize.l} />
+          </div>
+        }
+        endMessage={<EndMessage />}
+        className={infiniteScrollClassName}
+      >
+        {renderProductCards(products)}
+      </InfiniteScroll>
     ) : isLoadingContent ? (
       <div className={classes.loader}>
         <Loader size={LoaderSize.l} />

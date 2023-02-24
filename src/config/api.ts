@@ -1,5 +1,5 @@
 import { ResponseStatus } from "@config/constants";
-import { ApiError, Endpoint } from "@config/types";
+import { ApiError, Endpoint, Product } from "@config/types";
 
 const API_BASE_URL = "https://api.escuelajs.co/api/v1";
 
@@ -37,5 +37,6 @@ const INITIAL_ERROR: ApiError = {
   code: 0,
   message: "",
 };
+const INITIAL_PRODUCTS: Product[] = [];
 
-export { API_BASE_URL, ENDPOINTS, API_ERRORS, INITIAL_ERROR };
+export { API_BASE_URL, ENDPOINTS, API_ERRORS, INITIAL_ERROR, INITIAL_PRODUCTS };

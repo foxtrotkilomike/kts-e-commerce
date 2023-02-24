@@ -38,3 +38,7 @@
   @include flex-center;
   padding-top: 10%;
 }
+
+.infiniteScroll {
+  overflow: hidden !important;
+}
