@@ -21,7 +21,7 @@ export const Search = (): JSX.Element => {
       <section className={classes.search}>
         <SearchInput value={searchValue} onChange={setSearchValue} />
         <SearchFilter
-          textContent={searchFilterPlaceholder}
+          placeholder={searchFilterPlaceholder}
           options={initialOptions}
           value={searchFilterOptions}
           onChange={setSearchFilterOptions}
