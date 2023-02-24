@@ -9,9 +9,9 @@
   padding-bottom: 50px;
 
   @media screen and (max-width: $tablet) {
-    flex-direction: column;
     padding-top: 60px;
     padding-bottom: 48px;
+    flex-direction: column;
     gap: 30px;
   }
 }

@@ -8,7 +8,7 @@
     width: 42px;
     height: 42px;
     cursor: pointer;
-    transition: all ease $transition-m;
+    transition: opacity ease $transition-m;
 
     @media screen and (max-width: $mobile) {
       width: 32px;

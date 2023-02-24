@@ -1,11 +1,11 @@
-@import '@styles/variables';
+@import "@styles/variables";
 
 .checkbox {
   display: inline-block;
   position: relative;
   width: 40px;
   height: 40px;
-  box-shadow: 0 4px 120px $color-text-secondary;
+  box-shadow: $box-shadow;
   border: 1px solid transparent;
   box-sizing: content-box;
   cursor: pointer;
@@ -36,11 +36,11 @@
 
   input:checked + &__checkmark {
     display: block;
-    background-image: url('@assets/svg/checkmark.svg');
+    background-image: url("@assets/svg/checkmark.svg");
   }
 
   input:checked:disabled + &__checkmark {
     display: block;
-    background-image: url('@assets/svg/checkmark_disabled.svg');
+    background-image: url("@assets/svg/checkmark_disabled.svg");
   }
 }

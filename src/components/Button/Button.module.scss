@@ -6,10 +6,10 @@
   align-items: center;
   gap: 18px;
   font-weight: bold;
-  font-size: 1.125em;
+  font-size: $font-lg;
   line-height: 130%;
   cursor: pointer;
-  transition: all ease $transition-m;
+  transition: background-color ease $transition-m;
 
   &_primary {
     border: none;
@@ -36,6 +36,7 @@
     border: none;
     color: $color-text-main-light;
   }
+
   &_loading, &_loading:hover {
     padding-left: 20px;
     padding-right: 20px;

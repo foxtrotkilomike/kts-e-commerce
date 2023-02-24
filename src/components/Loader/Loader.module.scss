@@ -4,9 +4,7 @@
   display: inline-block;
   border-radius: 50%;
   border: solid;
-  border-top-color: $color-main;
-  border-left-color: $color-main;
-  border-bottom-color: $color-main;
+  border-color: $color-main;
   border-right-color: transparent;
   animation: $animation-loader linear infinite rotation;
 }

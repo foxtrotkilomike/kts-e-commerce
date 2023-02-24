@@ -12,7 +12,7 @@
     text-align: left;
     color: $color-text-main;
     background-color: $color-multidropdown;
-    box-shadow: 0 4px 20px rgba(175, 173, 181, 0.2);
+    box-shadow: $box-shadow;
     cursor: pointer;
 
     &:focus {
@@ -25,9 +25,9 @@
   }
 
   &__summary {
+    @include text-overflow;
     padding: 27px 28px;
     max-width: 190px;
-    @include text-overflow;
 
     @media screen and (max-width: $tablet) {
       padding: 9px 14px;
@@ -45,7 +45,7 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
     background-color: $color-multidropdown;
-    box-shadow: 0 4px 20px rgba(175, 173, 181, 0.2);
+    box-shadow: $box-shadow;
     z-index: 20;
 
     @media screen and (max-width: $tablet) {

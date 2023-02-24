@@ -9,7 +9,7 @@
   background-color: $color-background-light;
 
   @media screen and (max-width: $tablet) {
-    font-size: 0.875em;
+    font-size: $font-sm;
   }
 
   &:focus {

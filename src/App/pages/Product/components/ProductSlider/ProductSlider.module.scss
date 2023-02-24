@@ -17,13 +17,13 @@
 
   &__control {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
     width: 64px;
     height: 64px;
+    top: 50%;
+    transform: translateY(-50%);
     border-radius: 50%;
     background-color: $color-slider;
-    transition: all ease $transition-m;
+    transition: opacity ease $transition-m;
     cursor: pointer;
 
     &:hover {
