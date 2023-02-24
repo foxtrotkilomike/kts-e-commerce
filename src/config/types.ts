@@ -28,5 +28,22 @@ type Product = {
   images: string[];
 };
 
+type Endpoint = {
+  base: string;
+  [key: string]: string;
+};
+
+type ApiError = {
+  code: number;
+  message: string;
+};
+
 export { Pages };
-export type { HeaderNavItem, HeroContent, Category, Product };
+export type {
+  HeaderNavItem,
+  HeroContent,
+  Category,
+  Product,
+  Endpoint,
+  ApiError,
+};
