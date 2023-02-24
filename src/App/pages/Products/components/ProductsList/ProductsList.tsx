@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useMemo, useState } from "react";
 
 import EmptyContent from "@components/EmptyContent";
 import Loader, { LoaderSize } from "@components/Loader";
@@ -7,9 +7,14 @@ import Typography, {
   TypographyTagName,
 } from "@components/Typography";
 import Wrapper from "@components/Wrapper";
-import { API_ERRORS, initialError } from "@config/api";
+import {
+  DEFAULT_ERROR_STATUS,
+  DEFAULT_PRODUCTS_LIMIT,
+  DEFAULT_PRODUCTS_OFFSET,
+} from "@config/constants";
 import { productsListHeading } from "@config/data";
-import { ApiError, Product } from "@config/types";
+import { Product } from "@config/types";
+import useFetchProducts, { FetchFunctionParams } from "@hooks/useFetchProducts";
 import Grid from "@layouts/Grid";
 import { getProductsRange } from "@services/products";
 import renderProductCards from "@utils/renderProductCards";
@@ -19,32 +24,26 @@ import classes from "./ProductsList.module.scss";
 export const ProductsList = ({
   productsCount,
 }: ProductsListProps): JSX.Element => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [responseError, setResponseError] = useState<ApiError>(initialError);
+  const [offset, setOffset] = useState(DEFAULT_PRODUCTS_OFFSET);
+  const [limit, setLimit] = useState(DEFAULT_PRODUCTS_LIMIT);
 
-  useEffect(() => {
-    const getProductsData = async () => {
-      setResponseError(initialError);
-      const response = await getProductsRange();
-      if (response) {
-        if ("code" in response) {
-          setResponseError(response);
-          setProducts([]);
-        } else {
-          setProducts(response);
-        }
-      } else {
-        setResponseError(API_ERRORS.serverIsNotResponding);
-      }
-    };
+  const fetchFunctionParams = useMemo(
+    () => [offset, limit] as FetchFunctionParams,
+    [offset, limit]
+  );
+  const [products, responseError] = useFetchProducts<Product[]>(
+    [],
+    () => getProductsRange(offset, limit),
+    fetchFunctionParams
+  );
 
-    getProductsData();
-  }, []);
+  const isEmptyProducts = products.length === 0;
+  const isLoadingContent = responseError.code === DEFAULT_ERROR_STATUS;
 
   const renderProducts = () =>
-    products.length > 0 ? (
+    !isEmptyProducts ? (
       <Grid>{renderProductCards(products)}</Grid>
-    ) : responseError.code === 0 ? (
+    ) : isLoadingContent ? (
       <div className={classes.loader}>
         <Loader size={LoaderSize.l} />
       </div>
