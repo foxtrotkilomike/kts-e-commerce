@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.9777fbce.css",
-    "main.js": "/static/js/main.b92d72eb.js",
+    "main.js": "/static/js/main.9657bbfe.js",
     "static/media/mockProduct.jpg": "/static/media/mockProduct.e2615a8596af9f36536e.jpg",
     "static/media/EudoxusSans-Bold.woff": "/static/media/EudoxusSans-Bold.9e36cdea0e27e202b3ff.woff",
     "static/media/EudoxusSans-Medium.woff": "/static/media/EudoxusSans-Medium.b8e22bfe93fc3c4204ff.woff",
@@ -20,14 +20,14 @@
     "static/media/user.svg": "/static/media/user.602259693f266cd9809bf5256f07eb35.svg",
     "index.html": "/index.html",
     "static/media/search.svg": "/static/media/search.f99ae2b63fc7a1dce988f5e85c07c26c.svg",
-    "static/media/logo.svg": "/static/media/logo.01c898e787a1a988ba4748f5fe86ed08.svg",
+    "static/media/logo.svg": "/static/media/logo.7a5f66fccdce8ba40804af126d3857a8.svg",
     "static/media/arr_right.svg": "/static/media/arr_right.511f5e6d971024498bd7a3dbcb979ab0.svg",
     "static/media/arr_left.svg": "/static/media/arr_left.0e1903dcf8a5395e663e79dd29cae186.svg",
     "main.9777fbce.css.map": "/static/css/main.9777fbce.css.map",
-    "main.b92d72eb.js.map": "/static/js/main.b92d72eb.js.map"
+    "main.9657bbfe.js.map": "/static/js/main.9657bbfe.js.map"
   },
   "entrypoints": [
     "static/css/main.9777fbce.css",
-    "static/js/main.b92d72eb.js"
+    "static/js/main.9657bbfe.js"
   ]
 }
