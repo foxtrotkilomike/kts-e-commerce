@@ -14,7 +14,7 @@ export const SearchFilter = ({
   onChange,
   pluralizeOptions,
   disabled,
-  textContent,
+  placeholder,
 }: SearchFilterProps): JSX.Element => {
   const filterPlaceholder = (
     <div className={classes.searchFilter__placeholder}>
@@ -23,7 +23,7 @@ export const SearchFilter = ({
         size={TypographySize.md}
         tagName={TypographyTagName.paragraph}
       >
-        {textContent}
+        {placeholder}
       </Typography>
     </div>
   );
@@ -54,5 +54,5 @@ type SearchFilterProps = {
   pluralizeOptions: (value: Option[]) => string;
   /** Заблокирован ли дропдаун */
   disabled?: boolean;
-  textContent?: string;
+  placeholder?: string;
 };

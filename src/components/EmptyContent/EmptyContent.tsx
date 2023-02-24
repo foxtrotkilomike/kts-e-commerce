@@ -3,6 +3,7 @@ import Typography, {
   TypographyTagName,
 } from "@components/Typography";
 import Wrapper from "@components/Wrapper";
+import { emptyContentTextContent } from "@config/data";
 import { ApiError } from "@config/types";
 
 import classes from "./EmptyContent.module.scss";
@@ -11,7 +12,7 @@ export const EmptyContent = ({ error }: EmptyContentProps): JSX.Element => {
   return (
     <Wrapper centered main className={classes.wrapper}>
       <Typography tagName={TypographyTagName.h3}>
-        Data is not available, please, try again later
+        {emptyContentTextContent}
       </Typography>
       <Typography
         tagName={TypographyTagName.paragraph}

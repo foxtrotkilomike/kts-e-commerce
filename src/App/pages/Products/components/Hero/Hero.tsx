@@ -3,16 +3,13 @@ import Typography, {
   TypographyTagName,
 } from "@components/Typography";
 import Wrapper from "@components/Wrapper";
-import { heroContent } from "@config/data";
+import { defaultHeroContent, heroContent } from "@config/data";
 import { Pages } from "@config/types";
 
 import classes from "./Hero.module.scss";
 
 export const Hero = ({ page }: HeroProps): JSX.Element => {
-  const { heading, caption } = heroContent[page] || {
-    heading: "",
-    caption: "",
-  };
+  const { heading, caption } = heroContent[page] || defaultHeroContent;
 
   return (
     <Wrapper centered>

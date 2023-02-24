@@ -11,7 +11,9 @@ type HeaderNavItem = {
   link: Routes;
 };
 
-type HeroContent = Partial<Record<Pages, { heading: string; caption: string }>>;
+type HeroContent = { heading: string; caption: string };
+
+type PagesHeroContent = Partial<Record<Pages, HeroContent>>;
 
 type Category = {
   id: number;
@@ -42,6 +44,7 @@ export { Pages };
 export type {
   HeaderNavItem,
   HeroContent,
+  PagesHeroContent,
   Category,
   Product,
   Endpoint,

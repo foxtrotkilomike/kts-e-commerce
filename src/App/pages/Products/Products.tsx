@@ -5,14 +5,12 @@ import Hero from "./components/Hero";
 import ProductsList from "./components/ProductsList";
 import Search from "./components/Search";
 
-export const Products = (props: ProductsProps): JSX.Element => {
+export const Products = (): JSX.Element => {
   return (
     <Wrapper main>
       <Hero page={Pages.MAIN} />
       <Search />
-      <ProductsList productsCount={184} />
+      <ProductsList />
     </Wrapper>
   );
 };
-
-type ProductsProps = Record<string, string>;

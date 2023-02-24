@@ -4,6 +4,7 @@ import Typography, {
 } from "@components/Typography";
 import Wrapper from "@components/Wrapper";
 import { ResponseStatus, Routes } from "@config/constants";
+import { ErrorMessages } from "@config/data";
 import { isRouteErrorResponse, Link, useRouteError } from "react-router-dom";
 
 import classes from "./ErrorBoundary.module.scss";
@@ -11,18 +12,22 @@ import classes from "./ErrorBoundary.module.scss";
 export const ErrorBoundary = (): JSX.Element => {
   const error = useRouteError() as Error;
 
+  const ErrorCaption = () => (
+    <Typography
+      className={classes.error__caption}
+      tagName={TypographyTagName.paragraph}
+      size={TypographySize.lg}
+    >
+      Go to <Link to={Routes.MAIN}>main page</Link>
+    </Typography>
+  );
+
   let InnerMessage = (): JSX.Element => (
     <div className={classes.error}>
       <Typography tagName={TypographyTagName.h1} size={TypographySize.xl}>
-        This page doesn't exist
+        {ErrorMessages.PAGE_NOT_EXIST}
       </Typography>
-      <Typography
-        className={classes.error__caption}
-        tagName={TypographyTagName.paragraph}
-        size={TypographySize.lg}
-      >
-        Go to <Link to={Routes.MAIN}>main page</Link>
-      </Typography>
+      <ErrorCaption />
     </div>
   );
 
@@ -31,7 +36,7 @@ export const ErrorBoundary = (): JSX.Element => {
       InnerMessage = () => (
         <div className={classes.error}>
           <Typography tagName={TypographyTagName.h1} size={TypographySize.xl}>
-            You are not authorized to view this page
+            {ErrorMessages.NOT_AUTHORIZED}
           </Typography>
         </div>
       );
@@ -41,7 +46,7 @@ export const ErrorBoundary = (): JSX.Element => {
       InnerMessage = () => (
         <div className={classes.error}>
           <Typography tagName={TypographyTagName.h1} size={TypographySize.xl}>
-            Sorry, an unexpected error has occurred
+            {ErrorMessages.UNEXPECTED_ERR}
           </Typography>
           {error?.message ? (
             <Typography
@@ -52,13 +57,7 @@ export const ErrorBoundary = (): JSX.Element => {
               {error.message}
             </Typography>
           ) : (
-            <Typography
-              className={classes.error__caption}
-              tagName={TypographyTagName.paragraph}
-              size={TypographySize.lg}
-            >
-              Go to <Link to={Routes.MAIN}>main page</Link>
-            </Typography>
+            <ErrorCaption />
           )}
         </div>
       );

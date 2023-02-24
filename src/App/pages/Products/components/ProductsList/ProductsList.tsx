@@ -7,8 +7,10 @@ import Typography, {
   TypographyTagName,
 } from "@components/Typography";
 import Wrapper from "@components/Wrapper";
+import { INITIAL_PRODUCTS } from "@config/api";
 import {
   DEFAULT_ERROR_STATUS,
+  DEFAULT_PRODUCTS_COUNT,
   DEFAULT_PRODUCTS_LIMIT,
   DEFAULT_PRODUCTS_OFFSET,
   TOTAL_PRODUCTS_COUNT,
@@ -17,7 +19,7 @@ import { productsListHeading } from "@config/data";
 import { ApiError, Product } from "@config/types";
 import useFetchProducts, { FetchFunctionParams } from "@hooks/useFetchProducts";
 import gridClasses from "@layouts/Grid/Grid.module.scss";
-import EndMessage from "@pages/Products/components/EndMessage";
+import ProductsListEndMessage from "@pages/Products/components/ProductsListEndMessage";
 import { getProductsRange } from "@services/products";
 import renderProductCards from "@utils/renderProductCards";
 import classNames from "classnames";
@@ -25,9 +27,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 import classes from "./ProductsList.module.scss";
 
-export const ProductsList = ({
-  productsCount,
-}: ProductsListProps): JSX.Element => {
+export const ProductsList = (): JSX.Element => {
   const [offset, setOffset] = useState(DEFAULT_PRODUCTS_OFFSET);
   const [limit, setLimit] = useState(DEFAULT_PRODUCTS_LIMIT);
 
@@ -36,14 +36,15 @@ export const ProductsList = ({
     [offset, limit]
   );
   const [products, responseError] = useFetchProducts<Product>(
-    [],
+    INITIAL_PRODUCTS,
     () => getProductsRange(offset, limit),
     fetchFunctionParams
   ) as [Product[], ApiError];
 
   const isEmptyProducts = products.length === 0;
   const isLoadingContent = responseError.code === DEFAULT_ERROR_STATUS;
-  const hasMore = products.length < TOTAL_PRODUCTS_COUNT;
+  const productsCount = products.length;
+  const hasMoreProducts = productsCount < TOTAL_PRODUCTS_COUNT;
   const infiniteScrollClassName = classNames(
     gridClasses.grid,
     classes.infiniteScroll
@@ -55,13 +56,13 @@ export const ProductsList = ({
       <InfiniteScroll
         dataLength={products.length}
         next={fetchNextProducts}
-        hasMore={hasMore}
+        hasMore={hasMoreProducts}
         loader={
           <div className={classes.loader}>
             <Loader size={LoaderSize.l} />
           </div>
         }
-        endMessage={<EndMessage />}
+        endMessage={<ProductsListEndMessage />}
         className={infiniteScrollClassName}
       >
         {renderProductCards(products)}
@@ -86,15 +87,11 @@ export const ProductsList = ({
             {productsListHeading}
           </Typography>
           <div className={classes.header__counter}>
-            {productsCount ? productsCount : 0}
+            {productsCount ? productsCount : DEFAULT_PRODUCTS_COUNT}
           </div>
         </div>
         {renderProducts()}
       </Wrapper>
     </section>
   );
-};
-
-type ProductsListProps = {
-  productsCount: number;
 };
