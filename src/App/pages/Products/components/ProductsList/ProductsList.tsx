@@ -1,10 +1,17 @@
+import { useState, useEffect } from "react";
+
+import EmptyContent from "@components/EmptyContent";
+import Loader, { LoaderSize } from "@components/Loader";
 import Typography, {
   TypographySize,
   TypographyTagName,
 } from "@components/Typography";
 import Wrapper from "@components/Wrapper";
-import { productsListHeading, productsMock } from "@config/data";
+import { API_ERRORS, initialError } from "@config/api";
+import { productsListHeading } from "@config/data";
+import { ApiError, Product } from "@config/types";
 import Grid from "@layouts/Grid";
+import { getProductsRange } from "@services/products";
 import renderProductCards from "@utils/renderProductCards";
 
 import classes from "./ProductsList.module.scss";
@@ -12,7 +19,38 @@ import classes from "./ProductsList.module.scss";
 export const ProductsList = ({
   productsCount,
 }: ProductsListProps): JSX.Element => {
-  const products = renderProductCards(productsMock);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [responseError, setResponseError] = useState<ApiError>(initialError);
+
+  useEffect(() => {
+    const getProductsData = async () => {
+      setResponseError(initialError);
+      const response = await getProductsRange();
+      if (response) {
+        if ("code" in response) {
+          setResponseError(response);
+          setProducts([]);
+        } else {
+          setProducts(response);
+        }
+      } else {
+        setResponseError(API_ERRORS.serverIsNotResponding);
+      }
+    };
+
+    getProductsData();
+  }, []);
+
+  const renderProducts = () =>
+    products.length > 0 ? (
+      <Grid>{renderProductCards(products)}</Grid>
+    ) : responseError.code === 0 ? (
+      <div className={classes.loader}>
+        <Loader size={LoaderSize.l} />
+      </div>
+    ) : (
+      <EmptyContent error={responseError} />
+    );
 
   return (
     <section>
@@ -29,7 +67,7 @@ export const ProductsList = ({
             {productsCount ? productsCount : 0}
           </div>
         </div>
-        <Grid>{products}</Grid>
+        {renderProducts()}
       </Wrapper>
     </section>
   );

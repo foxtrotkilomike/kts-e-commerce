@@ -20,8 +20,8 @@ export enum TypographyTagName {
 }
 
 type TypographyProps = React.PropsWithChildren<{
-  size: TypographySize;
   tagName: TypographyTagName;
+  size?: TypographySize;
   bold?: boolean;
   secondary?: boolean;
   className?: string;
