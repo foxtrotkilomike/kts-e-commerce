@@ -9,3 +9,8 @@
     padding-bottom: 23px;
   }
 }
+
+.loader {
+  @include flex-center;
+  padding: 10% 0;
+}

@@ -12,12 +12,12 @@ import classes from "./ProductInfo.module.scss";
 import ProductSlider from "../ProductSlider";
 
 export const ProductInfo = ({
-  product: { title, description, price },
+  product: { title, description, price, images },
 }: ProductInfoProps): JSX.Element => {
   return (
     <Wrapper centered>
       <div className={classes.container}>
-        <ProductSlider />
+        <ProductSlider image={images} />
         <div className={classes.productContent}>
           <Typography
             className={classes.title}

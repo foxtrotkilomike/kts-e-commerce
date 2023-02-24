@@ -1,10 +1,9 @@
-import productPhotoMock from "@assets/Rectangle23.jpg";
 import { ReactComponent as LeftArrow } from "@assets/svg/arr_left.svg";
 import { ReactComponent as RightArrow } from "@assets/svg/arr_right.svg";
 
 import classes from "./ProductSlider.module.scss";
 
-export const ProductSlider = (props: ProductSliderProps): JSX.Element => {
+export const ProductSlider = ({ image }: ProductSliderProps): JSX.Element => {
   return (
     <div className={classes.slider}>
       <button
@@ -17,9 +16,11 @@ export const ProductSlider = (props: ProductSliderProps): JSX.Element => {
       >
         <RightArrow className={classes.icon} />
       </button>
-      <img className={classes.slider__image} src={productPhotoMock} alt="" />
+      <img className={classes.slider__image} src={image[0]} alt="" />
     </div>
   );
 };
 
-type ProductSliderProps = Record<string, string>;
+type ProductSliderProps = {
+  image: string[];
+};
