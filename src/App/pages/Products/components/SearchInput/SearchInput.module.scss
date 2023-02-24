@@ -16,6 +16,10 @@
     flex-basis: 0;
   }
 
+  @media screen and (max-width: $mobile) {
+    padding: 8px 8px 8px 14px;
+  }
+
   @media screen and (max-width: $mobile-s) {
     flex-wrap: wrap;
     row-gap: 10px;
@@ -34,8 +38,9 @@
     font-weight: 500;
 
     @media screen and (max-width: $tablet) {
-      margin: 0 12px;
+      margin: 0 10px 0 12px;
       flex-shrink: 1;
+      min-width: 120px;
     }
   }
 

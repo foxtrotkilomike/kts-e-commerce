@@ -15,6 +15,7 @@
     aspect-ratio: 4 / 3;
     margin-bottom: 26px;
     object-fit: cover;
+    background-color: $color-image-background-fallback;
 
     @media screen and (max-width: $mobile) {
       margin-bottom: 14px;
