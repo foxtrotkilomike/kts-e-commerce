@@ -33,9 +33,9 @@ const API_ERRORS: Record<string, ApiError> = {
   },
 };
 
-const initialError: ApiError = {
+const INITIAL_ERROR: ApiError = {
   code: 0,
   message: "",
 };
 
-export { API_BASE_URL, ENDPOINTS, API_ERRORS, initialError };
+export { API_BASE_URL, ENDPOINTS, API_ERRORS, INITIAL_ERROR };

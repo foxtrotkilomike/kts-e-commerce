@@ -13,4 +13,18 @@ enum Routes {
   ABOUT = "/about",
 }
 
-export { ResponseStatus, Routes };
+const DEFAULT_ERROR_STATUS = 0;
+const DEFAULT_PRODUCT_ID = -1;
+const DEFAULT_CATEGORY_ID = -1;
+const DEFAULT_PRODUCTS_OFFSET = 0;
+const DEFAULT_PRODUCTS_LIMIT = 9;
+
+export {
+  ResponseStatus,
+  Routes,
+  DEFAULT_ERROR_STATUS,
+  DEFAULT_PRODUCT_ID,
+  DEFAULT_CATEGORY_ID,
+  DEFAULT_PRODUCTS_OFFSET,
+  DEFAULT_PRODUCTS_LIMIT,
+};
