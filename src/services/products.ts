@@ -1,4 +1,8 @@
 import { API_BASE_URL, ENDPOINTS } from "@config/api";
+import {
+  DEFAULT_PRODUCTS_LIMIT,
+  DEFAULT_PRODUCTS_OFFSET,
+} from "@config/constants";
 import { ApiError, Product } from "@config/types";
 import { handleApiErrors } from "@utils/handleApiErrors";
 import axios from "axios";
@@ -15,8 +19,8 @@ const getAllProducts = async (): Promise<Product[] | ApiError> => {
 };
 
 const getProductsRange = async (
-  offset: number = 0,
-  limit: number = 9
+  offset: number = DEFAULT_PRODUCTS_OFFSET,
+  limit: number = DEFAULT_PRODUCTS_LIMIT
 ): Promise<Product[] | ApiError> => {
   return axios({
     method: "get",
@@ -41,4 +45,27 @@ const getProductById = async (
     .catch(handleApiErrors);
 };
 
-export { getAllProducts, getProductsRange, getProductById };
+const getProductsByCategory = async (
+  categoryId: number,
+  offset: number = DEFAULT_PRODUCTS_OFFSET,
+  limit: number = DEFAULT_PRODUCTS_LIMIT
+): Promise<Product | ApiError> => {
+  return axios({
+    method: "get",
+    url: `${API_BASE_URL}${productsEndpoint}/`,
+    params: {
+      categoryId,
+      offset,
+      limit,
+    },
+  })
+    .then(({ data }) => data as Product)
+    .catch(handleApiErrors);
+};
+
+export {
+  getAllProducts,
+  getProductsRange,
+  getProductById,
+  getProductsByCategory,
+};
