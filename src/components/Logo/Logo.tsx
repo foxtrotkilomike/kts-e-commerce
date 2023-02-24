@@ -1,13 +1,11 @@
-import logo from "@assets/svg/logo.svg";
+import { ReactComponent as LogoIcon } from "@assets/svg/logo.svg";
 
 import classes from "./Logo.module.scss";
 
 export const Logo = ({ hasText }: LogoProps): JSX.Element => {
   return (
     <div className={classes.logo}>
-      <svg className={classes.logo__icon}>
-        <use href={`${logo}#logo`}></use>
-      </svg>
+      <LogoIcon className={classes.logo__icon} />
       {hasText && <span className={classes.logo__text}>Lalasia</span>}
     </div>
   );
