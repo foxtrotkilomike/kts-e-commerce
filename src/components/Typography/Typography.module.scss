@@ -1,5 +1,6 @@
 @import "@styles/fonts/fonts";
 @import "@styles/variables";
+@import "@styles/mixins";
 
 .typography {
   font-family: 'Eudoxus Sans', sans-serif;
@@ -20,11 +21,11 @@
     font-size: $font-4xl;
     font-weight: 700;
 
-    @media screen and (max-width: $desktop-s) {
+    @include desktop-s-breakpoint {
       font-size: $font-xxl;
     }
 
-    @media screen and (max-width: $mobile) {
+    @include mobile-breakpoint {
       font-size: $font-xl;
     }
   }
@@ -32,11 +33,11 @@
     font-size: $font-3xl;
     font-weight: 700;
 
-    @media screen and (max-width: $desktop-s) {
+    @include desktop-s-breakpoint {
       font-size: $font-xl;
     }
 
-    @media screen and (max-width: $mobile) {
+    @include mobile-breakpoint {
       font-size: $font-lg-p;
     }
   }
@@ -44,11 +45,11 @@
     font-size: $font-xl-p;
     font-weight: 700;
 
-    @media screen and (max-width: $desktop-s) {
+    @include desktop-s-breakpoint {
       font-size: $font-lg-p;
     }
 
-    @media screen and (max-width: $mobile) {
+    @include mobile-breakpoint {
       font-size: $font-lg;
     }
   }
@@ -56,11 +57,11 @@
     font-size: $font-xl;
     font-weight: 700;
 
-    @media screen and (max-width: $desktop-s) {
+    @include desktop-s-breakpoint {
       font-size: $font-lg-p;
     }
 
-    @media screen and (max-width: $mobile) {
+    @include mobile-breakpoint {
       font-size: $font-sm;
     }
   }
@@ -70,22 +71,22 @@
   &_xl {
     font-size: $font-xl;
 
-    @media screen and (max-width: $desktop-s) {
+    @include desktop-s-breakpoint {
       font-size: $font-lg-p;
     }
 
-    @media screen and (max-width: $mobile) {
+    @include mobile-breakpoint {
       font-size: $font-md;
     }
   }
   &_lg {
     font-size: $font-lg-p;
 
-    @media screen and (max-width: $desktop-s) {
+    @include desktop-s-breakpoint {
       font-size: $font-lg;
     }
 
-    @media screen and (max-width: $mobile) {
+    @include mobile-breakpoint {
       font-size: $font-sm;
     }
   }
@@ -94,11 +95,11 @@
     line-height: 180%;
     font-weight: 500;
 
-    @media screen and (max-width: $desktop-s) {
+    @include desktop-s-breakpoint {
       font-size: $font-md;
     }
 
-    @media screen and (max-width: $mobile) {
+    @include mobile-breakpoint {
       font-size: $font-xs;
     }
   }

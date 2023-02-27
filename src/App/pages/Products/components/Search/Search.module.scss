@@ -7,7 +7,7 @@
   display: flex;
   gap: 30px;
 
-  @media screen and (max-width: $tablet){
+  @include tablet-breakpoint {
     flex-direction: column;
     gap: 16px;
   }

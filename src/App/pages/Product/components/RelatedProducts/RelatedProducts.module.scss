@@ -5,7 +5,7 @@
   @include main-container;
   padding-bottom: 30px;
 
-  @media screen and (max-width: $tablet) {
+  @include tablet-breakpoint {
     padding-bottom: 23px;
   }
 }

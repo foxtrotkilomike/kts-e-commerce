@@ -1,16 +1,17 @@
 @import "@styles/variables";
+@import "@styles/mixins";
 
 .slider {
   flex-basis: 600px;
   min-height: 600px;
   position: relative;
 
-  @media screen and (max-width: $tablet) {
+  @include tablet-breakpoint {
     flex-basis: auto;
     min-height: auto;
   }
 
-  @media screen and (max-width: $mobile) {
+  @include mobile-breakpoint {
     flex-basis: 330px;
     min-height: 330px;
   }
@@ -43,12 +44,12 @@
       left: 50%;
       transform: translate(-50%, -50%);
 
-      @media screen and (max-width: $mobile) {
+      @include mobile-breakpoint {
         transform: translate(-50%, -50%) scale(0.7);
       }
     }
 
-    @media screen and (max-width: $mobile) {
+    @include mobile-breakpoint {
       width: 40px;
       height: 40px;
     }

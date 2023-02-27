@@ -1,9 +1,10 @@
 @import "@styles/variables";
+@import "@styles/mixins";
 
 .menu {
   flex-basis: 724px;
 
-  @media screen and (max-width: $tablet) {
+  @include tablet-breakpoint {
     flex-basis: auto;
   }
 
@@ -11,11 +12,11 @@
     display: flex;
     gap: 60px;
 
-    @media screen and (max-width: $desktop-s) {
+    @include desktop-s-breakpoint {
       gap: 30px;
     }
 
-    @media screen and (max-width: $tablet) {
+    @include tablet-breakpoint {
       flex-basis: auto;
       flex-direction: column;
     }
@@ -44,11 +45,11 @@
       width: 100%;
       border-bottom: 3px solid $color-main;
 
-      @media screen and (max-width: $desktop-s) {
+      @include desktop-s-breakpoint {
         top: 56px;
       }
 
-      @media screen and (max-width: $tablet) {
+      @include tablet-breakpoint {
         display: none;
       }
     }

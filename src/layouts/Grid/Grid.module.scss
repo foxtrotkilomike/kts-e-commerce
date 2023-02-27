@@ -7,11 +7,11 @@
   grid-template-columns: repeat(3, minmax(200px, 1fr));
   gap: 30px;
 
-  @media screen and (max-width: $tablet) {
+  @include tablet-breakpoint {
     grid-template-columns: repeat(2, minmax(150px, 1fr));
   }
 
-  @media screen and (max-width: $mobile) {
+  @include mobile-breakpoint {
     grid-template-columns: repeat(2, minmax(100px, 1fr));
     gap: 15px;
   }

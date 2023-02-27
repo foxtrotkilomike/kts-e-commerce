@@ -4,7 +4,7 @@
 .search-filter {
   flex-basis: 190px;
 
-  @media screen and (max-width: $tablet) {
+  @include tablet-breakpoint {
     flex-basis: auto;
   }
 
@@ -13,7 +13,7 @@
     padding: 27px 52px;
     gap: 12px;
 
-    @media screen and (max-width: $tablet) {
+    @include tablet-breakpoint {
       padding: 12px 10px;
       gap: 8px;
     }
@@ -23,7 +23,7 @@
     width: 30px;
     height: 30px;
 
-    @media screen and (max-width: $tablet) {
+    @include tablet-breakpoint {
       width: 20px;
       height: 20px;
     }

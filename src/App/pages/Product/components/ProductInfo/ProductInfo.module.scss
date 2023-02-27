@@ -8,7 +8,7 @@
   padding-top: 100px;
   padding-bottom: 50px;
 
-  @media screen and (max-width: $tablet) {
+  @include tablet-breakpoint {
     padding-top: 60px;
     padding-bottom: 48px;
     flex-direction: column;
@@ -19,7 +19,7 @@
 .product-content {
   flex-basis: 590px;
 
-  @media screen and (max-width: $tablet) {
+  @include tablet-breakpoint {
     flex-basis: auto;
   }
 }
@@ -28,7 +28,7 @@
   padding-top: 32px;
   padding-bottom: 20px;
 
-  @media screen and (max-width: $tablet) {
+  @include tablet-breakpoint {
     padding-top: 0;
   }
 }
@@ -36,12 +36,12 @@
 .description {
   min-height: 200px;
 
-  @media screen and (max-width: $tablet) {
+  @include tablet-breakpoint {
     min-height: 100px;
   }
 
   & p {
-    @media screen and (max-width: $mobile) {
+    @include mobile-breakpoint {
       font-size: $font-md;
     }
   }
@@ -50,7 +50,7 @@
 .price {
   padding-bottom: 50px;
 
-  @media screen and (max-width: $mobile) {
+  @include mobile-breakpoint {
     padding-bottom: 30px;
   }
 }
@@ -65,7 +65,7 @@
     justify-content: center;
   }
 
-  @media screen and (max-width: $mobile) {
+  @include mobile-breakpoint {
     flex-direction: column;
     gap: 12px;
   }

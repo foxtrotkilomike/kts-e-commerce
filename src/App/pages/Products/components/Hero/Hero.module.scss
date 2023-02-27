@@ -1,16 +1,17 @@
 @import "@styles/variables";
+@import "@styles/mixins";
 
 .hero {
   margin: 100px 0 80px;
   width: 100%;
   text-align: center;
 
-  @media screen and (max-width: $desktop-s) {
+  @include desktop-s-breakpoint{
     margin: 50px 0 32px;
     padding: 0 32px;
   }
 
-  @media screen and (max-width: $mobile) {
+  @include mobile-breakpoint {
     margin: 50px 0 32px;
     padding: 0 24px;
   }

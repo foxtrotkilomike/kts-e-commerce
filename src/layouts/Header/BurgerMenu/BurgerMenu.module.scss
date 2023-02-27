@@ -1,4 +1,5 @@
 @import "@styles/variables";
+@import "@styles/mixins";
 
 .burger {
   display: none;
@@ -57,7 +58,7 @@
     border-color: $color-stroke-icon-hover;
   }
 
-  @media screen and (max-width: $tablet) {
+  @include tablet-breakpoint {
     display: block;
   }
 }

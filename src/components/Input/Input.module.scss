@@ -1,5 +1,6 @@
 @use "sass:color";
 @import '@styles/variables';
+@import "@styles/mixins";
 
 .input {
   font-weight: 500;
@@ -8,7 +9,7 @@
   color: $color-text-main;
   background-color: $color-background-light;
 
-  @media screen and (max-width: $tablet) {
+  @include tablet-breakpoint {
     font-size: $font-sm;
   }
 

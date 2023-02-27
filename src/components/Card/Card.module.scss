@@ -16,7 +16,7 @@
     object-fit: cover;
     background-color: $color-image-background-fallback;
 
-    @media screen and (max-width: $mobile) {
+    @include mobile-breakpoint {
       margin-bottom: 14px;
       height: 130px;
     }
@@ -24,11 +24,11 @@
 
   &__category {
     margin-bottom: 14px;
-    @media screen and (max-width: $desktop-s) {
+    @include desktop-s-breakpoint {
       margin-bottom: 10px;
     }
 
-    @media screen and (max-width: $mobile) {
+    @include mobile-breakpoint {
       margin-bottom: 6px;
     }
   }

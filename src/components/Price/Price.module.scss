@@ -1,16 +1,17 @@
 @import "@styles/variables";
+@import "@styles/mixins";
 
 .price {
   padding-top: 18px;
 
-  @media screen and (max-width: $mobile) {
+  @include mobile-breakpoint {
     padding-top: 14px;
   }
 
   &_large p {
     font-size: $font-3xl;
 
-    @media screen and (max-width: $tablet) {
+    @include tablet-breakpoint {
       font-size: $font-lg-p;
     }
   }

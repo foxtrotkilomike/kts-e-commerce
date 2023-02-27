@@ -26,3 +26,33 @@
     padding-right: 24px;
   }
 }
+
+@mixin mobile-s-breakpoint {
+  @media screen and (max-width: $mobile-s) {
+    @content;
+  }
+}
+
+@mixin mobile-breakpoint {
+  @media screen and (max-width: $mobile) {
+    @content;
+  }
+}
+
+@mixin tablet-breakpoint {
+  @media screen and (max-width: $tablet) {
+    @content;
+  }
+}
+
+@mixin desktop-s-breakpoint {
+  @media screen and (max-width: $desktop-s) {
+    @content;
+  }
+}
+
+@mixin desktop-l-breakpoint {
+  @media screen and (max-width: $desktop-l) {
+    @content;
+  }
+}

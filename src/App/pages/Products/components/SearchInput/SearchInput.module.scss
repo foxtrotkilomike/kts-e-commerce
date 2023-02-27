@@ -12,21 +12,21 @@
     border: 1px solid $color-main;
   }
 
-  @media screen and (max-width: $tablet) {
+  @include tablet-breakpoint {
     flex-basis: auto;
   }
 
-  @media screen and (max-width: $mobile) {
+  @include mobile-breakpoint {
     padding: 8px 8px 8px 14px;
   }
 
-  @media screen and (max-width: $mobile-s) {
+  @include mobile-s-breakpoint {
     flex-wrap: wrap;
     row-gap: 10px;
   }
 
   &__icon {
-    @media screen and (max-width: $tablet) {
+    @include tablet-breakpoint {
       flex-basis: 24px;
       flex-shrink: 0;
     }
@@ -37,7 +37,7 @@
     flex-grow: 1;
     font-weight: 500;
 
-    @media screen and (max-width: $tablet) {
+    @include tablet-breakpoint {
       margin: 0 10px 0 12px;
       flex-shrink: 1;
       min-width: 120px;
@@ -47,7 +47,7 @@
   &__button {
     flex-shrink: 0;
 
-    @media screen and (max-width: $tablet) {
+    @include tablet-breakpoint {
       padding: 10px 18px;
       font-size: $font-sm;
     }
