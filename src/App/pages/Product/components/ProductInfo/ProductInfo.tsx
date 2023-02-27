@@ -24,7 +24,7 @@ const ProductInfo = ({
     <Wrapper centered>
       <div className={classes.container}>
         <ProductSlider image={images} />
-        <div className={classes.productContent}>
+        <div className={classes["product-content"]}>
           <Typography
             className={classes.title}
             size={TypographySize.lg}

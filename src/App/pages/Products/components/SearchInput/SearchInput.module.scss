@@ -1,7 +1,7 @@
 @import "@styles/variables";
 @import "@styles/mixins";
 
-.searchInput {
+.search-input {
   @include flex-center;
   flex-basis: 1020px;
   padding: 15px 27px;

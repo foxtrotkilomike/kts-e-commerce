@@ -33,8 +33,8 @@ const SearchFilter = ({
   placeholder,
 }: SearchFilterProps): JSX.Element => {
   const filterPlaceholder = (
-    <div className={classes.searchFilter__placeholder}>
-      <FilterIcon className={classes.searchFilter__icon} />
+    <div className={classes["search-filter__placeholder"]}>
+      <FilterIcon className={classes["search-filter__icon"]} />
       <Typography
         size={TypographySize.md}
         tagName={TypographyTagName.paragraph}
@@ -45,9 +45,8 @@ const SearchFilter = ({
   );
 
   return (
-    <div className={classes.searchFilter}>
+    <div className={classes["search-filter"]}>
       <MultiDropdown
-        className={classes.searchFilter__dropDown}
         options={options}
         value={value}
         onChange={onChange}

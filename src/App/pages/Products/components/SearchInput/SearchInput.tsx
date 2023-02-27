@@ -12,15 +12,15 @@ type SearchInputProps = {
 
 const SearchInput = ({ value, onChange }: SearchInputProps): JSX.Element => {
   return (
-    <div className={classes.searchInput}>
-      <SearchIcon className={classes.searchInput__icon} />
+    <div className={classes["search-input"]}>
+      <SearchIcon className={classes["search-input__icon"]} />
       <Input
-        className={classes.searchInput__input}
+        className={classes["search-input__input"]}
         placeholder={searchInputPlaceholder}
         value={value}
         onChange={onChange}
       />
-      <Button className={classes.searchInput__button} loading={false}>
+      <Button className={classes["search-input__button"]} loading={false}>
         {searchButtonText}
       </Button>
     </div>

@@ -38,7 +38,10 @@ const MultiDropdown = ({
 }: MultiDropdownProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
   const hasSelectedOptions = value.length > 0;
-  const multiDropDownClassName = classNames(classes.multiDropdown, className);
+  const multiDropDownClassName = classNames(
+    classes["multi-dropdown"],
+    className
+  );
 
   const isSelected = (selectedOption: Option) =>
     !!value.find((option) => option.key === selectedOption.key);
@@ -62,7 +65,7 @@ const MultiDropdown = ({
           checked={isSelected(option)}
           onChange={() => onSelect(option)}
         />
-        <label className={classes.multiDropdown__item} htmlFor={option.key}>
+        <label className={classes["multi-dropdown__item"]} htmlFor={option.key}>
           {option.value}
         </label>
       </li>
@@ -71,7 +74,7 @@ const MultiDropdown = ({
 
   const renderButtonContent = () => {
     return hasSelectedOptions ? (
-      <div className={classes.multiDropdown__summary}>
+      <div className={classes["multi-dropdown__summary"]}>
         {pluralizeOptions(value)}
       </div>
     ) : (
@@ -82,14 +85,14 @@ const MultiDropdown = ({
   return (
     <div className={multiDropDownClassName}>
       <button
-        className={classes.multiDropdown__button}
+        className={classes["multi-dropdown__button"]}
         disabled={disabled}
         onClick={() => setIsOpen((isOpen) => !isOpen)}
       >
         {renderButtonContent()}
       </button>
       {isOpen && !disabled && (
-        <ul className={classes.multiDropdown__list}>
+        <ul className={classes["multi-dropdown__list"]}>
           {renderDropdownOptions(options)}
         </ul>
       )}

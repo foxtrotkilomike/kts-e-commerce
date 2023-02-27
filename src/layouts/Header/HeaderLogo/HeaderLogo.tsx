@@ -6,7 +6,7 @@ import classes from "./HeaderLogo.module.scss";
 
 const HeaderLogo = (): JSX.Element => {
   return (
-    <div className={classes.logoContainer}>
+    <div className={classes.logo__container}>
       <Link to={Routes.MAIN} aria-label="Main page">
         <Logo hasText />
       </Link>

@@ -9,7 +9,7 @@ import classes from "./ProductsListEndMessage.module.scss";
 const ProductsListEndMessage = (): JSX.Element => {
   return (
     <Typography
-      className={classes.endMessage}
+      className={classes["end-message"]}
       tagName={TypographyTagName.paragraph}
       size={TypographySize.lg}
     >

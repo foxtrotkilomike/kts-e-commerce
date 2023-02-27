@@ -17,7 +17,7 @@ const Header = (): JSX.Element => {
         <div className={classes.header__inner}>
           <HeaderLogo />
           <Navigation isBurgerActive={isBurgerActive} />
-          <div className={classes.header__burgerContainer}>
+          <div className={classes["header__burger-container"]}>
             <BurgerMenu
               isBurgerActive={isBurgerActive}
               setIsBurgerActive={setIsBurgerActive}
