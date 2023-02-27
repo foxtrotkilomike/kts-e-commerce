@@ -4,6 +4,9 @@ import {
   DEFAULT_PRODUCTS_OFFSET,
 } from "@config/constants";
 import ApiError from "@customTypes/ApiError";
+import GetProductByIdConfig from "@customTypes/GetProductByIdConfig";
+import GetProductsByCategory from "@customTypes/GetProductsByCategory";
+import GetProductsRangeConfig from "@customTypes/GetProductsRangeConfig";
 import Product from "@customTypes/Product";
 import { handleApiErrors } from "@utils/handleApiErrors";
 import axios from "axios";
@@ -19,10 +22,10 @@ const getAllProducts = async (): Promise<Product[] | ApiError> => {
     .catch(handleApiErrors);
 };
 
-const getProductsRange = async (
-  offset: number = DEFAULT_PRODUCTS_OFFSET,
-  limit: number = DEFAULT_PRODUCTS_LIMIT
-): Promise<Product[] | ApiError> => {
+const getProductsRange = async ({
+  offset = DEFAULT_PRODUCTS_OFFSET,
+  limit = DEFAULT_PRODUCTS_LIMIT,
+}: GetProductsRangeConfig): Promise<Product[] | ApiError> => {
   return axios({
     method: "get",
     url: `${API_BASE_URL}${productsEndpoint}`,
@@ -35,9 +38,9 @@ const getProductsRange = async (
     .catch(handleApiErrors);
 };
 
-const getProductById = async (
-  productId: number
-): Promise<Product | ApiError> => {
+const getProductById = async ({
+  productId,
+}: GetProductByIdConfig): Promise<Product | ApiError> => {
   return axios({
     method: "get",
     url: `${API_BASE_URL}${productsEndpoint}/${productId}`,
@@ -46,11 +49,11 @@ const getProductById = async (
     .catch(handleApiErrors);
 };
 
-const getProductsByCategory = async (
-  categoryId: number,
-  offset: number = DEFAULT_PRODUCTS_OFFSET,
-  limit: number = DEFAULT_PRODUCTS_LIMIT
-): Promise<Product | ApiError> => {
+const getProductsByCategory = async ({
+  categoryId,
+  offset = DEFAULT_PRODUCTS_OFFSET,
+  limit = DEFAULT_PRODUCTS_LIMIT,
+}: GetProductsByCategory): Promise<Product[] | ApiError> => {
   return axios({
     method: "get",
     url: `${API_BASE_URL}${productsEndpoint}/`,
@@ -60,7 +63,7 @@ const getProductsByCategory = async (
       limit,
     },
   })
-    .then(({ data }) => data as Product)
+    .then(({ data }) => data as Product[])
     .catch(handleApiErrors);
 };
 
