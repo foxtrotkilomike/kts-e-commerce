@@ -1,3 +1,5 @@
+import React from "react";
+
 import { ReactComponent as FilterIcon } from "@assets/svg/filter.svg";
 import MultiDropdown from "@components/MultiDropdown";
 import { Option } from "@components/MultiDropdown/MultiDropdown";
@@ -57,4 +59,4 @@ const SearchFilter = ({
   );
 };
 
-export default SearchFilter;
+export default React.memo(SearchFilter);

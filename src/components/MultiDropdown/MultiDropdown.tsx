@@ -97,4 +97,4 @@ const MultiDropdown = ({
   );
 };
 
-export default MultiDropdown;
+export default React.memo(MultiDropdown);

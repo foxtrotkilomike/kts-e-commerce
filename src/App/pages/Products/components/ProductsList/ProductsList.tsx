@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import Loader, { LoaderSize } from "@components/Loader";
 import Typography, {
@@ -43,27 +43,32 @@ const ProductsList = (): JSX.Element => {
   const isEmptyProducts = products.length === 0;
   const productsCount = products.length;
   const hasMoreProducts = productsCount < TOTAL_PRODUCTS_COUNT;
-  const infiniteScrollClassName = classNames(
-    gridClasses.grid,
-    classes.infiniteScroll
+  const infiniteScrollClassName = useMemo(
+    () => classNames(gridClasses.grid, classes.infiniteScroll),
+    []
   );
-  const fetchNextProducts = () => setOffset(offset + DEFAULT_PRODUCTS_LIMIT);
+  const fetchNextProducts = useCallback(() => {
+    setOffset((offset) => offset + DEFAULT_PRODUCTS_LIMIT);
+  }, []);
 
-  const renderProducts = () => (
-    <InfiniteScroll
-      dataLength={products.length}
-      next={fetchNextProducts}
-      hasMore={hasMoreProducts}
-      loader={
-        <div className={classes.loader}>
-          <Loader size={LoaderSize.l} />
-        </div>
-      }
-      endMessage={<ProductsListEndMessage />}
-      className={infiniteScrollClassName}
-    >
-      {renderProductCards(products)}
-    </InfiniteScroll>
+  const renderProducts = useCallback(
+    () => (
+      <InfiniteScroll
+        dataLength={products.length}
+        next={fetchNextProducts}
+        hasMore={hasMoreProducts}
+        loader={
+          <div className={classes.loader}>
+            <Loader size={LoaderSize.l} />
+          </div>
+        }
+        endMessage={<ProductsListEndMessage />}
+        className={infiniteScrollClassName}
+      >
+        {renderProductCards(products)}
+      </InfiniteScroll>
+    ),
+    [products, fetchNextProducts, hasMoreProducts, infiniteScrollClassName]
   );
 
   return (

@@ -1,3 +1,5 @@
+import React from "react";
+
 import Typography, {
   TypographySize,
   TypographyTagName,
@@ -38,4 +40,4 @@ const Hero = ({ page }: HeroProps): JSX.Element => {
   );
 };
 
-export default Hero;
+export default React.memo(Hero);

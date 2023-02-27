@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
 import Typography, {
   TypographySize,
@@ -46,8 +46,9 @@ const RelatedProducts = ({
   );
 
   const isEmptyProducts = relatedProducts.length === 0;
-  const renderProducts = () => (
-    <Grid>{renderProductCards(relatedProducts)}</Grid>
+  const renderProducts = useCallback(
+    () => <Grid>{renderProductCards(relatedProducts)}</Grid>,
+    [relatedProducts]
   );
 
   return (

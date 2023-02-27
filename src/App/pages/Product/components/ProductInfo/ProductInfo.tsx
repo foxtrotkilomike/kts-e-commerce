@@ -1,3 +1,5 @@
+import React from "react";
+
 import Button from "@components/Button";
 import Price from "@components/Price";
 import Typography, {
@@ -52,4 +54,4 @@ const ProductInfo = ({
   );
 };
 
-export default ProductInfo;
+export default React.memo(ProductInfo);

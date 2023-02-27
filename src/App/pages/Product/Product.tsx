@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
 import Wrapper from "@components/Wrapper";
 import { DEFAULT_PRODUCT_ID } from "@config/constants";
@@ -28,7 +28,10 @@ const Product = (): JSX.Element => {
     );
 
   const isEmptyProduct = product.id === DEFAULT_PRODUCT_ID;
-  const renderProduct = () => <ProductInfo product={product} />;
+  const renderProduct = useCallback(
+    () => <ProductInfo product={product} />,
+    [product]
+  );
 
   return (
     <Wrapper main>
