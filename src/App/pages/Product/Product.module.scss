@@ -1,6 +1,0 @@
-@import "@styles/mixins";
-
-.loader, .error {
-  @include flex-center;
-  padding: 10% 0;
-}
