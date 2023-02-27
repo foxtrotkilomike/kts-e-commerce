@@ -25,7 +25,7 @@ const Header = (): JSX.Element => {
           </div>
           <BurgerBackground
             isBurgerActive={isBurgerActive}
-            setIsBurgerActive={setIsBurgerActive}
+            onClick={() => setIsBurgerActive(false)}
           />
         </div>
       </Wrapper>

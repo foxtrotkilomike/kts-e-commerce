@@ -4,23 +4,19 @@ import classes from "./BurgerBackground.module.scss";
 
 type BurgerBackgroundProps = {
   isBurgerActive: boolean;
-  setIsBurgerActive: (isBurgerActive: boolean) => void;
+  onClick: () => void;
 };
 
 export const BurgerBackground = ({
   isBurgerActive,
-  setIsBurgerActive,
+  onClick,
 }: BurgerBackgroundProps): JSX.Element => {
   const headerBackgroundClassName = classNames(classes.burger__background, {
     [classes.burger__background_active]: isBurgerActive,
   });
 
   return (
-    <div
-      aria-hidden
-      className={headerBackgroundClassName}
-      onClick={() => setIsBurgerActive(false)}
-    />
+    <div aria-hidden className={headerBackgroundClassName} onClick={onClick} />
   );
 };
 
