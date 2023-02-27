@@ -5,7 +5,8 @@ import { DEFAULT_PRODUCT_ID } from "@config/constants";
 import { productsMock } from "@config/data";
 import GetProductByIdConfig from "@customTypes/GetProductByIdConfig";
 import useFetchProduct from "@hooks/useFetchProduct";
-import SelectedProduct from "@pages/Product/components/SelectedProduct";
+import ProductContent from "@layouts/ProductContent";
+import ProductInfo from "@pages/Product/components/ProductInfo";
 import { getProductById } from "@services/products";
 import { useParams } from "react-router-dom";
 
@@ -27,13 +28,15 @@ const Product = (): JSX.Element => {
     );
 
   const isEmptyProduct = product.id === DEFAULT_PRODUCT_ID;
+  const renderProduct = () => <ProductInfo product={product} />;
 
   return (
     <Wrapper main>
-      <SelectedProduct
+      <ProductContent
         isLoading={isLoading}
         isEmpty={isEmptyProduct}
-        product={product}
+        content={product}
+        renderContent={renderProduct}
         responseError={responseError}
       />
       <RelatedProducts productCategoryId={product.category.id} />

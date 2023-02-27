@@ -1,7 +1,5 @@
 import { useMemo } from "react";
 
-import EmptyContent from "@components/EmptyContent";
-import Loader, { LoaderSize } from "@components/Loader";
 import Typography, {
   TypographySize,
   TypographyTagName,
@@ -16,6 +14,7 @@ import { relatedItemsHeading } from "@config/data";
 import GetProductsByCategory from "@customTypes/GetProductsByCategory";
 import useFetchProducts from "@hooks/useFetchProducts";
 import Grid from "@layouts/Grid";
+import ProductContent from "@layouts/ProductContent";
 import { getProductsRange } from "@services/products";
 import renderProductCards from "@utils/renderProductCards";
 
@@ -47,17 +46,9 @@ const RelatedProducts = ({
   );
 
   const isEmptyProducts = relatedProducts.length === 0;
-
-  const renderProducts = () =>
-    !isEmptyProducts ? (
-      <Grid>{renderProductCards(relatedProducts)}</Grid>
-    ) : isLoading ? (
-      <div className={classes.loader}>
-        <Loader size={LoaderSize.l} />
-      </div>
-    ) : (
-      <EmptyContent error={responseError} />
-    );
+  const renderProducts = () => (
+    <Grid>{renderProductCards(relatedProducts)}</Grid>
+  );
 
   return (
     <Wrapper centered>
@@ -69,7 +60,13 @@ const RelatedProducts = ({
         >
           {relatedItemsHeading}
         </Typography>
-        {renderProducts()}
+        <ProductContent
+          isLoading={isLoading}
+          isEmpty={isEmptyProducts}
+          content={relatedProducts}
+          renderContent={renderProducts}
+          responseError={responseError}
+        />
       </section>
     </Wrapper>
   );

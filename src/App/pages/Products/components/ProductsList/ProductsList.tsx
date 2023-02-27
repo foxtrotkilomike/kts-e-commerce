@@ -1,6 +1,5 @@
 import { useMemo, useState } from "react";
 
-import EmptyContent from "@components/EmptyContent";
 import Loader, { LoaderSize } from "@components/Loader";
 import Typography, {
   TypographySize,
@@ -18,6 +17,7 @@ import { productsListHeading } from "@config/data";
 import GetProductsRangeConfig from "@customTypes/GetProductsRangeConfig";
 import useFetchProducts from "@hooks/useFetchProducts";
 import gridClasses from "@layouts/Grid/Grid.module.scss";
+import ProductContent from "@layouts/ProductContent";
 import ProductsListEndMessage from "@pages/Products/components/ProductsListEndMessage";
 import { getProductsRange } from "@services/products";
 import renderProductCards from "@utils/renderProductCards";
@@ -49,29 +49,22 @@ const ProductsList = (): JSX.Element => {
   );
   const fetchNextProducts = () => setOffset(offset + DEFAULT_PRODUCTS_LIMIT);
 
-  const renderProducts = () =>
-    !isEmptyProducts ? (
-      <InfiniteScroll
-        dataLength={products.length}
-        next={fetchNextProducts}
-        hasMore={hasMoreProducts}
-        loader={
-          <div className={classes.loader}>
-            <Loader size={LoaderSize.l} />
-          </div>
-        }
-        endMessage={<ProductsListEndMessage />}
-        className={infiniteScrollClassName}
-      >
-        {renderProductCards(products)}
-      </InfiniteScroll>
-    ) : isLoading ? (
-      <div className={classes.loader}>
-        <Loader size={LoaderSize.l} />
-      </div>
-    ) : (
-      <EmptyContent error={responseError} />
-    );
+  const renderProducts = () => (
+    <InfiniteScroll
+      dataLength={products.length}
+      next={fetchNextProducts}
+      hasMore={hasMoreProducts}
+      loader={
+        <div className={classes.loader}>
+          <Loader size={LoaderSize.l} />
+        </div>
+      }
+      endMessage={<ProductsListEndMessage />}
+      className={infiniteScrollClassName}
+    >
+      {renderProductCards(products)}
+    </InfiniteScroll>
+  );
 
   return (
     <section>
@@ -88,7 +81,13 @@ const ProductsList = (): JSX.Element => {
             {productsCount ? productsCount : DEFAULT_PRODUCTS_COUNT}
           </div>
         </div>
-        {renderProducts()}
+        <ProductContent
+          isLoading={isLoading}
+          isEmpty={isEmptyProducts}
+          content={products}
+          renderContent={renderProducts}
+          responseError={responseError}
+        />
       </Wrapper>
     </section>
   );
