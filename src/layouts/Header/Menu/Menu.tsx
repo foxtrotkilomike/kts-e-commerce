@@ -1,3 +1,5 @@
+import React from "react";
+
 import { Routes } from "@config/constants";
 import { headerNavItems } from "@config/data";
 import classNames from "classnames";
@@ -29,4 +31,4 @@ const Menu = ({ currentLocation }: MenuProps): JSX.Element => {
   );
 };
 
-export default Menu;
+export default React.memo(Menu);

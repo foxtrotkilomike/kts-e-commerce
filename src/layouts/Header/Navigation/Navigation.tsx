@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import React from "react";
 
-import { Routes } from "@config/constants";
 import Menu from "@layouts/Header/Menu";
 import Toolbar from "@layouts/Header/Toolbar";
 import { parseLocationPathName } from "@utils/parseLocationPathName";
@@ -15,11 +14,6 @@ type NavigationProps = {
 
 const Navigation = ({ isBurgerActive }: NavigationProps): JSX.Element => {
   const location = useLocation();
-  const [currentLocation, setCurrentLocation] = useState<Routes>(Routes.MAIN);
-
-  useEffect(() => {
-    setCurrentLocation(parseLocationPathName(location.pathname));
-  }, [location]);
 
   const navigationClassName = classNames(classes.header__navigation, {
     [classes.header__navigation_active]: isBurgerActive,
@@ -27,10 +21,10 @@ const Navigation = ({ isBurgerActive }: NavigationProps): JSX.Element => {
 
   return (
     <div className={navigationClassName}>
-      <Menu currentLocation={currentLocation} />
+      <Menu currentLocation={parseLocationPathName(location.pathname)} />
       <Toolbar />
     </div>
   );
 };
 
-export default Navigation;
+export default React.memo(Navigation);
