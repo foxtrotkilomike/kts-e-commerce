@@ -2,59 +2,47 @@ import { useEffect, useState } from "react";
 
 import { API_ERRORS, INITIAL_ERROR } from "@config/api";
 import ApiError from "@customTypes/ApiError";
-import {
-  getAllProducts,
-  getProductById,
-  getProductsByCategory,
-  getProductsRange,
-} from "@services/products";
+import GetAllProductsConfig from "@customTypes/GetAllProductsConfig";
+import GetProductsByCategory from "@customTypes/GetProductsByCategory";
+import GetProductsRangeConfig from "@customTypes/GetProductsRangeConfig";
+import Product from "@customTypes/Product";
 
-type FetchFunction =
-  | (() => ReturnType<typeof getAllProducts>)
-  | (() => ReturnType<typeof getProductsRange>)
-  | (() => ReturnType<typeof getProductById>)
-  | (() => ReturnType<typeof getProductsByCategory>);
+export type FetchProductsConfig =
+  | GetAllProductsConfig
+  | GetProductsByCategory
+  | GetProductsRangeConfig;
 
-export type FetchFunctionParams = Parameters<
-  | typeof getAllProducts
-  | typeof getProductsRange
-  | typeof getProductById
-  | typeof getProductsByCategory
->;
-
-const useFetchProducts = <T>(
-  initialState: T | Array<T>,
-  fetchFunction: FetchFunction,
-  dependencies?: FetchFunctionParams
-): [T | Array<T>, ApiError] => {
-  const [data, setData] = useState<T | Array<T>>(initialState);
+const useFetchProducts = <C extends FetchProductsConfig>(
+  initialState: Product[],
+  config: C,
+  fetchFunction: (config: C) => Promise<Product[] | ApiError>
+) => {
+  const [products, setProducts] = useState<Product[]>(initialState);
   const [responseError, setResponseError] = useState<ApiError>(INITIAL_ERROR);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     let ignoreSubsequentFetch = false;
     const getProductsData = async () => {
+      setIsLoading(true);
       setResponseError(INITIAL_ERROR);
-      const response = await fetchFunction();
+      const response = await fetchFunction(config);
       if (!response) {
         setResponseError(API_ERRORS.serverIsNotResponding);
+        setIsLoading(false);
         return;
       }
 
       if ("code" in response) {
         setResponseError(response);
-        setData(initialState);
+        setProducts(initialState);
+        setIsLoading(false);
         return;
       }
 
       if (!ignoreSubsequentFetch) {
-        if (Array.isArray(data)) {
-          setData((prevState) => [
-            ...(prevState as Array<T>),
-            ...(response as Array<T>),
-          ]);
-        } else {
-          setData(response as T);
-        }
+        setProducts((prevState) => [...prevState, ...response]);
+        setIsLoading(false);
       }
     };
 
@@ -63,9 +51,9 @@ const useFetchProducts = <T>(
     return () => {
       ignoreSubsequentFetch = true;
     };
-  }, [dependencies]);
+  }, [config]);
 
-  return [data, responseError];
+  return { products, isLoading, responseError };
 };
 
 export default useFetchProducts;

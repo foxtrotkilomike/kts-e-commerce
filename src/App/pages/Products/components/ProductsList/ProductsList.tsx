@@ -9,16 +9,14 @@ import Typography, {
 import Wrapper from "@components/Wrapper";
 import { INITIAL_PRODUCTS } from "@config/api";
 import {
-  DEFAULT_ERROR_STATUS,
   DEFAULT_PRODUCTS_COUNT,
   DEFAULT_PRODUCTS_LIMIT,
   DEFAULT_PRODUCTS_OFFSET,
   TOTAL_PRODUCTS_COUNT,
 } from "@config/constants";
 import { productsListHeading } from "@config/data";
-import ApiError from "@customTypes/ApiError";
-import Product from "@customTypes/Product";
-import useFetchProducts, { FetchFunctionParams } from "@hooks/useFetchProducts";
+import GetProductsRangeConfig from "@customTypes/GetProductsRangeConfig";
+import useFetchProducts from "@hooks/useFetchProducts";
 import gridClasses from "@layouts/Grid/Grid.module.scss";
 import ProductsListEndMessage from "@pages/Products/components/ProductsListEndMessage";
 import { getProductsRange } from "@services/products";
@@ -30,27 +28,26 @@ import classes from "./ProductsList.module.scss";
 
 const ProductsList = (): JSX.Element => {
   const [offset, setOffset] = useState(DEFAULT_PRODUCTS_OFFSET);
-  const [limit, setLimit] = useState(DEFAULT_PRODUCTS_LIMIT);
 
-  const fetchFunctionParams = useMemo(
-    () => [offset, limit] as FetchFunctionParams,
-    [offset, limit]
-  );
-  const [products, responseError] = useFetchProducts<Product>(
-    INITIAL_PRODUCTS,
-    () => getProductsRange(offset, limit),
-    fetchFunctionParams
-  ) as [Product[], ApiError];
+  const fetchConfig = useMemo(() => {
+    return { offset, limit: DEFAULT_PRODUCTS_LIMIT };
+  }, [offset]);
+
+  const { products, isLoading, responseError } =
+    useFetchProducts<GetProductsRangeConfig>(
+      INITIAL_PRODUCTS,
+      fetchConfig,
+      getProductsRange
+    );
 
   const isEmptyProducts = products.length === 0;
-  const isLoadingContent = responseError.code === DEFAULT_ERROR_STATUS;
   const productsCount = products.length;
   const hasMoreProducts = productsCount < TOTAL_PRODUCTS_COUNT;
   const infiniteScrollClassName = classNames(
     gridClasses.grid,
     classes.infiniteScroll
   );
-  const fetchNextProducts = () => setOffset(offset + limit);
+  const fetchNextProducts = () => setOffset(offset + DEFAULT_PRODUCTS_LIMIT);
 
   const renderProducts = () =>
     !isEmptyProducts ? (
@@ -68,7 +65,7 @@ const ProductsList = (): JSX.Element => {
       >
         {renderProductCards(products)}
       </InfiniteScroll>
-    ) : isLoadingContent ? (
+    ) : isLoading ? (
       <div className={classes.loader}>
         <Loader size={LoaderSize.l} />
       </div>
