@@ -6,7 +6,7 @@ import Wrapper from "@components/Wrapper";
 
 import classes from "./Categories.module.scss";
 
-export const Categories = (): JSX.Element => {
+const Categories = (): JSX.Element => {
   return (
     <Wrapper centered main className={classes.wrapper}>
       <Typography tagName={TypographyTagName.h1} size={TypographySize.xl}>
@@ -15,3 +15,5 @@ export const Categories = (): JSX.Element => {
     </Wrapper>
   );
 };
+
+export default Categories;

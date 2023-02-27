@@ -1,3 +1,2 @@
-import { WithLoader } from "./WithLoader";
-
-export default WithLoader;
+export { default } from "./WithLoader";
+export type { WithLoaderProps } from "./WithLoader";

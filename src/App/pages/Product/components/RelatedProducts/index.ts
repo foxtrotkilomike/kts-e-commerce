@@ -1,3 +1,1 @@
-import { RelatedProducts } from "./RelatedProducts";
-
-export default RelatedProducts;
+export { default } from "./RelatedProducts";

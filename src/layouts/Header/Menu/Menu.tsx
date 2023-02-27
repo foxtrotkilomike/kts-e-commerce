@@ -5,7 +5,11 @@ import { Link } from "react-router-dom";
 
 import classes from "./Menu.module.scss";
 
-export const Menu = ({ currentLocation }: MenuProps): JSX.Element => {
+type MenuProps = {
+  currentLocation: Routes;
+};
+
+const Menu = ({ currentLocation }: MenuProps): JSX.Element => {
   const getMenuItemClassName = (page: Routes) => {
     return classNames(classes.menu__item, {
       [classes.menu__item_active]: page === currentLocation,
@@ -25,6 +29,4 @@ export const Menu = ({ currentLocation }: MenuProps): JSX.Element => {
   );
 };
 
-type MenuProps = {
-  currentLocation: Routes;
-};
+export default Menu;

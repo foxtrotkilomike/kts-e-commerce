@@ -5,10 +5,12 @@ import { searchButtonText, searchInputPlaceholder } from "@config/data";
 
 import classes from "./SearchInput.module.scss";
 
-export const SearchInput = ({
-  value,
-  onChange,
-}: SearchInputProps): JSX.Element => {
+type SearchInputProps = {
+  value: string;
+  onChange: (value: string) => void;
+};
+
+const SearchInput = ({ value, onChange }: SearchInputProps): JSX.Element => {
   return (
     <div className={classes.searchInput}>
       <SearchIcon className={classes.searchInput__icon} />
@@ -25,7 +27,4 @@ export const SearchInput = ({
   );
 };
 
-type SearchInputProps = {
-  value: string;
-  onChange: (value: string) => void;
-};
+export default SearchInput;

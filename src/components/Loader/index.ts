@@ -1,4 +1,1 @@
-import { Loader, LoaderSize } from "./Loader";
-
-export default Loader;
-export { LoaderSize };
+export { default, LoaderSize } from "./Loader";

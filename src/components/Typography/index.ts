@@ -1,4 +1,1 @@
-import { Typography, TypographyTagName, TypographySize } from "./Typography";
-
-export default Typography;
-export { TypographyTagName, TypographySize };
+export { default, TypographyTagName, TypographySize } from "./Typography";

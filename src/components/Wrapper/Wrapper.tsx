@@ -4,7 +4,14 @@ import classNames from "classnames";
 
 import classes from "./Wrapper.module.scss";
 
-export const Wrapper = ({
+type WrapperProps = React.PropsWithChildren<{
+  growing?: boolean;
+  centered?: boolean;
+  main?: boolean;
+  className?: string;
+}>;
+
+const Wrapper = ({
   growing,
   centered,
   main,
@@ -20,9 +27,4 @@ export const Wrapper = ({
   return <TagName className={wrapperClassName}>{children}</TagName>;
 };
 
-type WrapperProps = React.PropsWithChildren<{
-  growing?: boolean;
-  centered?: boolean;
-  main?: boolean;
-  className?: string;
-}>;
+export default Wrapper;

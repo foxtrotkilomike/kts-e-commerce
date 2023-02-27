@@ -1,3 +1,1 @@
-import { ProductSlider } from "./ProductSlider";
-
-export default ProductSlider;
+export { default } from "./ProductSlider";

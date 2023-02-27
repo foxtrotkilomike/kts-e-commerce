@@ -6,7 +6,7 @@ import { productListEndMessage } from "@config/data";
 
 import classes from "./ProductsListEndMessage.module.scss";
 
-export const ProductsListEndMessage = (): JSX.Element => {
+const ProductsListEndMessage = (): JSX.Element => {
   return (
     <Typography
       className={classes.endMessage}
@@ -17,3 +17,5 @@ export const ProductsListEndMessage = (): JSX.Element => {
     </Typography>
   );
 };
+
+export default ProductsListEndMessage;

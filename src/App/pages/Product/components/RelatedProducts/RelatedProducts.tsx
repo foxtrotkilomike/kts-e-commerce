@@ -22,7 +22,11 @@ import renderProductCards from "@utils/renderProductCards";
 
 import classes from "./RelatedProducts.module.scss";
 
-export const RelatedProducts = ({
+type RelatedProductsProps = {
+  productCategoryId: number;
+};
+
+const RelatedProducts = ({
   productCategoryId,
 }: RelatedProductsProps): JSX.Element => {
   const [offset, setOffset] = useState(DEFAULT_PRODUCTS_OFFSET);
@@ -70,6 +74,4 @@ export const RelatedProducts = ({
   );
 };
 
-type RelatedProductsProps = {
-  productCategoryId: number;
-};
+export default RelatedProducts;

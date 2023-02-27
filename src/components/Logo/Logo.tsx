@@ -2,7 +2,11 @@ import { ReactComponent as LogoIcon } from "@assets/svg/logo.svg";
 
 import classes from "./Logo.module.scss";
 
-export const Logo = ({ hasText }: LogoProps): JSX.Element => {
+type LogoProps = {
+  hasText?: boolean;
+};
+
+const Logo = ({ hasText }: LogoProps): JSX.Element => {
   return (
     <div className={classes.logo}>
       <LogoIcon className={classes.logo__icon} />
@@ -11,6 +15,4 @@ export const Logo = ({ hasText }: LogoProps): JSX.Element => {
   );
 };
 
-type LogoProps = {
-  hasText?: boolean;
-};
+export default Logo;

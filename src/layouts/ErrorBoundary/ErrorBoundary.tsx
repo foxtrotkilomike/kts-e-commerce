@@ -9,7 +9,7 @@ import { isRouteErrorResponse, Link, useRouteError } from "react-router-dom";
 
 import classes from "./ErrorBoundary.module.scss";
 
-export const ErrorBoundary = (): JSX.Element => {
+const ErrorBoundary = (): JSX.Element => {
   const error = useRouteError() as Error;
 
   const ErrorCaption = () => (
@@ -70,3 +70,5 @@ export const ErrorBoundary = (): JSX.Element => {
     </Wrapper>
   );
 };
+
+export default ErrorBoundary;

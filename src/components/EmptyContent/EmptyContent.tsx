@@ -8,7 +8,11 @@ import { ApiError } from "@config/types";
 
 import classes from "./EmptyContent.module.scss";
 
-export const EmptyContent = ({ error }: EmptyContentProps): JSX.Element => {
+type EmptyContentProps = {
+  error?: ApiError;
+};
+
+const EmptyContent = ({ error }: EmptyContentProps): JSX.Element => {
   return (
     <Wrapper centered main className={classes.wrapper}>
       <Typography tagName={TypographyTagName.h3}>
@@ -24,6 +28,4 @@ export const EmptyContent = ({ error }: EmptyContentProps): JSX.Element => {
   );
 };
 
-type EmptyContentProps = {
-  error?: ApiError;
-};
+export default EmptyContent;

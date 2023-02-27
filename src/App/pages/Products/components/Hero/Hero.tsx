@@ -8,7 +8,11 @@ import { Pages } from "@config/types";
 
 import classes from "./Hero.module.scss";
 
-export const Hero = ({ page }: HeroProps): JSX.Element => {
+type HeroProps = {
+  page: Pages;
+};
+
+const Hero = ({ page }: HeroProps): JSX.Element => {
   const { heading, caption } = heroContent[page] || defaultHeroContent;
 
   return (
@@ -34,6 +38,4 @@ export const Hero = ({ page }: HeroProps): JSX.Element => {
   );
 };
 
-type HeroProps = {
-  page: Pages;
-};
+export default Hero;

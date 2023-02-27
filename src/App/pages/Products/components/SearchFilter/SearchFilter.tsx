@@ -8,7 +8,21 @@ import Typography, {
 
 import classes from "./SearchFilter.module.scss";
 
-export const SearchFilter = ({
+type SearchFilterProps = {
+  /** Массив возможных вариантов для выбора */
+  options: Option[];
+  /** Текущие выбранные значения поля, может быть пустым */
+  value: Option[];
+  /** Callback, вызываемый при выборе варианта */
+  onChange: (value: Option[]) => void;
+  /** Преобразовать выбранные значения в строку. Отображается в дропдауне в качестве выбранного значения */
+  pluralizeOptions: (value: Option[]) => string;
+  /** Заблокирован ли дропдаун */
+  disabled?: boolean;
+  placeholder?: string;
+};
+
+const SearchFilter = ({
   options,
   value,
   onChange,
@@ -43,16 +57,4 @@ export const SearchFilter = ({
   );
 };
 
-type SearchFilterProps = {
-  /** Массив возможных вариантов для выбора */
-  options: Option[];
-  /** Текущие выбранные значения поля, может быть пустым */
-  value: Option[];
-  /** Callback, вызываемый при выборе варианта */
-  onChange: (value: Option[]) => void;
-  /** Преобразовать выбранные значения в строку. Отображается в дропдауне в качестве выбранного значения */
-  pluralizeOptions: (value: Option[]) => string;
-  /** Заблокирован ли дропдаун */
-  disabled?: boolean;
-  placeholder?: string;
-};
+export default SearchFilter;

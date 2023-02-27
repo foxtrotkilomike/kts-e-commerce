@@ -27,7 +27,7 @@ type TypographyProps = React.PropsWithChildren<{
   className?: string;
 }>;
 
-export const Typography = ({
+const Typography = ({
   size,
   tagName: TagName,
   bold,
@@ -58,3 +58,5 @@ export const Typography = ({
 
   return <TagName className={typographyClassName}>{children}</TagName>;
 };
+
+export default Typography;

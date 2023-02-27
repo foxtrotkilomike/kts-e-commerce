@@ -14,7 +14,7 @@ import ProductInfo from "./components/ProductInfo";
 import RelatedProducts from "./components/RelatedProducts";
 import classes from "./Product.module.scss";
 
-export const Product = (): JSX.Element => {
+const Product = (): JSX.Element => {
   const { productId } = useParams();
   const productIdNumber = productId ? Number(productId) : DEFAULT_PRODUCT_ID;
 
@@ -51,3 +51,5 @@ export const Product = (): JSX.Element => {
     </Wrapper>
   );
 };
+
+export default Product;

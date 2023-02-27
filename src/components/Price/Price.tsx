@@ -6,11 +6,13 @@ import classNames from "classnames";
 
 import classes from "./Price.module.scss";
 
-export const Price = ({
-  price,
-  currency = "$",
-  large,
-}: PriceProps): JSX.Element => {
+type PriceProps = {
+  price: number;
+  currency?: "$" | "€";
+  large?: boolean;
+};
+
+const Price = ({ price, currency = "$", large }: PriceProps): JSX.Element => {
   const priceClassName = classNames(classes.price, {
     [classes.price_large]: large,
   });
@@ -29,8 +31,4 @@ export const Price = ({
   );
 };
 
-type PriceProps = {
-  price: number;
-  currency?: "$" | "€";
-  large?: boolean;
-};
+export default Price;

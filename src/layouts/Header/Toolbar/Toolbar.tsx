@@ -3,7 +3,7 @@ import { ReactComponent as ProfileIcon } from "@assets/svg/user.svg";
 
 import classes from "./Toolbar.module.scss";
 
-export const Toolbar = (): JSX.Element => {
+const Toolbar = (): JSX.Element => {
   return (
     <div className={classes.toolbar}>
       <ul className={classes.toolbar__list}>
@@ -21,3 +21,5 @@ export const Toolbar = (): JSX.Element => {
     </div>
   );
 };
+
+export default Toolbar;

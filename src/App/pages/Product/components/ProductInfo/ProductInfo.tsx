@@ -11,7 +11,11 @@ import { Product } from "@config/types";
 import classes from "./ProductInfo.module.scss";
 import ProductSlider from "../ProductSlider";
 
-export const ProductInfo = ({
+type ProductInfoProps = {
+  product: Product;
+};
+
+const ProductInfo = ({
   product: { title, description, price, images },
 }: ProductInfoProps): JSX.Element => {
   return (
@@ -48,6 +52,4 @@ export const ProductInfo = ({
   );
 };
 
-type ProductInfoProps = {
-  product: Product;
-};
+export default ProductInfo;

@@ -3,7 +3,11 @@ import { ReactComponent as RightArrow } from "@assets/svg/arr_right.svg";
 
 import classes from "./ProductSlider.module.scss";
 
-export const ProductSlider = ({ image }: ProductSliderProps): JSX.Element => {
+type ProductSliderProps = {
+  image: string[];
+};
+
+const ProductSlider = ({ image }: ProductSliderProps): JSX.Element => {
   return (
     <div className={classes.slider}>
       <button
@@ -21,6 +25,4 @@ export const ProductSlider = ({ image }: ProductSliderProps): JSX.Element => {
   );
 };
 
-type ProductSliderProps = {
-  image: string[];
-};
+export default ProductSlider;

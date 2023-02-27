@@ -1,4 +1,2 @@
-import { MultiDropdown, Option } from "./MultiDropdown";
-
-export default MultiDropdown;
-export type { Option };
+export { default } from "./MultiDropdown";
+export type { Option } from "./MultiDropdown";

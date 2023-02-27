@@ -5,7 +5,7 @@ import Hero from "./components/Hero";
 import ProductsList from "./components/ProductsList";
 import Search from "./components/Search";
 
-export const Products = (): JSX.Element => {
+const Products = (): JSX.Element => {
   return (
     <Wrapper main>
       <Hero page={Pages.MAIN} />
@@ -14,3 +14,5 @@ export const Products = (): JSX.Element => {
     </Wrapper>
   );
 };
+
+export default Products;

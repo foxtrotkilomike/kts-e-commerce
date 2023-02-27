@@ -27,7 +27,7 @@ export type MultiDropdownProps = {
   className?: string;
 };
 
-export const MultiDropdown = ({
+const MultiDropdown = ({
   options,
   value,
   onChange,
@@ -96,3 +96,5 @@ export const MultiDropdown = ({
     </div>
   );
 };
+
+export default MultiDropdown;

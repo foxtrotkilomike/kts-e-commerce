@@ -27,7 +27,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 import classes from "./ProductsList.module.scss";
 
-export const ProductsList = (): JSX.Element => {
+const ProductsList = (): JSX.Element => {
   const [offset, setOffset] = useState(DEFAULT_PRODUCTS_OFFSET);
   const [limit, setLimit] = useState(DEFAULT_PRODUCTS_LIMIT);
 
@@ -95,3 +95,5 @@ export const ProductsList = (): JSX.Element => {
     </section>
   );
 };
+
+export default ProductsList;

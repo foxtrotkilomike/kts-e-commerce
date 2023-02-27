@@ -6,7 +6,7 @@ import Wrapper from "@components/Wrapper";
 
 import classes from "./About.module.scss";
 
-export const About = (): JSX.Element => {
+const About = (): JSX.Element => {
   return (
     <Wrapper centered main className={classes.wrapper}>
       <Typography tagName={TypographyTagName.h1} size={TypographySize.xl}>
@@ -15,3 +15,5 @@ export const About = (): JSX.Element => {
     </Wrapper>
   );
 };
+
+export default About;

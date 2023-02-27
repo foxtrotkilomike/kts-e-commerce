@@ -28,7 +28,7 @@ export type LoaderProps = {
   className?: string;
 };
 
-export const Loader = ({
+const Loader = ({
   loading = true,
   size = LoaderSize.m,
   className,
@@ -41,3 +41,5 @@ export const Loader = ({
 
   return <>{loading && <div className={loaderClassName} />}</>;
 };
+
+export default Loader;

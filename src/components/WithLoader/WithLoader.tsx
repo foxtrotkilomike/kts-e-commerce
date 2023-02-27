@@ -1,16 +1,14 @@
 import React, { useLayoutEffect, useRef, useState } from "react";
 
+import Loader, { LoaderSize } from "@components/Loader";
+
 import classes from "./WithLoader.module.scss";
-import { Loader, LoaderSize } from "../Loader/Loader";
 
 export type WithLoaderProps = React.PropsWithChildren<{
   loading: boolean;
 }>;
 
-export const WithLoader = ({
-  loading,
-  children,
-}: WithLoaderProps): JSX.Element => {
+const WithLoader = ({ loading, children }: WithLoaderProps): JSX.Element => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [loaderSize, setLoaderSize] = useState<LoaderSize>(LoaderSize.m);
 
@@ -43,3 +41,5 @@ export const WithLoader = ({
     </div>
   );
 };
+
+export default WithLoader;

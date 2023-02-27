@@ -12,7 +12,7 @@ import classes from "./Search.module.scss";
 import SearchFilter from "../SearchFilter";
 import SearchInput from "../SearchInput";
 
-export const Search = (): JSX.Element => {
+const Search = (): JSX.Element => {
   const [searchValue, setSearchValue] = useState("");
   const [searchFilterOptions, setSearchFilterOptions] = useState<Option[]>([]);
 
@@ -31,3 +31,5 @@ export const Search = (): JSX.Element => {
     </Wrapper>
   );
 };
+
+export default Search;

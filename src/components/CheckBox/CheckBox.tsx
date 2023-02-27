@@ -10,7 +10,7 @@ export type CheckBoxProps = Omit<
   onChange: (value: boolean) => void;
 };
 
-export const CheckBox = ({
+const CheckBox = ({
   onChange,
   checked,
   ...nativeProps
@@ -28,3 +28,5 @@ export const CheckBox = ({
     </label>
   );
 };
+
+export default CheckBox;

@@ -19,7 +19,7 @@ export type CardProps = {
   onClick?: React.MouseEventHandler;
 };
 
-export const Card = ({
+const Card = ({
   product,
   content,
   onClick = () => {},
@@ -69,3 +69,5 @@ export const Card = ({
     </Link>
   );
 };
+
+export default Card;

@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 
 import classes from "./App.module.scss";
 
-export const App = (): JSX.Element => {
+const App = (): JSX.Element => {
   return (
     <div className={classes.app}>
       <Header />
@@ -12,3 +12,5 @@ export const App = (): JSX.Element => {
     </div>
   );
 };
+
+export default App;

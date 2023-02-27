@@ -2,6 +2,11 @@ import classNames from "classnames";
 
 import classes from "./BurgerMenu.module.scss";
 
+type BurgerMenuProps = {
+  isBurgerActive: boolean;
+  setIsBurgerActive: (isBurgerActive: boolean) => void;
+};
+
 export const BurgerMenu = ({
   isBurgerActive,
   setIsBurgerActive,
@@ -23,7 +28,4 @@ export const BurgerMenu = ({
   );
 };
 
-type BurgerMenuProps = {
-  isBurgerActive: boolean;
-  setIsBurgerActive: (isBurgerActive: boolean) => void;
-};
+export default BurgerMenu;

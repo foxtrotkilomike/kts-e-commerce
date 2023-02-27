@@ -8,7 +8,7 @@ import Navigation from "@layouts/Header/Navigation";
 
 import classes from "./Header.module.scss";
 
-export const Header = (): JSX.Element => {
+const Header = (): JSX.Element => {
   const [isBurgerActive, setIsBurgerActive] = useState(false);
 
   return (
@@ -32,3 +32,5 @@ export const Header = (): JSX.Element => {
     </header>
   );
 };
+
+export default Header;

@@ -9,9 +9,11 @@ import { useLocation } from "react-router-dom";
 
 import classes from "./Navigation.module.scss";
 
-export const Navigation = ({
-  isBurgerActive,
-}: NavigationProps): JSX.Element => {
+type NavigationProps = {
+  isBurgerActive: boolean;
+};
+
+const Navigation = ({ isBurgerActive }: NavigationProps): JSX.Element => {
   const location = useLocation();
   const [currentLocation, setCurrentLocation] = useState<Routes>(Routes.MAIN);
 
@@ -31,6 +33,4 @@ export const Navigation = ({
   );
 };
 
-type NavigationProps = {
-  isBurgerActive: boolean;
-};
+export default Navigation;

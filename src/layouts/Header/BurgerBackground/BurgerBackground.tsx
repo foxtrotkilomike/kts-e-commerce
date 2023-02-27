@@ -2,6 +2,11 @@ import classNames from "classnames";
 
 import classes from "./BurgerBackground.module.scss";
 
+type BurgerBackgroundProps = {
+  isBurgerActive: boolean;
+  setIsBurgerActive: (isBurgerActive: boolean) => void;
+};
+
 export const BurgerBackground = ({
   isBurgerActive,
   setIsBurgerActive,
@@ -19,7 +24,4 @@ export const BurgerBackground = ({
   );
 };
 
-type BurgerBackgroundProps = {
-  isBurgerActive: boolean;
-  setIsBurgerActive: (isBurgerActive: boolean) => void;
-};
+export default BurgerBackground;

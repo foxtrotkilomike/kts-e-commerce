@@ -1,3 +1,1 @@
-import { SearchFilter } from "./SearchFilter";
-
-export default SearchFilter;
+export { default } from "./SearchFilter";

@@ -1,3 +1,1 @@
-import { ProductsListEndMessage } from "./ProductsListEndMessage";
-
-export default ProductsListEndMessage;
+export { default } from "./ProductsListEndMessage";

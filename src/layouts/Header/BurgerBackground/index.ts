@@ -1,3 +1,1 @@
-import { BurgerBackground } from "./BurgerBackground";
-
-export default BurgerBackground;
+export { default } from "./BurgerBackground";

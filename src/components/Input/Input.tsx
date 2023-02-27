@@ -14,7 +14,7 @@ export type InputProps = Omit<
   onChange: (value: string) => void;
 };
 
-export const Input = ({
+const Input = ({
   value,
   onChange,
   className,
@@ -38,3 +38,5 @@ export const Input = ({
     />
   );
 };
+
+export default Input;

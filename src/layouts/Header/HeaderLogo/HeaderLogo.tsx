@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import classes from "./HeaderLogo.module.scss";
 
-export const HeaderLogo = (): JSX.Element => {
+const HeaderLogo = (): JSX.Element => {
   return (
     <div className={classes.logoContainer}>
       <Link to={Routes.MAIN} aria-label="Main page">
@@ -13,3 +13,5 @@ export const HeaderLogo = (): JSX.Element => {
     </div>
   );
 };
+
+export default HeaderLogo;

@@ -15,7 +15,7 @@ export type ButtonProps = React.PropsWithChildren<{
 }> &
   React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-export const Button = ({
+const Button = ({
   loading,
   variant = "primary",
   className,
@@ -41,3 +41,5 @@ export const Button = ({
     </button>
   );
 };
+
+export default Button;

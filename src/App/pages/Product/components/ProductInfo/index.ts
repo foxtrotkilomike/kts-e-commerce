@@ -1,3 +1,1 @@
-import { ProductInfo } from "./ProductInfo";
-
-export default ProductInfo;
+export { default } from "./ProductInfo";
