@@ -6,14 +6,11 @@ import {
   DEFAULT_PRODUCT_PRICE,
   Routes,
 } from "@config/constants";
-
-import {
-  HeaderNavItem,
-  HeroContent,
-  Pages,
-  PagesHeroContent,
-  Product,
-} from "./types";
+import HeaderNavItem from "@customTypes/HeaderNavItem";
+import HeroContent from "@customTypes/HeroContent";
+import Pages from "@customTypes/Pages";
+import PagesHeroContent from "@customTypes/PagesHeroContent";
+import Product from "@customTypes/Product";
 
 const headerNavItems: HeaderNavItem[] = [
   {

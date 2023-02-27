@@ -1,5 +1,5 @@
 import Wrapper from "@components/Wrapper";
-import { Pages } from "@config/types";
+import Pages from "@customTypes/Pages";
 
 import Hero from "./components/Hero";
 import ProductsList from "./components/ProductsList";

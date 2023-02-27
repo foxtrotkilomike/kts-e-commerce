@@ -10,6 +10,7 @@
       "@pages/*": ["src/App/pages/*"],
       "@services/*": ["src/services/*"],
       "@styles/*": ["src/styles/*"],
+      "@customTypes/*": ["src/types/*"],
       "@utils/*": ["src/utils/*"]
     }
   }

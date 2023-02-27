@@ -5,7 +5,7 @@ import Typography, {
   TypographyTagName,
 } from "@components/Typography";
 import { Routes } from "@config/constants";
-import { Product } from "@config/types";
+import Product from "@customTypes/Product";
 import { Link } from "react-router-dom";
 
 import classes from "./Card.module.scss";

@@ -6,7 +6,7 @@ import Typography, {
 } from "@components/Typography";
 import Wrapper from "@components/Wrapper";
 import { ProductPageButtonsText } from "@config/data";
-import { Product } from "@config/types";
+import Product from "@customTypes/Product";
 
 import classes from "./ProductInfo.module.scss";
 import ProductSlider from "../ProductSlider";

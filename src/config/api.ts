@@ -1,5 +1,7 @@
 import { ResponseStatus } from "@config/constants";
-import { ApiError, Endpoint, Product } from "@config/types";
+import ApiError from "@customTypes/ApiError";
+import Endpoint from "@customTypes/Endpoint";
+import Product from "@customTypes/Product";
 
 const API_BASE_URL = "https://api.escuelajs.co/api/v1";
 

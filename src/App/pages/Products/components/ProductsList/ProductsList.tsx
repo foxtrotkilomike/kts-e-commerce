@@ -16,7 +16,8 @@ import {
   TOTAL_PRODUCTS_COUNT,
 } from "@config/constants";
 import { productsListHeading } from "@config/data";
-import { ApiError, Product } from "@config/types";
+import ApiError from "@customTypes/ApiError";
+import Product from "@customTypes/Product";
 import useFetchProducts, { FetchFunctionParams } from "@hooks/useFetchProducts";
 import gridClasses from "@layouts/Grid/Grid.module.scss";
 import ProductsListEndMessage from "@pages/Products/components/ProductsListEndMessage";

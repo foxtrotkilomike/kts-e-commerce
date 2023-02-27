@@ -4,7 +4,7 @@ import Typography, {
 } from "@components/Typography";
 import Wrapper from "@components/Wrapper";
 import { defaultHeroContent, heroContent } from "@config/data";
-import { Pages } from "@config/types";
+import Pages from "@customTypes/Pages";
 
 import classes from "./Hero.module.scss";
 

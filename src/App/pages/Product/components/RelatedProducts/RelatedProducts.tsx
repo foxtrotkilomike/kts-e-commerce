@@ -14,7 +14,8 @@ import {
   DEFAULT_PRODUCTS_OFFSET,
 } from "@config/constants";
 import { relatedItemsHeading } from "@config/data";
-import { ApiError, Product } from "@config/types";
+import ApiError from "@customTypes/ApiError";
+import Product from "@customTypes/Product";
 import useFetchProducts, { FetchFunctionParams } from "@hooks/useFetchProducts";
 import Grid from "@layouts/Grid";
 import { getProductsByCategory } from "@services/products";

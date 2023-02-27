@@ -1,5 +1,5 @@
 import { API_ERRORS } from "@config/api";
-import { ApiError } from "@config/types";
+import ApiError from "@customTypes/ApiError";
 import { AxiosError } from "axios";
 
 export const handleApiErrors = (error: AxiosError): ApiError => {

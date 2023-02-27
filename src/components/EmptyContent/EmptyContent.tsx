@@ -4,7 +4,7 @@ import Typography, {
 } from "@components/Typography";
 import Wrapper from "@components/Wrapper";
 import { emptyContentTextContent } from "@config/data";
-import { ApiError } from "@config/types";
+import ApiError from "@customTypes/ApiError";
 
 import classes from "./EmptyContent.module.scss";
 

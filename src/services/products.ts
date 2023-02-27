@@ -3,7 +3,8 @@ import {
   DEFAULT_PRODUCTS_LIMIT,
   DEFAULT_PRODUCTS_OFFSET,
 } from "@config/constants";
-import { ApiError, Product } from "@config/types";
+import ApiError from "@customTypes/ApiError";
+import Product from "@customTypes/Product";
 import { handleApiErrors } from "@utils/handleApiErrors";
 import axios from "axios";
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { API_ERRORS, INITIAL_ERROR } from "@config/api";
-import { ApiError } from "@config/types";
+import ApiError from "@customTypes/ApiError";
 import {
   getAllProducts,
   getProductById,
