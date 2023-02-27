@@ -35,8 +35,6 @@
     width: 22.5px;
     height: 2px;
     border: 1px solid $color-burger;
-    -webkit-border-radius: 1px;
-    -moz-border-radius: 1px;
     border-radius: 1px;
     transform-origin: 50%;
     transition: top $transition-m cubic-bezier(0.21, 0.83, 0.26, 0.87) 0.3s,
