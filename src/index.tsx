@@ -3,6 +3,7 @@ import React from "react";
 import { routesConfig } from "@config/routes";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "@config/configureMobX";
 
 const router = createBrowserRouter(routesConfig);
 
