@@ -1,0 +1,16 @@
+@import "@styles/variables";
+@import "@styles/mixins";
+
+.heading {
+  @include main-container;
+  padding-bottom: 30px;
+
+  @include tablet-breakpoint {
+    padding-bottom: 23px;
+  }
+}
+
+.loader {
+  @include flex-center;
+  padding: 10% 0;
+}

@@ -1,0 +1,14 @@
+@import '@styles/variables';
+@import '@styles/mixins';
+
+.search {
+  @include main-container;
+  width: 100%;
+  display: flex;
+  gap: 30px;
+
+  @include tablet-breakpoint {
+    flex-direction: column;
+    gap: 16px;
+  }
+}

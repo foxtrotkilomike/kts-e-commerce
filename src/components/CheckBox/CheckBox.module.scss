@@ -1,0 +1,46 @@
+@import "@styles/variables";
+
+.checkbox {
+  display: inline-block;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  box-shadow: $box-shadow;
+  border: 1px solid transparent;
+  box-sizing: content-box;
+  cursor: pointer;
+
+  &:hover {
+    border: 1px solid $color-main;
+  }
+
+  &:has(input:disabled) {
+    border: 1px solid transparent;
+  }
+
+  &__input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  &__checkmark {
+    display: none;
+    position: absolute;
+    top: 4px;
+    left: 6px;
+    width: 31px;
+    height: 31px;
+  }
+
+  input:checked + &__checkmark {
+    display: block;
+    background-image: url("@assets/svg/checkmark.svg");
+  }
+
+  input:checked:disabled + &__checkmark {
+    display: block;
+    background-image: url("@assets/svg/checkmark_disabled.svg");
+  }
+}

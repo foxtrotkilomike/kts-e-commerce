@@ -1,0 +1,44 @@
+@import "@styles/variables";
+@import "@styles/mixins";
+
+.card {
+  max-width: 394px;
+  display: flex;
+  flex-direction: column;
+  font-size: $font-lg;
+  line-height: 130%;
+
+  &__image {
+    display: block;
+    margin-bottom: 26px;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    background-color: $color-image-background-fallback;
+
+    @include mobile-breakpoint {
+      margin-bottom: 14px;
+      height: 130px;
+    }
+  }
+
+  &__category {
+    margin-bottom: 14px;
+    @include desktop-s-breakpoint {
+      margin-bottom: 10px;
+    }
+
+    @include mobile-breakpoint {
+      margin-bottom: 6px;
+    }
+  }
+
+  &__title {
+    @include text-overflow;
+    margin-bottom: 6px;
+  }
+
+  &__subtitle {
+    @include text-overflow;
+  }
+}

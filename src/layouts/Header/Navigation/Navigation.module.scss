@@ -1,0 +1,31 @@
+@import '@styles/variables';
+@import "@styles/mixins";
+
+.header {
+  &__navigation {
+    display: flex;
+    justify-content: space-between;
+    transition: right $transition-m, opacity $transition-m;
+
+    @include tablet-breakpoint {
+      position: absolute;
+      top: 0;
+      right: -100%;
+      width: 60%;
+      height: 101vh;
+      flex-direction: column-reverse;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+      text-align: center;
+      background-color: $color-background-light;
+      opacity: 0;
+      z-index: 15;
+
+      &_active {
+        right: 0;
+        opacity: 1;
+      }
+    }
+  }
+}

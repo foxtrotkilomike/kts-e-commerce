@@ -1,0 +1,64 @@
+@import "@styles/variables";
+@import "@styles/mixins";
+
+.slider {
+  flex-basis: 600px;
+  min-height: 600px;
+  position: relative;
+
+  @include tablet-breakpoint {
+    flex-basis: auto;
+    min-height: auto;
+  }
+
+  @include mobile-breakpoint {
+    flex-basis: 330px;
+    min-height: 330px;
+  }
+
+  &__control {
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background-color: $color-slider;
+    transition: opacity ease $transition-m;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.6;
+    }
+
+    &_left {
+      left: 24px;
+    }
+    &_right {
+      right: 24px;
+    }
+
+    .icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      @include mobile-breakpoint {
+        transform: translate(-50%, -50%) scale(0.7);
+      }
+    }
+
+    @include mobile-breakpoint {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  &__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}

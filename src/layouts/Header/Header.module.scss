@@ -1,0 +1,27 @@
+@import '@styles/variables';
+@import "@styles/mixins";
+
+.header {
+  border-bottom: 2px solid $color-header-border;
+
+  &__inner {
+    display: grid;
+    grid-template-columns: 1fr 1.87fr;
+    align-items: center;
+    padding: 39px 100px;
+    position: relative;
+
+    @include desktop-s-breakpoint {
+      padding: 20px 40px;
+    }
+
+    @include mobile-breakpoint {
+      padding: 20px 24px;
+    }
+  }
+
+  &__burger-container {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+}

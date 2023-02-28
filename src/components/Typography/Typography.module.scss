@@ -1,0 +1,109 @@
+@import "@styles/fonts/fonts";
+@import "@styles/variables";
+@import "@styles/mixins";
+
+.typography {
+  font-family: 'Eudoxus Sans', sans-serif;
+  color: $color-text-main;
+  line-height: 130%;
+}
+
+.bold {
+  font-weight: 700 !important;
+}
+
+.secondary {
+  color: $color-text-secondary;
+}
+
+.heading {
+  &_xl {
+    font-size: $font-4xl;
+    font-weight: 700;
+
+    @include desktop-s-breakpoint {
+      font-size: $font-xxl;
+    }
+
+    @include mobile-breakpoint {
+      font-size: $font-xl;
+    }
+  }
+  &_lg {
+    font-size: $font-3xl;
+    font-weight: 700;
+
+    @include desktop-s-breakpoint {
+      font-size: $font-xl;
+    }
+
+    @include mobile-breakpoint {
+      font-size: $font-lg-p;
+    }
+  }
+  &_md_p {
+    font-size: $font-xl-p;
+    font-weight: 700;
+
+    @include desktop-s-breakpoint {
+      font-size: $font-lg-p;
+    }
+
+    @include mobile-breakpoint {
+      font-size: $font-lg;
+    }
+  }
+  &_md {
+    font-size: $font-xl;
+    font-weight: 700;
+
+    @include desktop-s-breakpoint {
+      font-size: $font-lg-p;
+    }
+
+    @include mobile-breakpoint {
+      font-size: $font-sm;
+    }
+  }
+}
+
+.paragraph {
+  &_xl {
+    font-size: $font-xl;
+
+    @include desktop-s-breakpoint {
+      font-size: $font-lg-p;
+    }
+
+    @include mobile-breakpoint {
+      font-size: $font-md;
+    }
+  }
+  &_lg {
+    font-size: $font-lg-p;
+
+    @include desktop-s-breakpoint {
+      font-size: $font-lg;
+    }
+
+    @include mobile-breakpoint {
+      font-size: $font-sm;
+    }
+  }
+  &_md {
+    font-size: $font-lg;
+    line-height: 180%;
+    font-weight: 500;
+
+    @include desktop-s-breakpoint {
+      font-size: $font-md;
+    }
+
+    @include mobile-breakpoint {
+      font-size: $font-xs;
+    }
+  }
+  &_sm {
+    font-size: $font-sm;
+  }
+}
