@@ -11,7 +11,7 @@ type ProductContentProps = {
   isLoading: boolean;
   isEmpty: boolean;
   content: Product | Product[];
-  renderContent: () => JSX.Element;
+  renderedContent: JSX.Element;
   responseError: ApiError;
 };
 
@@ -19,11 +19,11 @@ const ProductContent = ({
   isLoading,
   isEmpty,
   content,
-  renderContent,
+  renderedContent,
   responseError,
 }: ProductContentProps): JSX.Element => {
   if (!isEmpty || content !== undefined) {
-    return renderContent();
+    return renderedContent;
   }
 
   if (isLoading) {

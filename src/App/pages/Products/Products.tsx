@@ -1,18 +1,23 @@
 import Wrapper from "@components/Wrapper";
 import Pages from "@customTypes/Pages";
+import { useLocalStore } from "@hooks/useLocalStore";
+import ProductStore from "@store/ProductStore";
+import { observer } from "mobx-react-lite";
 
 import Hero from "./components/Hero";
 import ProductsList from "./components/ProductsList";
 import Search from "./components/Search";
 
 const Products = (): JSX.Element => {
+  const productStore = useLocalStore(() => new ProductStore());
+
   return (
     <Wrapper main>
       <Hero page={Pages.MAIN} />
       <Search />
-      <ProductsList />
+      <ProductsList productStore={productStore} />
     </Wrapper>
   );
 };
 
-export default Products;
+export default observer(Products);

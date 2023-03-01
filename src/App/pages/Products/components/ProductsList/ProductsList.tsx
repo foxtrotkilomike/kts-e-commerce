@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 
 import Loader, { LoaderSize } from "@components/Loader";
 import Typography, {
@@ -6,56 +6,65 @@ import Typography, {
   TypographyTagName,
 } from "@components/Typography";
 import Wrapper from "@components/Wrapper";
-import { INITIAL_PRODUCTS } from "@config/api";
-import {
-  DEFAULT_PRODUCTS_COUNT,
-  DEFAULT_PRODUCTS_LIMIT,
-  DEFAULT_PRODUCTS_OFFSET,
-  TOTAL_PRODUCTS_COUNT,
-} from "@config/constants";
+import { DEFAULT_PRODUCTS_LIMIT } from "@config/constants";
 import { productsListHeading } from "@config/data";
-import GetProductsRangeConfig from "@customTypes/GetProductsRangeConfig";
-import useFetchProducts from "@hooks/useFetchProducts";
+import { LoadingStatus } from "@customTypes/LoadingStatus";
 import gridClasses from "@layouts/Grid/Grid.module.scss";
 import ProductContent from "@layouts/ProductContent";
 import ProductsListEndMessage from "@pages/Products/components/ProductsListEndMessage";
-import { getProductsRange } from "@services/products";
+import ProductStore from "@store/ProductStore";
 import renderProductCards from "@utils/renderProductCards";
 import classNames from "classnames";
+import { observer } from "mobx-react-lite";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import classes from "./ProductsList.module.scss";
 
-const ProductsList = (): JSX.Element => {
-  const [offset, setOffset] = useState(DEFAULT_PRODUCTS_OFFSET);
+type ProductsListProps = {
+  productStore: ProductStore;
+};
 
-  const fetchConfig = useMemo(() => {
-    return { offset, limit: DEFAULT_PRODUCTS_LIMIT };
-  }, [offset]);
+const ProductsList = ({ productStore }: ProductsListProps): JSX.Element => {
+  const { products, offset, totalProductsCount, loadingStatus, loadingError } =
+    productStore;
 
-  const { products, isLoading, responseError } =
-    useFetchProducts<GetProductsRangeConfig>(
-      INITIAL_PRODUCTS,
-      fetchConfig,
-      getProductsRange
-    );
+  useEffect(() => {
+    let ignoreSubsequentFetch = false;
+    const getProductsInRange = async () => {
+      await productStore.getProductsInRange(offset);
+      if (!ignoreSubsequentFetch) {
+        productStore.setProductsInRange();
+      }
+    };
+
+    getProductsInRange();
+    return () => {
+      ignoreSubsequentFetch = true;
+    };
+  }, [productStore]);
 
   const isEmptyProducts = products.length === 0;
+  const isLoading =
+    loadingStatus !== LoadingStatus.INITIAL &&
+    loadingStatus !== LoadingStatus.PENDING;
   const productsCount = products.length;
-  const hasMoreProducts = productsCount < TOTAL_PRODUCTS_COUNT;
+  const hasMoreProducts = productsCount < totalProductsCount;
   const infiniteScrollClassName = useMemo(
     () => classNames(gridClasses.grid, classes.infiniteScroll),
     []
   );
-  const fetchNextProducts = useCallback(() => {
-    setOffset((offset) => offset + DEFAULT_PRODUCTS_LIMIT);
-  }, []);
+  const fetchNextProducts = useCallback(
+    (offset: number) => {
+      productStore.setOffset(offset + DEFAULT_PRODUCTS_LIMIT);
+    },
+    [productStore]
+  );
 
-  const renderProducts = useCallback(
+  const Products = useMemo(
     () => (
       <InfiniteScroll
         dataLength={products.length}
-        next={fetchNextProducts}
+        next={() => fetchNextProducts(offset)}
         hasMore={hasMoreProducts}
         loader={
           <div className={classes.loader}>
@@ -82,20 +91,18 @@ const ProductsList = (): JSX.Element => {
           >
             {productsListHeading}
           </Typography>
-          <div className={classes.header__counter}>
-            {productsCount ? productsCount : DEFAULT_PRODUCTS_COUNT}
-          </div>
+          <div className={classes.header__counter}>{totalProductsCount}</div>
         </div>
         <ProductContent
           isLoading={isLoading}
           isEmpty={isEmptyProducts}
           content={products}
-          renderContent={renderProducts}
-          responseError={responseError}
+          renderedContent={Products}
+          responseError={loadingError}
         />
       </Wrapper>
     </section>
   );
 };
 
-export default ProductsList;
+export default observer(ProductsList);

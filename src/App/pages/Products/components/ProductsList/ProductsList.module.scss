@@ -37,6 +37,8 @@
 .loader {
   @include flex-center;
   padding-top: 10%;
+  padding-bottom: 10%;
+  grid-column: 1 / -1;
 }
 
 .infiniteScroll {
