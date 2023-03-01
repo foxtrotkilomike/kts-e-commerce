@@ -1,52 +1,48 @@
-import { useCallback, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 
 import Typography, {
   TypographySize,
   TypographyTagName,
 } from "@components/Typography";
 import Wrapper from "@components/Wrapper";
-import { INITIAL_PRODUCTS } from "@config/api";
 import {
   DEFAULT_PRODUCTS_LIMIT,
   DEFAULT_PRODUCTS_OFFSET,
 } from "@config/constants";
 import { relatedItemsHeading } from "@config/data";
-import GetProductsByCategory from "@customTypes/GetProductsByCategory";
-import useFetchProducts from "@hooks/useFetchProducts";
+import { LoadingStatus } from "@customTypes/LoadingStatus";
 import Grid from "@layouts/Grid";
 import ProductContent from "@layouts/ProductContent";
-import { getProductsRange } from "@services/products";
+import ProductStore from "@store/ProductStore";
 import renderProductCards from "@utils/renderProductCards";
+import { observer } from "mobx-react-lite";
 
 import classes from "./RelatedProducts.module.scss";
 
 type RelatedProductsProps = {
   productCategoryId: number;
+  productStore: ProductStore;
 };
 
 const RelatedProducts = ({
   productCategoryId,
+  productStore,
 }: RelatedProductsProps): JSX.Element => {
-  const fetchConfig = useMemo(() => {
-    return {
+  const { relatedProducts, loadingStatus, loadingError } = productStore;
+
+  useEffect(() => {
+    productStore.getRelatedProducts({
       offset: DEFAULT_PRODUCTS_OFFSET,
       limit: DEFAULT_PRODUCTS_LIMIT,
       categoryId: productCategoryId,
-    };
-  }, [productCategoryId]);
-
-  const {
-    products: relatedProducts,
-    isLoading,
-    responseError,
-  } = useFetchProducts<GetProductsByCategory>(
-    INITIAL_PRODUCTS,
-    fetchConfig,
-    getProductsRange
-  );
+    });
+  }, [productStore, productCategoryId]);
 
   const isEmptyProducts = relatedProducts.length === 0;
-  const renderProducts = useCallback(
+  const isLoading =
+    loadingStatus !== LoadingStatus.INITIAL &&
+    loadingStatus !== LoadingStatus.PENDING;
+  const renderedProducts = useMemo(
     () => <Grid>{renderProductCards(relatedProducts)}</Grid>,
     [relatedProducts]
   );
@@ -65,12 +61,12 @@ const RelatedProducts = ({
           isLoading={isLoading}
           isEmpty={isEmptyProducts}
           content={relatedProducts}
-          renderContent={renderProducts}
-          responseError={responseError}
+          renderedContent={renderedProducts}
+          responseError={loadingError}
         />
       </section>
     </Wrapper>
   );
 };
 
-export default RelatedProducts;
+export default observer(RelatedProducts);

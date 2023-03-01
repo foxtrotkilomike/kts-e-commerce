@@ -6,12 +6,14 @@ import {
 } from "@config/constants";
 import { productsMock } from "@config/data";
 import ApiError from "@customTypes/ApiError";
+import GetProductsByCategory from "@customTypes/GetProductsByCategory";
 import { ILocalStore } from "@customTypes/ILocalStore";
 import { LoadingStatus } from "@customTypes/LoadingStatus";
 import Product from "@customTypes/Product";
 import {
   getAllProducts,
   getProductById,
+  getProductsByCategory,
   getProductsRange,
 } from "@services/products";
 import {
@@ -28,6 +30,7 @@ type PrivateFields =
   | "_products"
   | "_productsInRange"
   | "_selectedProduct"
+  | "_relatedProducts"
   | "_totalProductsCount"
   | "_offset"
   | "_loadingStatus"
@@ -37,6 +40,7 @@ export default class ProductStore implements ILocalStore {
   private _products: Product[] = [];
   private _selectedProduct: Product = productsMock;
   private _productsInRange: Product[] = [];
+  private _relatedProducts: Product[] = [];
   private _totalProductsCount: number = INIT_PRODUCTS_COUNT;
   private _offset: number = DEFAULT_PRODUCTS_OFFSET;
   private _loadingStatus: LoadingStatus = LoadingStatus.INITIAL;
@@ -47,6 +51,7 @@ export default class ProductStore implements ILocalStore {
       _products: observable.ref,
       _productsInRange: observable.ref,
       _selectedProduct: observable.ref,
+      _relatedProducts: observable.ref,
       _totalProductsCount: observable,
       _offset: observable,
       _loadingStatus: observable,
@@ -54,6 +59,7 @@ export default class ProductStore implements ILocalStore {
       products: computed,
       selectedProduct: computed,
       setProductsInRange: action.bound,
+      relatedProducts: computed,
       totalProductsCount: computed,
       offset: computed,
       setOffset: action,
@@ -62,6 +68,7 @@ export default class ProductStore implements ILocalStore {
       getAllProducts: action,
       getProductById: action,
       getProductsInRange: action,
+      getRelatedProducts: action,
       getTotalProductsCount: action,
       destroy: action,
     });
@@ -80,6 +87,10 @@ export default class ProductStore implements ILocalStore {
     if (this._loadingStatus === LoadingStatus.SUCCESS) {
       this._products = [...this._products, ...this._productsInRange];
     }
+  }
+
+  get relatedProducts() {
+    return this._relatedProducts;
   }
 
   get offset(): number {
@@ -170,6 +181,29 @@ export default class ProductStore implements ILocalStore {
       if (!hasError) {
         this._loadingStatus = LoadingStatus.SUCCESS;
         this._productsInRange = response as Product[];
+      }
+    });
+  }
+
+  async getRelatedProducts({
+    categoryId,
+    offset,
+    limit,
+  }: GetProductsByCategory): Promise<void> {
+    this._initializeRequest();
+
+    const response = await getProductsByCategory({
+      categoryId,
+      offset,
+      limit,
+    });
+
+    runInAction(() => {
+      const hasError = this._hasResponseError(response);
+
+      if (!hasError) {
+        this._loadingStatus = LoadingStatus.SUCCESS;
+        this._relatedProducts = response as Product[];
       }
     });
   }
