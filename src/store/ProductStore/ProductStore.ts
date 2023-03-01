@@ -4,11 +4,16 @@ import {
   DEFAULT_PRODUCTS_OFFSET,
   INIT_PRODUCTS_COUNT,
 } from "@config/constants";
+import { productsMock } from "@config/data";
 import ApiError from "@customTypes/ApiError";
 import { ILocalStore } from "@customTypes/ILocalStore";
 import { LoadingStatus } from "@customTypes/LoadingStatus";
 import Product from "@customTypes/Product";
-import { getAllProducts, getProductsRange } from "@services/products";
+import {
+  getAllProducts,
+  getProductById,
+  getProductsRange,
+} from "@services/products";
 import {
   action,
   computed,
@@ -22,6 +27,7 @@ import {
 type PrivateFields =
   | "_products"
   | "_productsInRange"
+  | "_selectedProduct"
   | "_totalProductsCount"
   | "_offset"
   | "_loadingStatus"
@@ -29,6 +35,7 @@ type PrivateFields =
 
 export default class ProductStore implements ILocalStore {
   private _products: Product[] = [];
+  private _selectedProduct: Product = productsMock;
   private _productsInRange: Product[] = [];
   private _totalProductsCount: number = INIT_PRODUCTS_COUNT;
   private _offset: number = DEFAULT_PRODUCTS_OFFSET;
@@ -39,20 +46,23 @@ export default class ProductStore implements ILocalStore {
     makeObservable<ProductStore, PrivateFields>(this, {
       _products: observable.ref,
       _productsInRange: observable.ref,
+      _selectedProduct: observable.ref,
       _totalProductsCount: observable,
       _offset: observable,
       _loadingStatus: observable,
       _loadingError: observable,
       products: computed,
+      selectedProduct: computed,
       setProductsInRange: action.bound,
       totalProductsCount: computed,
       offset: computed,
       setOffset: action,
       loadingStatus: computed,
       loadingError: computed,
-      getTotalProductsCount: action,
       getAllProducts: action,
+      getProductById: action,
       getProductsInRange: action,
+      getTotalProductsCount: action,
       destroy: action,
     });
     this.getTotalProductsCount();
@@ -60,6 +70,10 @@ export default class ProductStore implements ILocalStore {
 
   get products(): Product[] {
     return this._products;
+  }
+
+  get selectedProduct(): Product {
+    return this._selectedProduct;
   }
 
   setProductsInRange() {
@@ -95,7 +109,7 @@ export default class ProductStore implements ILocalStore {
     });
   }
 
-  private _hasResponseError(response: Product[] | ApiError): boolean {
+  private _hasResponseError(response: Product[] | Product | ApiError): boolean {
     if (!response) {
       this._loadingStatus = LoadingStatus.FAIL;
       this._loadingError = API_ERRORS.serverIsNotResponding;
@@ -109,20 +123,6 @@ export default class ProductStore implements ILocalStore {
     }
 
     return false;
-  }
-
-  async getTotalProductsCount(): Promise<void> {
-    this._initializeRequest();
-    const response = await getAllProducts();
-
-    runInAction(() => {
-      const hasError = this._hasResponseError(response);
-
-      if (!hasError) {
-        this._loadingStatus = LoadingStatus.SUCCESS;
-        this._totalProductsCount = (response as Product[]).length;
-      }
-    });
   }
 
   async getAllProducts(): Promise<void> {
@@ -141,6 +141,21 @@ export default class ProductStore implements ILocalStore {
     });
   }
 
+  async getProductById(productId: number): Promise<void> {
+    this._initializeRequest();
+
+    const response = await getProductById({ productId });
+
+    runInAction(() => {
+      const hasError = this._hasResponseError(response);
+
+      if (!hasError) {
+        this._loadingStatus = LoadingStatus.SUCCESS;
+        this._selectedProduct = response as Product;
+      }
+    });
+  }
+
   async getProductsInRange(offset: number): Promise<void> {
     this._initializeRequest();
 
@@ -155,6 +170,20 @@ export default class ProductStore implements ILocalStore {
       if (!hasError) {
         this._loadingStatus = LoadingStatus.SUCCESS;
         this._productsInRange = response as Product[];
+      }
+    });
+  }
+
+  async getTotalProductsCount(): Promise<void> {
+    this._initializeRequest();
+    const response = await getAllProducts();
+
+    runInAction(() => {
+      const hasError = this._hasResponseError(response);
+
+      if (!hasError) {
+        this._loadingStatus = LoadingStatus.SUCCESS;
+        this._totalProductsCount = (response as Product[]).length;
       }
     });
   }
