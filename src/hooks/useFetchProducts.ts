@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { API_ERRORS, INITIAL_ERROR } from "@config/api";
+import { API_ERRORS } from "@config/api";
 import ApiError from "@customTypes/ApiError";
 import GetAllProductsConfig from "@customTypes/GetAllProductsConfig";
 import GetProductsByCategory from "@customTypes/GetProductsByCategory";
@@ -18,14 +18,16 @@ const useFetchProducts = <C extends FetchProductsConfig>(
   fetchFunction: (config: C) => Promise<Product[] | ApiError>
 ) => {
   const [products, setProducts] = useState<Product[]>(initialState);
-  const [responseError, setResponseError] = useState<ApiError>(INITIAL_ERROR);
+  const [responseError, setResponseError] = useState<ApiError>(
+    API_ERRORS.initial
+  );
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     let ignoreSubsequentFetch = false;
     const getProductsData = async () => {
       setIsLoading(true);
-      setResponseError(INITIAL_ERROR);
+      setResponseError(API_ERRORS.initial);
       const response = await fetchFunction(config);
       if (!response) {
         setResponseError(API_ERRORS.serverIsNotResponding);
