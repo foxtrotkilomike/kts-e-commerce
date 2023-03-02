@@ -11,10 +11,10 @@ import {
   DEFAULT_PRODUCTS_OFFSET,
 } from "@config/constants";
 import { relatedItemsHeading } from "@config/data";
-import { LoadingStatus } from "@customTypes/LoadingStatus";
 import Grid from "@layouts/Grid";
 import ProductContent from "@layouts/ProductContent";
 import ProductStore from "@store/ProductStore";
+import { checkLoadingStatus } from "@utils/checkLoadingStatus";
 import renderProductCards from "@utils/renderProductCards";
 import { observer } from "mobx-react-lite";
 
@@ -42,9 +42,7 @@ const RelatedProducts = ({
   }, [productStore, productCategoryId]);
 
   const isEmptyProducts = relatedProducts.length === 0;
-  const isLoading =
-    loadingStatus !== LoadingStatus.INITIAL &&
-    loadingStatus !== LoadingStatus.PENDING;
+  const isLoading = checkLoadingStatus(loadingStatus);
 
   const renderedProducts = useMemo(
     () =>

@@ -1,4 +1,4 @@
-import { ResponseStatus } from "@config/constants";
+import { DEFAULT_ERROR_STATUS, ResponseStatus } from "@config/constants";
 import ApiError from "@customTypes/ApiError";
 import Endpoint from "@customTypes/Endpoint";
 
@@ -39,7 +39,7 @@ const API_ERRORS: Record<ERROR_TYPE, ApiError> = {
     message: "Unknown error",
   },
   [ERROR_TYPE.INITIAL]: {
-    code: 0,
+    code: DEFAULT_ERROR_STATUS,
     message: "",
   },
 };

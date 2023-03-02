@@ -2,11 +2,11 @@ import { useEffect, useMemo } from "react";
 
 import Wrapper from "@components/Wrapper";
 import { DEFAULT_PRODUCT_ID } from "@config/constants";
-import { LoadingStatus } from "@customTypes/LoadingStatus";
 import { useLocalStore } from "@hooks/useLocalStore";
 import ProductContent from "@layouts/ProductContent";
 import ProductInfo from "@pages/Product/components/ProductInfo";
 import ProductStore from "@store/ProductStore";
+import { checkLoadingStatus } from "@utils/checkLoadingStatus";
 import { observer } from "mobx-react-lite";
 import { useParams } from "react-router-dom";
 
@@ -29,9 +29,7 @@ const Product = (): JSX.Element => {
   }, [productStore, productIdNumber]);
 
   const isEmptyProduct = product?.id === DEFAULT_PRODUCT_ID;
-  const isLoading =
-    loadingStatus !== LoadingStatus.INITIAL &&
-    loadingStatus !== LoadingStatus.PENDING;
+  const isLoading = checkLoadingStatus(loadingStatus);
 
   const renderedProduct = useMemo(
     () => (product ? <ProductInfo product={product} /> : null),

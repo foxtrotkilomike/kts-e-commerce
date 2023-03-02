@@ -8,11 +8,11 @@ import Typography, {
 import Wrapper from "@components/Wrapper";
 import { DEFAULT_PRODUCTS_LIMIT } from "@config/constants";
 import { productsListHeading } from "@config/data";
-import { LoadingStatus } from "@customTypes/LoadingStatus";
 import gridClasses from "@layouts/Grid/Grid.module.scss";
 import ProductContent from "@layouts/ProductContent";
 import ProductsListEndMessage from "@pages/Products/components/ProductsListEndMessage";
 import ProductStore from "@store/ProductStore";
+import { checkLoadingStatus } from "@utils/checkLoadingStatus";
 import renderProductCards from "@utils/renderProductCards";
 import classNames from "classnames";
 import { observer } from "mobx-react-lite";
@@ -29,9 +29,7 @@ const ProductsList = ({ productStore }: ProductsListProps): JSX.Element => {
     productStore;
 
   const isEmptyProducts = products.length === 0;
-  const isLoading =
-    loadingStatus !== LoadingStatus.INITIAL &&
-    loadingStatus !== LoadingStatus.PENDING;
+  const isLoading = checkLoadingStatus(loadingStatus);
   const productsCount = products.length;
   const hasMoreProducts = productsCount < totalProductsCount;
 
