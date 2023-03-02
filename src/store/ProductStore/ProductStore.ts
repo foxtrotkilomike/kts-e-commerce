@@ -54,7 +54,7 @@ export default class ProductStore implements ILocalStore {
       _totalProductsCount: observable,
       _offset: observable,
       _loadingStatus: observable,
-      _loadingError: observable,
+      _loadingError: observable.ref,
       products: computed,
       selectedProduct: computed,
       relatedProducts: computed,
@@ -83,7 +83,7 @@ export default class ProductStore implements ILocalStore {
   }
 
   setProductsInRange() {
-    if (this._loadingStatus === LoadingStatus.SUCCESS) {
+    if (this._loadingStatus === LoadingStatus.PENDING) {
       this._products = [...this._products, ...this._productsInRange];
     }
   }
@@ -178,7 +178,7 @@ export default class ProductStore implements ILocalStore {
       const hasError = this._hasResponseError(response);
 
       if (!hasError) {
-        this._loadingStatus = LoadingStatus.SUCCESS;
+        this._loadingStatus = LoadingStatus.PENDING;
         this._productsInRange = response as Product[];
       }
     });
