@@ -20,15 +20,15 @@ import { observer } from "mobx-react-lite";
 import classes from "./RelatedProducts.module.scss";
 
 type RelatedProductsProps = {
-  productCategoryId: number;
   productStore: ProductStore;
 };
 
 const RelatedProducts = ({
-  productCategoryId,
   productStore,
 }: RelatedProductsProps): JSX.Element => {
-  const { relatedProducts, loadingStatus, loadingError } = productStore;
+  const { relatedProducts, selectedProduct, loadingStatus, loadingError } =
+    productStore;
+  const productCategoryId = selectedProduct.category.id;
 
   useEffect(() => {
     productStore.getRelatedProducts({
@@ -42,6 +42,7 @@ const RelatedProducts = ({
   const isLoading =
     loadingStatus !== LoadingStatus.INITIAL &&
     loadingStatus !== LoadingStatus.PENDING;
+
   const renderedProducts = useMemo(
     () => <Grid>{renderProductCards(relatedProducts)}</Grid>,
     [relatedProducts]

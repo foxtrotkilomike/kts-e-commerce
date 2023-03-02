@@ -44,10 +44,7 @@ const Product = (): JSX.Element => {
         renderedContent={renderedProduct}
         responseError={loadingError}
       />
-      <RelatedProducts
-        productCategoryId={product.category.id}
-        productStore={productStore}
-      />
+      <RelatedProducts productStore={productStore} />
     </Wrapper>
   );
 };
