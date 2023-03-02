@@ -27,8 +27,12 @@ type RelatedProductsProps = {
 const RelatedProducts = ({
   productStore,
 }: RelatedProductsProps): JSX.Element => {
-  const { relatedProducts, selectedProduct, loadingStatus, loadingError } =
-    productStore;
+  const {
+    relatedProducts,
+    selectedProduct,
+    relatedProductsLoadingStatus,
+    relatedProductsLoadingError,
+  } = productStore;
   const productCategoryId = selectedProduct?.category.id || DEFAULT_CATEGORY_ID;
 
   useEffect(() => {
@@ -42,7 +46,7 @@ const RelatedProducts = ({
   }, [productStore, productCategoryId]);
 
   const isEmptyProducts = relatedProducts.length === 0;
-  const isLoading = checkLoadingStatus(loadingStatus);
+  const isLoading = checkLoadingStatus(relatedProductsLoadingStatus);
 
   const renderedProducts = useMemo(
     () =>
@@ -67,7 +71,7 @@ const RelatedProducts = ({
           isEmpty={isEmptyProducts}
           data={relatedProducts}
           renderedContent={renderedProducts}
-          responseError={loadingError}
+          responseError={relatedProductsLoadingError}
         />
       </section>
     </Wrapper>

@@ -25,11 +25,16 @@ type ProductsListProps = {
 };
 
 const ProductsList = ({ productStore }: ProductsListProps): JSX.Element => {
-  const { products, offset, totalProductsCount, loadingStatus, loadingError } =
-    productStore;
+  const {
+    products,
+    offset,
+    totalProductsCount,
+    productsLoadingStatus,
+    productsLoadingError,
+  } = productStore;
 
   const isEmptyProducts = products.length === 0;
-  const isLoading = checkLoadingStatus(loadingStatus);
+  const isLoading = checkLoadingStatus(productsLoadingStatus);
   const productsCount = products.length;
   const hasMoreProducts = productsCount < totalProductsCount;
 
@@ -50,7 +55,7 @@ const ProductsList = ({ productStore }: ProductsListProps): JSX.Element => {
   }, [productStore]);
 
   const infiniteScrollClassName = useMemo(
-    () => classNames(gridClasses.grid, classes.infiniteScroll),
+    () => classNames(gridClasses.grid, classes["infinite-scroll"]),
     []
   );
 
@@ -106,7 +111,7 @@ const ProductsList = ({ productStore }: ProductsListProps): JSX.Element => {
           isEmpty={isEmptyProducts}
           data={products}
           renderedContent={renderedProducts}
-          responseError={loadingError}
+          responseError={productsLoadingError}
         />
       </Wrapper>
     </section>

@@ -5,6 +5,7 @@ import {
   INIT_PRODUCTS_COUNT,
 } from "@config/constants";
 import ApiError from "@customTypes/ApiError";
+import EntityType from "@customTypes/EntityType";
 import GetProductsByCategory from "@customTypes/GetProductsByCategory";
 import { ILocalStore } from "@customTypes/ILocalStore";
 import { LoadingStatus } from "@customTypes/LoadingStatus";
@@ -32,8 +33,12 @@ type PrivateFields =
   | "_relatedProducts"
   | "_totalProductsCount"
   | "_offset"
-  | "_loadingStatus"
-  | "_loadingError";
+  | "_productsLoadingStatus"
+  | "_relatedProductsLoadingStatus"
+  | "_selectedProductLoadingStatus"
+  | "_productsLoadingError"
+  | "_relatedProductsLoadingError"
+  | "_selectedProductLoadingError";
 
 export default class ProductStore implements ILocalStore {
   private _products: Product[] = [];
@@ -42,26 +47,38 @@ export default class ProductStore implements ILocalStore {
   private _relatedProducts: Product[] = [];
   private _totalProductsCount: number = INIT_PRODUCTS_COUNT;
   private _offset: number = DEFAULT_PRODUCTS_OFFSET;
-  private _loadingStatus: LoadingStatus = LoadingStatus.INITIAL;
-  private _loadingError: ApiError = API_ERRORS.initial;
+  private _productsLoadingStatus: LoadingStatus = LoadingStatus.INITIAL;
+  private _relatedProductsLoadingStatus: LoadingStatus = LoadingStatus.INITIAL;
+  private _selectedProductLoadingStatus: LoadingStatus = LoadingStatus.INITIAL;
+  private _productsLoadingError: ApiError = API_ERRORS.initial;
+  private _relatedProductsLoadingError: ApiError = API_ERRORS.initial;
+  private _selectedProductLoadingError: ApiError = API_ERRORS.initial;
 
   constructor() {
     makeObservable<ProductStore, PrivateFields>(this, {
       _products: observable.ref,
       _productsInRange: observable.ref,
-      _selectedProduct: observable.ref,
       _relatedProducts: observable.ref,
+      _selectedProduct: observable.ref,
       _totalProductsCount: observable,
       _offset: observable,
-      _loadingStatus: observable,
-      _loadingError: observable.ref,
+      _productsLoadingStatus: observable,
+      _relatedProductsLoadingStatus: observable,
+      _selectedProductLoadingStatus: observable,
+      _productsLoadingError: observable.ref,
+      _relatedProductsLoadingError: observable.ref,
+      _selectedProductLoadingError: observable.ref,
       products: computed,
       selectedProduct: computed,
       relatedProducts: computed,
       totalProductsCount: computed,
       offset: computed,
-      loadingStatus: computed,
-      loadingError: computed,
+      productsLoadingStatus: computed,
+      relatedProductsLoadingStatus: computed,
+      selectedProductLoadingStatus: computed,
+      productsLoadingError: computed,
+      relatedProductsLoadingError: computed,
+      selectedProductLoadingError: computed,
       setProductsInRange: action.bound,
       setOffset: action.bound,
       getAllProducts: action,
@@ -83,8 +100,9 @@ export default class ProductStore implements ILocalStore {
   }
 
   setProductsInRange() {
-    if (this._loadingStatus === LoadingStatus.PENDING) {
+    if (this._productsLoadingStatus === LoadingStatus.PENDING) {
       this._products = [...this._products, ...this._productsInRange];
+      this._productsLoadingStatus = LoadingStatus.SUCCESS;
     }
   }
 
@@ -104,31 +122,87 @@ export default class ProductStore implements ILocalStore {
     return this._totalProductsCount;
   }
 
-  get loadingStatus(): LoadingStatus {
-    return this._loadingStatus;
+  get productsLoadingStatus(): LoadingStatus {
+    return this._productsLoadingStatus;
   }
 
-  get loadingError(): ApiError {
-    return this._loadingError;
+  get relatedProductsLoadingStatus(): LoadingStatus {
+    return this._productsLoadingStatus;
   }
 
-  private _initializeRequest() {
+  get selectedProductLoadingStatus(): LoadingStatus {
+    return this._productsLoadingStatus;
+  }
+
+  get productsLoadingError(): ApiError {
+    return this._productsLoadingError;
+  }
+
+  get relatedProductsLoadingError(): ApiError {
+    return this._productsLoadingError;
+  }
+
+  get selectedProductLoadingError(): ApiError {
+    return this._productsLoadingError;
+  }
+
+  private _setStatusAndError(
+    entityType: EntityType,
+    loadingStatus: LoadingStatus,
+    error: ApiError
+  ) {
+    switch (entityType) {
+      case EntityType.PRODUCTS:
+        this._productsLoadingStatus = loadingStatus;
+        this._productsLoadingError = error;
+        break;
+
+      case EntityType.RELATED_PRODUCTS:
+        this._relatedProductsLoadingStatus = loadingStatus;
+        this._relatedProductsLoadingError = error;
+        break;
+
+      case EntityType.SELECTED_PRODUCT:
+        this._selectedProductLoadingStatus = loadingStatus;
+        this._selectedProductLoadingError = error;
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  private _initializeRequest(entityType: EntityType) {
     runInAction(() => {
-      this._loadingStatus = LoadingStatus.PENDING;
-      this._loadingError = API_ERRORS.initial;
+      this._setStatusAndError(
+        entityType,
+        LoadingStatus.PENDING,
+        API_ERRORS.initial
+      );
     });
   }
 
-  private _hasResponseError(response: Product[] | Product | ApiError): boolean {
+  private _hasResponseError(
+    response: Product[] | Product | ApiError,
+    entityType: EntityType
+  ): boolean {
     if (!response) {
-      this._loadingStatus = LoadingStatus.FAIL;
-      this._loadingError = API_ERRORS.serverIsNotResponding;
+      this._setStatusAndError(
+        entityType,
+        LoadingStatus.FAIL,
+        API_ERRORS.serverIsNotResponding
+      );
+
       return true;
     }
 
     if ("code" in response) {
-      this._loadingStatus = LoadingStatus.FAIL;
-      this._loadingError = API_ERRORS.fallback;
+      this._setStatusAndError(
+        entityType,
+        LoadingStatus.FAIL,
+        API_ERRORS.fallback
+      );
+
       return true;
     }
 
@@ -136,38 +210,41 @@ export default class ProductStore implements ILocalStore {
   }
 
   async getAllProducts(): Promise<void> {
-    this._initializeRequest();
+    this._initializeRequest(EntityType.PRODUCTS);
     this._products = [];
 
     const response = await getAllProducts();
 
     runInAction(() => {
-      const hasError = this._hasResponseError(response);
+      const hasError = this._hasResponseError(response, EntityType.PRODUCTS);
 
       if (!hasError) {
-        this._loadingStatus = LoadingStatus.SUCCESS;
+        this._productsLoadingStatus = LoadingStatus.SUCCESS;
         this._products = response as Product[];
       }
     });
   }
 
   async getProductById(productId: number): Promise<void> {
-    this._initializeRequest();
+    this._initializeRequest(EntityType.SELECTED_PRODUCT);
 
     const response = await getProductById({ productId });
 
     runInAction(() => {
-      const hasError = this._hasResponseError(response);
+      const hasError = this._hasResponseError(
+        response,
+        EntityType.SELECTED_PRODUCT
+      );
 
       if (!hasError) {
-        this._loadingStatus = LoadingStatus.SUCCESS;
+        this._selectedProductLoadingStatus = LoadingStatus.SUCCESS;
         this._selectedProduct = response as Product;
       }
     });
   }
 
   async getProductsInRange(offset: number): Promise<void> {
-    this._initializeRequest();
+    this._initializeRequest(EntityType.PRODUCTS);
 
     const response = await getProductsRange({
       offset: offset,
@@ -175,10 +252,10 @@ export default class ProductStore implements ILocalStore {
     });
 
     runInAction(() => {
-      const hasError = this._hasResponseError(response);
+      const hasError = this._hasResponseError(response, EntityType.PRODUCTS);
 
       if (!hasError) {
-        this._loadingStatus = LoadingStatus.PENDING;
+        this._productsLoadingStatus = LoadingStatus.PENDING;
         this._productsInRange = response as Product[];
       }
     });
@@ -189,7 +266,7 @@ export default class ProductStore implements ILocalStore {
     offset,
     limit,
   }: GetProductsByCategory): Promise<void> {
-    this._initializeRequest();
+    this._initializeRequest(EntityType.RELATED_PRODUCTS);
 
     const response = await getProductsByCategory({
       categoryId,
@@ -198,24 +275,25 @@ export default class ProductStore implements ILocalStore {
     });
 
     runInAction(() => {
-      const hasError = this._hasResponseError(response);
+      const hasError = this._hasResponseError(
+        response,
+        EntityType.RELATED_PRODUCTS
+      );
 
       if (!hasError) {
-        this._loadingStatus = LoadingStatus.SUCCESS;
+        this._relatedProductsLoadingStatus = LoadingStatus.SUCCESS;
         this._relatedProducts = response as Product[];
       }
     });
   }
 
   async getTotalProductsCount(): Promise<void> {
-    this._initializeRequest();
     const response = await getAllProducts();
 
     runInAction(() => {
-      const hasError = this._hasResponseError(response);
+      const hasError = this._hasResponseError(response, EntityType.PRODUCTS);
 
       if (!hasError) {
-        this._loadingStatus = LoadingStatus.SUCCESS;
         this._totalProductsCount = (response as Product[]).length;
       }
     });

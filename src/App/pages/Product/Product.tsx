@@ -18,8 +18,8 @@ const Product = (): JSX.Element => {
   const productStore = useLocalStore(() => new ProductStore());
   const {
     selectedProduct: product,
-    loadingStatus,
-    loadingError,
+    selectedProductLoadingStatus,
+    selectedProductLoadingError,
   } = productStore;
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const Product = (): JSX.Element => {
   }, [productStore, productIdNumber]);
 
   const isEmptyProduct = product?.id === DEFAULT_PRODUCT_ID;
-  const isLoading = checkLoadingStatus(loadingStatus);
+  const isLoading = checkLoadingStatus(selectedProductLoadingStatus);
 
   const renderedProduct = useMemo(
     () => (product ? <ProductInfo product={product} /> : null),
@@ -43,7 +43,7 @@ const Product = (): JSX.Element => {
         isEmpty={isEmptyProduct}
         data={product}
         renderedContent={renderedProduct}
-        responseError={loadingError}
+        responseError={selectedProductLoadingError}
       />
       <RelatedProducts productStore={productStore} />
     </Wrapper>
