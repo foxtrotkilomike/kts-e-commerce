@@ -4,7 +4,6 @@ import {
   DEFAULT_PRODUCTS_OFFSET,
   INIT_PRODUCTS_COUNT,
 } from "@config/constants";
-import { productsMock } from "@config/data";
 import ApiError from "@customTypes/ApiError";
 import GetProductsByCategory from "@customTypes/GetProductsByCategory";
 import { ILocalStore } from "@customTypes/ILocalStore";
@@ -38,7 +37,7 @@ type PrivateFields =
 
 export default class ProductStore implements ILocalStore {
   private _products: Product[] = [];
-  private _selectedProduct: Product = productsMock;
+  private _selectedProduct: Product | null = null;
   private _productsInRange: Product[] = [];
   private _relatedProducts: Product[] = [];
   private _totalProductsCount: number = INIT_PRODUCTS_COUNT;
@@ -58,13 +57,13 @@ export default class ProductStore implements ILocalStore {
       _loadingError: observable,
       products: computed,
       selectedProduct: computed,
-      setProductsInRange: action.bound,
       relatedProducts: computed,
       totalProductsCount: computed,
       offset: computed,
-      setOffset: action,
       loadingStatus: computed,
       loadingError: computed,
+      setProductsInRange: action.bound,
+      setOffset: action.bound,
       getAllProducts: action,
       getProductById: action,
       getProductsInRange: action,
@@ -79,7 +78,7 @@ export default class ProductStore implements ILocalStore {
     return this._products;
   }
 
-  get selectedProduct(): Product {
+  get selectedProduct(): Product | null {
     return this._selectedProduct;
   }
 
@@ -234,7 +233,7 @@ export default class ProductStore implements ILocalStore {
     /**
      * I could not solve the problem with React Strict mode, which
      * calls this method and kills all reactions before the app even
-     * starts working... So in order to get the app working this.destroy()
+     * starts working... So in order to get the app working this.destroy
      * must stay inactive for now.
      */
     // this._offsetReaction();

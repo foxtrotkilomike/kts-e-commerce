@@ -1,16 +1,9 @@
-import mockProductImage from "@assets/mockProduct.jpg";
 import { Option } from "@components/MultiDropdown";
-import {
-  DEFAULT_CATEGORY_ID,
-  DEFAULT_PRODUCT_ID,
-  DEFAULT_PRODUCT_PRICE,
-  Routes,
-} from "@config/constants";
+import { Routes } from "@config/constants";
 import HeaderNavItem from "@customTypes/HeaderNavItem";
 import HeroContent from "@customTypes/HeroContent";
 import Pages from "@customTypes/Pages";
 import PagesHeroContent from "@customTypes/PagesHeroContent";
-import Product from "@customTypes/Product";
 
 const headerNavItems: HeaderNavItem[] = [
   {
@@ -50,18 +43,6 @@ const searchFilterOptions: Option[] = [
 ];
 
 const productsListHeading = "Total Products";
-const productsMock: Product = {
-  id: DEFAULT_PRODUCT_ID,
-  title: "",
-  price: DEFAULT_PRODUCT_PRICE,
-  description: "",
-  category: {
-    id: DEFAULT_CATEGORY_ID,
-    name: "",
-    image: mockProductImage,
-  },
-  images: [mockProductImage],
-};
 
 const relatedItemsHeading = "Related Items";
 enum ProductPageButtonsText {
@@ -88,7 +69,6 @@ export {
   searchFilterPlaceholder,
   searchFilterOptions,
   productsListHeading,
-  productsMock,
   relatedItemsHeading,
   ProductPageButtonsText,
   productListEndMessage,

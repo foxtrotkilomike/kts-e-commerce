@@ -23,15 +23,18 @@ const Product = (): JSX.Element => {
   } = productStore;
 
   useEffect(() => {
-    productStore.getProductById(productIdNumber);
+    if (productIdNumber !== DEFAULT_PRODUCT_ID) {
+      productStore.getProductById(productIdNumber);
+    }
   }, [productStore, productIdNumber]);
 
-  const isEmptyProduct = product.id === DEFAULT_PRODUCT_ID;
+  const isEmptyProduct = product?.id === DEFAULT_PRODUCT_ID;
   const isLoading =
     loadingStatus !== LoadingStatus.INITIAL &&
     loadingStatus !== LoadingStatus.PENDING;
+
   const renderedProduct = useMemo(
-    () => <ProductInfo product={product} />,
+    () => (product ? <ProductInfo product={product} /> : null),
     [product]
   );
 
@@ -40,7 +43,7 @@ const Product = (): JSX.Element => {
       <ProductContent
         isLoading={isLoading}
         isEmpty={isEmptyProduct}
-        content={product}
+        data={product}
         renderedContent={renderedProduct}
         responseError={loadingError}
       />

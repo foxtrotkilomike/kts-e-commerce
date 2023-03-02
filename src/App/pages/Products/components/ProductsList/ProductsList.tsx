@@ -28,10 +28,18 @@ const ProductsList = ({ productStore }: ProductsListProps): JSX.Element => {
   const { products, offset, totalProductsCount, loadingStatus, loadingError } =
     productStore;
 
+  const isEmptyProducts = products.length === 0;
+  const isLoading =
+    loadingStatus !== LoadingStatus.INITIAL &&
+    loadingStatus !== LoadingStatus.PENDING;
+  const productsCount = products.length;
+  const hasMoreProducts = productsCount < totalProductsCount;
+
   useEffect(() => {
     let ignoreSubsequentFetch = false;
     const getProductsInRange = async () => {
       await productStore.getProductsInRange(offset);
+      // This check is necessary due to React.StrictMode double fetch
       if (!ignoreSubsequentFetch) {
         productStore.setProductsInRange();
       }
@@ -43,16 +51,11 @@ const ProductsList = ({ productStore }: ProductsListProps): JSX.Element => {
     };
   }, [productStore]);
 
-  const isEmptyProducts = products.length === 0;
-  const isLoading =
-    loadingStatus !== LoadingStatus.INITIAL &&
-    loadingStatus !== LoadingStatus.PENDING;
-  const productsCount = products.length;
-  const hasMoreProducts = productsCount < totalProductsCount;
   const infiniteScrollClassName = useMemo(
     () => classNames(gridClasses.grid, classes.infiniteScroll),
     []
   );
+
   const fetchNextProducts = useCallback(
     (offset: number) => {
       productStore.setOffset(offset + DEFAULT_PRODUCTS_LIMIT);
@@ -60,24 +63,31 @@ const ProductsList = ({ productStore }: ProductsListProps): JSX.Element => {
     [productStore]
   );
 
-  const Products = useMemo(
-    () => (
-      <InfiniteScroll
-        dataLength={products.length}
-        next={() => fetchNextProducts(offset)}
-        hasMore={hasMoreProducts}
-        loader={
-          <div className={classes.loader}>
-            <Loader size={LoaderSize.l} />
-          </div>
-        }
-        endMessage={<ProductsListEndMessage />}
-        className={infiniteScrollClassName}
-      >
-        {renderProductCards(products)}
-      </InfiniteScroll>
-    ),
-    [products, fetchNextProducts, hasMoreProducts, infiniteScrollClassName]
+  const renderedProducts = useMemo(
+    () =>
+      !isEmptyProducts ? (
+        <InfiniteScroll
+          dataLength={products.length}
+          next={() => fetchNextProducts(offset)}
+          hasMore={hasMoreProducts}
+          loader={
+            <div className={classes.loader}>
+              <Loader size={LoaderSize.l} />
+            </div>
+          }
+          endMessage={<ProductsListEndMessage />}
+          className={infiniteScrollClassName}
+        >
+          {renderProductCards(products)}
+        </InfiniteScroll>
+      ) : null,
+    [
+      isEmptyProducts,
+      products,
+      fetchNextProducts,
+      hasMoreProducts,
+      infiniteScrollClassName,
+    ]
   );
 
   return (
@@ -96,8 +106,8 @@ const ProductsList = ({ productStore }: ProductsListProps): JSX.Element => {
         <ProductContent
           isLoading={isLoading}
           isEmpty={isEmptyProducts}
-          content={products}
-          renderedContent={Products}
+          data={products}
+          renderedContent={renderedProducts}
           responseError={loadingError}
         />
       </Wrapper>

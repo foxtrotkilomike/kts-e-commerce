@@ -6,6 +6,7 @@ import Typography, {
 } from "@components/Typography";
 import Wrapper from "@components/Wrapper";
 import {
+  DEFAULT_CATEGORY_ID,
   DEFAULT_PRODUCTS_LIMIT,
   DEFAULT_PRODUCTS_OFFSET,
 } from "@config/constants";
@@ -28,14 +29,16 @@ const RelatedProducts = ({
 }: RelatedProductsProps): JSX.Element => {
   const { relatedProducts, selectedProduct, loadingStatus, loadingError } =
     productStore;
-  const productCategoryId = selectedProduct.category.id;
+  const productCategoryId = selectedProduct?.category.id || DEFAULT_CATEGORY_ID;
 
   useEffect(() => {
-    productStore.getRelatedProducts({
-      offset: DEFAULT_PRODUCTS_OFFSET,
-      limit: DEFAULT_PRODUCTS_LIMIT,
-      categoryId: productCategoryId,
-    });
+    if (productCategoryId !== DEFAULT_CATEGORY_ID) {
+      productStore.getRelatedProducts({
+        offset: DEFAULT_PRODUCTS_OFFSET,
+        limit: DEFAULT_PRODUCTS_LIMIT,
+        categoryId: productCategoryId,
+      });
+    }
   }, [productStore, productCategoryId]);
 
   const isEmptyProducts = relatedProducts.length === 0;
@@ -44,8 +47,11 @@ const RelatedProducts = ({
     loadingStatus !== LoadingStatus.PENDING;
 
   const renderedProducts = useMemo(
-    () => <Grid>{renderProductCards(relatedProducts)}</Grid>,
-    [relatedProducts]
+    () =>
+      !isEmptyProducts ? (
+        <Grid>{renderProductCards(relatedProducts)}</Grid>
+      ) : null,
+    [isEmptyProducts, relatedProducts]
   );
 
   return (
@@ -61,7 +67,7 @@ const RelatedProducts = ({
         <ProductContent
           isLoading={isLoading}
           isEmpty={isEmptyProducts}
-          content={relatedProducts}
+          data={relatedProducts}
           renderedContent={renderedProducts}
           responseError={loadingError}
         />

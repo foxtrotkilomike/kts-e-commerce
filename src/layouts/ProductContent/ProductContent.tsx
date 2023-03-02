@@ -10,19 +10,20 @@ import classes from "./ProductContent.module.scss";
 type ProductContentProps = {
   isLoading: boolean;
   isEmpty: boolean;
-  content: Product | Product[];
-  renderedContent: JSX.Element;
+  data?: Product | Product[] | null;
+  renderedContent: JSX.Element | null;
   responseError: ApiError;
 };
 
 const ProductContent = ({
   isLoading,
   isEmpty,
-  content,
+  data,
   renderedContent,
   responseError,
 }: ProductContentProps): JSX.Element => {
-  if (!isEmpty || content !== undefined) {
+  const hasContent = (!isEmpty || !!data) && !!renderedContent;
+  if (hasContent) {
     return renderedContent;
   }
 
