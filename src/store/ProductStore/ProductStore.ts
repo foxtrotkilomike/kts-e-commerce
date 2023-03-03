@@ -6,14 +6,14 @@ import {
 } from "@config/constants";
 import ApiError from "@customTypes/ApiError";
 import EntityType from "@customTypes/EntityType";
-import GetProductsByCategory from "@customTypes/GetProductsByCategory";
+import GetFilteredProducts from "@customTypes/GetFilteredProducts";
 import { ILocalStore } from "@customTypes/ILocalStore";
 import { LoadingStatus } from "@customTypes/LoadingStatus";
 import Product from "@customTypes/Product";
 import {
   getAllProducts,
   getProductById,
-  getProductsByCategory,
+  getFilteredProducts,
   getProductsRange,
 } from "@services/products";
 import {
@@ -84,7 +84,7 @@ export default class ProductStore implements ILocalStore {
       getAllProducts: action,
       getProductById: action,
       getProductsInRange: action,
-      getRelatedProducts: action,
+      getFilteredProducts: action,
       getTotalProductsCount: action,
       destroy: action,
     });
@@ -261,14 +261,45 @@ export default class ProductStore implements ILocalStore {
     });
   }
 
-  async getRelatedProducts({
+  async getFilteredProducts({
+    title,
+    price,
+    price_min,
+    price_max,
     categoryId,
     offset,
     limit,
-  }: GetProductsByCategory): Promise<void> {
+  }: GetFilteredProducts): Promise<void> {
+    this._initializeRequest(EntityType.PRODUCTS);
+
+    const response = await getFilteredProducts({
+      title,
+      price,
+      price_min,
+      price_max,
+      categoryId,
+      offset,
+      limit,
+    });
+
+    runInAction(() => {
+      const hasError = this._hasResponseError(response, EntityType.PRODUCTS);
+
+      if (!hasError) {
+        this._productsLoadingStatus = LoadingStatus.SUCCESS;
+        this._products = response as Product[];
+      }
+    });
+  }
+
+  async getProductsByCategory({
+    categoryId,
+    offset,
+    limit,
+  }: GetFilteredProducts): Promise<void> {
     this._initializeRequest(EntityType.RELATED_PRODUCTS);
 
-    const response = await getProductsByCategory({
+    const response = await getFilteredProducts({
       categoryId,
       offset,
       limit,
