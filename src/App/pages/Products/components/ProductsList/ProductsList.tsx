@@ -8,10 +8,10 @@ import Typography, {
 import Wrapper from "@components/Wrapper";
 import { DEFAULT_PRODUCTS_LIMIT } from "@config/constants";
 import { productsListHeading } from "@config/data";
+import { useProductStoreContext } from "@context/ProductStoreContext";
 import gridClasses from "@layouts/Grid/Grid.module.scss";
 import ProductContent from "@layouts/ProductContent";
 import ProductsListEndMessage from "@pages/Products/components/ProductsListEndMessage";
-import ProductStore from "@store/ProductStore";
 import { checkLoadingStatus } from "@utils/checkLoadingStatus";
 import renderProductCards from "@utils/renderProductCards";
 import classNames from "classnames";
@@ -20,11 +20,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 import classes from "./ProductsList.module.scss";
 
-type ProductsListProps = {
-  productStore: ProductStore;
-};
-
-const ProductsList = ({ productStore }: ProductsListProps): JSX.Element => {
+const ProductsList = (): JSX.Element => {
+  const productStore = useProductStoreContext();
   const {
     products,
     offset,
