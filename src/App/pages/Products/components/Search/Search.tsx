@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 import { Option } from "@components/MultiDropdown";
 import Wrapper from "@components/Wrapper";
@@ -6,7 +6,9 @@ import {
   searchFilterOptions as initialOptions,
   searchFilterPlaceholder,
 } from "@config/data";
+import QueryParams from "@customTypes/QueryParams";
 import { pluralizeOptions } from "@utils/pluralizeOptions";
+import { useSearchParams } from "react-router-dom";
 
 import classes from "./Search.module.scss";
 import SearchFilter from "../SearchFilter";
@@ -15,11 +17,19 @@ import SearchInput from "../SearchInput";
 const Search = (): JSX.Element => {
   const [searchValue, setSearchValue] = useState("");
   const [searchFilterOptions, setSearchFilterOptions] = useState<Option[]>([]);
+  const [_, setSearchParams] = useSearchParams();
+
+  const handleSearchChange = (searchValue: string) => {
+    setSearchParams({
+      [QueryParams.TITLE]: searchValue,
+    });
+    setSearchValue(searchValue);
+  };
 
   return (
     <Wrapper centered>
       <section className={classes.search}>
-        <SearchInput value={searchValue} onChange={setSearchValue} />
+        <SearchInput value={searchValue} onChange={handleSearchChange} />
         <SearchFilter
           placeholder={searchFilterPlaceholder}
           options={initialOptions}
@@ -32,4 +42,4 @@ const Search = (): JSX.Element => {
   );
 };
 
-export default Search;
+export default React.memo(Search);
