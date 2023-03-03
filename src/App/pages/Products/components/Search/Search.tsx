@@ -7,6 +7,7 @@ import {
   searchFilterPlaceholder,
 } from "@config/data";
 import QueryParams from "@customTypes/QueryParams";
+import getInitSearchValue from "@utils/getInitSearchValue";
 import { pluralizeOptions } from "@utils/pluralizeOptions";
 import { useSearchParams } from "react-router-dom";
 
@@ -15,7 +16,7 @@ import SearchFilter from "../SearchFilter";
 import SearchInput from "../SearchInput";
 
 const Search = (): JSX.Element => {
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState(getInitSearchValue());
   const [searchFilterOptions, setSearchFilterOptions] = useState<Option[]>([]);
   const [_, setSearchParams] = useSearchParams();
 

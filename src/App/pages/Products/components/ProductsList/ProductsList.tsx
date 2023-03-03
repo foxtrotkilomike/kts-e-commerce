@@ -13,10 +13,12 @@ import gridClasses from "@layouts/Grid/Grid.module.scss";
 import ProductContent from "@layouts/ProductContent";
 import ProductsListEndMessage from "@pages/Products/components/ProductsListEndMessage";
 import { checkLoadingStatus } from "@utils/checkLoadingStatus";
+import fetchFilteredProducts from "@utils/fetchFilteredProducts";
 import renderProductCards from "@utils/renderProductCards";
 import classNames from "classnames";
 import { observer } from "mobx-react-lite";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { useLocation } from "react-router-dom";
 
 import classes from "./ProductsList.module.scss";
 
@@ -34,6 +36,7 @@ const ProductsList = (): JSX.Element => {
   const isLoading = checkLoadingStatus(productsLoadingStatus);
   const productsCount = products.length;
   const hasMoreProducts = productsCount < totalProductsCount;
+  const { search } = useLocation();
 
   useEffect(() => {
     let ignoreSubsequentFetch = false;
@@ -45,7 +48,12 @@ const ProductsList = (): JSX.Element => {
       }
     };
 
-    getProductsInRange();
+    if (search) {
+      fetchFilteredProducts(productStore);
+    } else {
+      getProductsInRange();
+    }
+
     return () => {
       ignoreSubsequentFetch = true;
     };
