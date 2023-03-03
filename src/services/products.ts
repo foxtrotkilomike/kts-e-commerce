@@ -4,7 +4,7 @@ import {
   DEFAULT_PRODUCTS_OFFSET,
 } from "@config/constants";
 import ApiError from "@customTypes/ApiError";
-import GetFilteredProducts from "@customTypes/GetFilteredProducts";
+import GetFilteredProductsConfig from "@customTypes/GetFilteredProductsConfig";
 import GetProductByIdConfig from "@customTypes/GetProductByIdConfig";
 import GetProductsRangeConfig from "@customTypes/GetProductsRangeConfig";
 import Product from "@customTypes/Product";
@@ -57,7 +57,7 @@ const getFilteredProducts = async ({
   categoryId,
   offset = DEFAULT_PRODUCTS_OFFSET,
   limit = DEFAULT_PRODUCTS_LIMIT,
-}: GetFilteredProducts): Promise<Product[] | ApiError> => {
+}: GetFilteredProductsConfig): Promise<Product[] | ApiError> => {
   return axios({
     method: "get",
     url: `${API_BASE_URL}${productsEndpoint}/`,

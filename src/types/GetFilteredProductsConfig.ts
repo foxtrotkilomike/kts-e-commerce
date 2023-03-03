@@ -1,6 +1,6 @@
 import QueryParams from "@customTypes/QueryParams";
 
-type GetFilteredProducts = Partial<{
+type GetFilteredProductsConfig = Partial<{
   [QueryParams.TITLE]: string;
   [QueryParams.PRICE]: number;
   [QueryParams.PRICE_MIN]: number;
@@ -10,4 +10,4 @@ type GetFilteredProducts = Partial<{
   [QueryParams.LIMIT]: number;
 }>;
 
-export default GetFilteredProducts;
+export default GetFilteredProductsConfig;
