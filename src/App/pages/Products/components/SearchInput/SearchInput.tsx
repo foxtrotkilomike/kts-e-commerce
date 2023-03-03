@@ -4,7 +4,6 @@ import Input from "@components/Input";
 import { searchButtonText, searchInputPlaceholder } from "@config/data";
 import { useProductStoreContext } from "@context/ProductStoreContext";
 import { checkLoadingStatus } from "@utils/checkLoadingStatus";
-import fetchFilteredProducts from "@utils/fetchFilteredProducts";
 import { observer } from "mobx-react-lite";
 
 import classes from "./SearchInput.module.scss";
@@ -12,12 +11,15 @@ import classes from "./SearchInput.module.scss";
 type SearchInputProps = {
   value: string;
   onChange: (value: string) => void;
+  onSubmit: () => void;
 };
 
-const SearchInput = ({ value, onChange }: SearchInputProps): JSX.Element => {
+const SearchInput = ({
+  value,
+  onChange,
+  onSubmit,
+}: SearchInputProps): JSX.Element => {
   const productStore = useProductStoreContext();
-
-  const handleSearchSubmit = () => fetchFilteredProducts(productStore);
 
   const isLoading = checkLoadingStatus(productStore.productsLoadingStatus);
 
@@ -32,7 +34,7 @@ const SearchInput = ({ value, onChange }: SearchInputProps): JSX.Element => {
       />
       <Button
         className={classes["search-input__button"]}
-        onClick={handleSearchSubmit}
+        onClick={onSubmit}
         loading={isLoading}
       >
         {searchButtonText}

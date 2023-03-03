@@ -9,24 +9,26 @@ import Wrapper from "@components/Wrapper";
 import { DEFAULT_PRODUCTS_LIMIT } from "@config/constants";
 import { productsListHeading } from "@config/data";
 import { useProductStoreContext } from "@context/ProductStoreContext";
+import QueryParams from "@customTypes/QueryParams";
 import gridClasses from "@layouts/Grid/Grid.module.scss";
 import ProductContent from "@layouts/ProductContent";
 import ProductsListEndMessage from "@pages/Products/components/ProductsListEndMessage";
+import rootStore from "@store/RootStore";
 import { checkLoadingStatus } from "@utils/checkLoadingStatus";
 import fetchFilteredProducts from "@utils/fetchFilteredProducts";
 import renderProductCards from "@utils/renderProductCards";
 import classNames from "classnames";
 import { observer } from "mobx-react-lite";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useLocation } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 import classes from "./ProductsList.module.scss";
 
 const ProductsList = (): JSX.Element => {
   const productStore = useProductStoreContext();
+  const [_, setSearchParams] = useSearchParams();
   const {
     products,
-    offset,
     totalProductsCount,
     productsLoadingStatus,
     productsLoadingError,
@@ -36,27 +38,9 @@ const ProductsList = (): JSX.Element => {
   const isLoading = checkLoadingStatus(productsLoadingStatus);
   const productsCount = products.length;
   const hasMoreProducts = productsCount < totalProductsCount;
-  const { search } = useLocation();
 
   useEffect(() => {
-    let ignoreSubsequentFetch = false;
-    const getProductsInRange = async () => {
-      await productStore.getProductsInRange(offset);
-      // This check is necessary due to React.StrictMode double fetch
-      if (!ignoreSubsequentFetch) {
-        productStore.setProductsInRange();
-      }
-    };
-
-    if (search) {
-      fetchFilteredProducts(productStore);
-    } else {
-      getProductsInRange();
-    }
-
-    return () => {
-      ignoreSubsequentFetch = true;
-    };
+    fetchFilteredProducts(productStore);
   }, [productStore]);
 
   const infiniteScrollClassName = useMemo(
@@ -64,19 +48,20 @@ const ProductsList = (): JSX.Element => {
     []
   );
 
-  const fetchNextProducts = useCallback(
-    (offset: number) => {
-      productStore.setOffset(offset + DEFAULT_PRODUCTS_LIMIT);
-    },
-    [productStore]
-  );
+  const fetchNextProducts = useCallback(() => {
+    const offset = Number(rootStore.query.getParam(QueryParams.OFFSET)) || 0;
+    const nextOffset = offset + DEFAULT_PRODUCTS_LIMIT;
+    setSearchParams({
+      [QueryParams.OFFSET]: String(nextOffset),
+    });
+  }, [setSearchParams]);
 
   const renderedProducts = useMemo(
     () =>
       !isEmptyProducts ? (
         <InfiniteScroll
           dataLength={products.length}
-          next={() => fetchNextProducts(offset)}
+          next={fetchNextProducts}
           hasMore={hasMoreProducts}
           loader={
             <div className={classes.loader}>

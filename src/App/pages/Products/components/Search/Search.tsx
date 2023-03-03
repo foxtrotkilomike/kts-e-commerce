@@ -20,17 +20,20 @@ const Search = (): JSX.Element => {
   const [searchFilterOptions, setSearchFilterOptions] = useState<Option[]>([]);
   const [_, setSearchParams] = useSearchParams();
 
-  const handleSearchChange = (searchValue: string) => {
+  const handleSearchSubmit = () => {
     setSearchParams({
       [QueryParams.TITLE]: searchValue,
     });
-    setSearchValue(searchValue);
   };
 
   return (
     <Wrapper centered>
       <section className={classes.search}>
-        <SearchInput value={searchValue} onChange={handleSearchChange} />
+        <SearchInput
+          value={searchValue}
+          onChange={setSearchValue}
+          onSubmit={handleSearchSubmit}
+        />
         <SearchFilter
           placeholder={searchFilterPlaceholder}
           options={initialOptions}
