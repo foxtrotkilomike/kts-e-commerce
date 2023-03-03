@@ -1,3 +1,4 @@
+import { QueryParamValue } from "@customTypes/QueryParamValue";
 import { action, makeObservable, observable } from "mobx";
 import * as qs from "qs";
 
@@ -14,20 +15,14 @@ export default class QueryParamsStore {
     });
   }
 
-  getParam(
-    key: string
-  ): string | string[] | qs.ParsedQs | qs.ParsedQs[] | undefined {
+  getParam(key: string): QueryParamValue {
     return this._params[key];
   }
 
   setSearchQuery(searchQuery: string) {
-    searchQuery = searchQuery.startsWith("?")
-      ? searchQuery.slice(1)
-      : searchQuery;
-
     if (this._searchQuery !== searchQuery) {
       this._searchQuery = searchQuery;
-      this._params = qs.parse(searchQuery);
+      this._params = qs.parse(searchQuery, { ignoreQueryPrefix: true });
     }
   }
 }

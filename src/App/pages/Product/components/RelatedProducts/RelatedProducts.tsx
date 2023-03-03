@@ -11,6 +11,7 @@ import {
   DEFAULT_PRODUCTS_OFFSET,
 } from "@config/constants";
 import { relatedItemsHeading } from "@config/data";
+import QueryParams from "@customTypes/QueryParams";
 import Grid from "@layouts/Grid";
 import ProductContent from "@layouts/ProductContent";
 import ProductStore from "@store/ProductStore";
@@ -37,10 +38,10 @@ const RelatedProducts = ({
 
   useEffect(() => {
     if (productCategoryId !== DEFAULT_CATEGORY_ID) {
-      productStore.getRelatedProducts({
-        offset: DEFAULT_PRODUCTS_OFFSET,
-        limit: DEFAULT_PRODUCTS_LIMIT,
-        categoryId: productCategoryId,
+      productStore.getProductsByCategory({
+        [QueryParams.OFFSET]: DEFAULT_PRODUCTS_OFFSET,
+        [QueryParams.LIMIT]: DEFAULT_PRODUCTS_LIMIT,
+        [QueryParams.CATEGORY_ID]: productCategoryId,
       });
     }
   }, [productStore, productCategoryId]);
