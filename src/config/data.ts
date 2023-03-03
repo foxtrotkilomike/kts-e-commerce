@@ -50,9 +50,8 @@ enum ProductPageButtonsText {
   ADD_CART = "Add to Cart",
 }
 
-const productListEndMessage = "Yay! You have seen it all";
-const emptyContentTextContent =
-  "Data is not available, please, try again later";
+const productListEndMessage = "Yay! You have seen it all!";
+const emptyContentTextContent = "Products not found";
 
 enum ErrorMessages {
   PAGE_NOT_EXIST = "This page doesn't exist",

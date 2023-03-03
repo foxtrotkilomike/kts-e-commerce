@@ -288,6 +288,7 @@ export default class ProductStore implements ILocalStore {
       if (!hasError) {
         this._productsLoadingStatus = LoadingStatus.SUCCESS;
         this._products = response as Product[];
+        this._totalProductsCount = (response as Product[]).length;
       }
     });
   }
