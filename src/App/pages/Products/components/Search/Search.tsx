@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import Wrapper from "@components/Wrapper";
 import {
@@ -40,6 +40,18 @@ const Search = (): JSX.Element => {
       setSearchParams
     );
   }, [searchValue, selectedOption, setSearchParams]);
+
+  useEffect(() => {
+    const submitSearch = (e: KeyboardEvent) => {
+      if (e.key === "Enter") {
+        handleSearchSubmit();
+      }
+    };
+
+    window.addEventListener("keydown", submitSearch);
+
+    return () => window.removeEventListener("keydown", submitSearch);
+  }, [handleSearchSubmit]);
 
   return (
     <Wrapper centered>
