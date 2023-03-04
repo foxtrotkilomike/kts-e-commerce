@@ -23,7 +23,7 @@ const ProductInfo = ({
   return (
     <Wrapper centered>
       <div className={classes.container}>
-        <ProductSlider image={images} />
+        <ProductSlider images={images} />
         <div className={classes["product-content"]}>
           <Typography
             className={classes.title}
