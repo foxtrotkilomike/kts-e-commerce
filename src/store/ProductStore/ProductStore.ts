@@ -9,12 +9,12 @@ import EntityType from "@customTypes/EntityType";
 import GetFilteredProductsConfig from "@customTypes/GetFilteredProductsConfig";
 import { ILocalStore } from "@customTypes/ILocalStore";
 import { LoadingStatus } from "@customTypes/LoadingStatus";
-import Product from "@customTypes/Product";
 import {
   getAllProducts,
   getProductById,
   getFilteredProducts,
 } from "@services/products";
+import { Product } from "@store/models/platziStore";
 import rootStore from "@store/RootStore";
 import fetchFilteredProducts from "@utils/fetchFilteredProducts";
 import shouldProductsRefresh from "@utils/shouldProductsRefresh";

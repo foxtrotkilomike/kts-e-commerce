@@ -7,7 +7,7 @@ import ApiError from "@customTypes/ApiError";
 import GetFilteredProductsConfig from "@customTypes/GetFilteredProductsConfig";
 import GetProductByIdConfig from "@customTypes/GetProductByIdConfig";
 import GetProductsRangeConfig from "@customTypes/GetProductsRangeConfig";
-import Product from "@customTypes/Product";
+import { Product } from "@store/models/platziStore";
 import { handleApiErrors } from "@utils/handleApiErrors";
 import axios from "axios";
 

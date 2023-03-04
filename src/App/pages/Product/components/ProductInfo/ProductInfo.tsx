@@ -8,7 +8,7 @@ import Typography, {
 } from "@components/Typography";
 import Wrapper from "@components/Wrapper";
 import { ProductPageButtonsText } from "@config/data";
-import Product from "@customTypes/Product";
+import { Product } from "@store/models/platziStore";
 
 import classes from "./ProductInfo.module.scss";
 import ProductSlider from "../ProductSlider";

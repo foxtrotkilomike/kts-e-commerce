@@ -1,7 +1,7 @@
-import { Option } from "@components/MultiDropdown";
 import { Routes } from "@config/constants";
 import HeaderNavItem from "@customTypes/HeaderNavItem";
 import HeroContent from "@customTypes/HeroContent";
+import { Option } from "@customTypes/Option";
 import Pages from "@customTypes/Pages";
 import PagesHeroContent from "@customTypes/PagesHeroContent";
 

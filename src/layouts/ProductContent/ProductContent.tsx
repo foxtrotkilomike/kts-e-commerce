@@ -3,7 +3,7 @@ import React from "react";
 import EmptyContent from "@components/EmptyContent";
 import Loader, { LoaderSize } from "@components/Loader";
 import ApiError from "@customTypes/ApiError";
-import Product from "@customTypes/Product";
+import { Product } from "@store/models/platziStore";
 
 import classes from "./ProductContent.module.scss";
 

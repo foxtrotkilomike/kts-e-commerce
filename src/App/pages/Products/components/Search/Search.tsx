@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
-import { Option } from "@components/MultiDropdown";
 import Wrapper from "@components/Wrapper";
 import {
   searchFilterOptions as initialOptions,
   searchFilterPlaceholder,
 } from "@config/data";
+import { Option } from "@customTypes/Option";
 import QueryParams from "@customTypes/QueryParams";
 import getInitSearchValue from "@utils/getInitSearchValue";
 import { observer } from "mobx-react-lite";

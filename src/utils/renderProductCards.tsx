@@ -1,6 +1,6 @@
 import Card from "@components/Card";
 import Price from "@components/Price";
-import Product from "@customTypes/Product";
+import { Product } from "@store/models/platziStore";
 
 const renderProductCards = (products: Product[]) => {
   return products.map((product) => {
