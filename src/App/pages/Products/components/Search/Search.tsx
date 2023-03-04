@@ -8,7 +8,7 @@ import {
 } from "@config/data";
 import QueryParams from "@customTypes/QueryParams";
 import getInitSearchValue from "@utils/getInitSearchValue";
-import { pluralizeOptions } from "@utils/pluralizeOptions";
+import { observer } from "mobx-react-lite";
 import { useSearchParams } from "react-router-dom";
 
 import classes from "./Search.module.scss";
@@ -16,8 +16,9 @@ import SearchFilter from "../SearchFilter";
 import SearchInput from "../SearchInput";
 
 const Search = (): JSX.Element => {
-  const [searchValue, setSearchValue] = useState(getInitSearchValue());
-  const [searchFilterOptions, setSearchFilterOptions] = useState<Option[]>([]);
+  const [searchValue, setSearchValue] = useState(getInitSearchValue);
+  const [searchFilterOption, setSearchFilterOption] =
+    useState<Option["key"]>("");
   const [_, setSearchParams] = useSearchParams();
 
   const handleSearchSubmit = () => {
@@ -37,13 +38,12 @@ const Search = (): JSX.Element => {
         <SearchFilter
           placeholder={searchFilterPlaceholder}
           options={initialOptions}
-          value={searchFilterOptions}
-          onChange={setSearchFilterOptions}
-          pluralizeOptions={pluralizeOptions}
+          value={searchFilterOption}
+          onChange={setSearchFilterOption}
         />
       </section>
     </Wrapper>
   );
 };
 
-export default React.memo(Search);
+export default observer(Search);
