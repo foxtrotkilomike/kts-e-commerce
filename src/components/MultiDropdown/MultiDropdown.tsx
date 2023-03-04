@@ -9,7 +9,7 @@ export type MultiDropdownProps = {
   /** Массив возможных вариантов для выбора */
   options: Option[];
   /** Текущее выбранное поле (ключ), может быть пустым */
-  value: Option["key"];
+  selectedOptionKey: Option["key"];
   /** Callback, вызываемый при выборе варианта */
   onChange: (value: Option["key"]) => void;
   /** Заблокирован ли дропдаун */
@@ -20,7 +20,7 @@ export type MultiDropdownProps = {
 
 const MultiDropdown = ({
   options,
-  value,
+  selectedOptionKey,
   onChange,
   disabled,
   placeholder = "",
@@ -28,7 +28,7 @@ const MultiDropdown = ({
 }: MultiDropdownProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
   const selectedOptionValue =
-    options.find((option) => option.key === value)?.value || "";
+    options.find((option) => option.key === selectedOptionKey)?.value || "";
   const hasSelectedOptions = selectedOptionValue.length > 0;
 
   const multiDropDownClassName = classNames(
@@ -46,11 +46,14 @@ const MultiDropdown = ({
       <li key={option.key}>
         <input
           type="radio"
-          id={option.key}
-          checked={value === option.key}
+          id={option.value}
+          checked={selectedOptionKey === option.key}
           onChange={() => onSelect(option.key)}
         />
-        <label className={classes["multi-dropdown__item"]} htmlFor={option.key}>
+        <label
+          className={classes["multi-dropdown__item"]}
+          htmlFor={option.value}
+        >
           {option.value}
         </label>
       </li>

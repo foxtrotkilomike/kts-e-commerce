@@ -10,7 +10,7 @@ export const normalizeCategoriesToOptions = (
   categories: CategoryModelApi[]
 ): Option[] => {
   return categories.map((category) => ({
-    key: String(category.id),
+    key: category.id,
     value: category.name,
   }));
 };

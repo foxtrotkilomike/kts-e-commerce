@@ -45,7 +45,7 @@ const SearchFilter = ({
     <div className={classes["search-filter"]}>
       <MultiDropdown
         options={options}
-        value={value}
+        selectedOptionKey={value}
         onChange={onChange}
         placeholder={filterPlaceholder}
         disabled={disabled}

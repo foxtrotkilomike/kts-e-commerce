@@ -36,10 +36,10 @@ const searchInputPlaceholder = "Search";
 const searchButtonText = "Find Now";
 const searchFilterPlaceholder = "Filter";
 const searchFilterOptions: Option[] = [
-  { key: "chair", value: "Chair" },
-  { key: "cupboard", value: "Cupboard" },
-  { key: "table", value: "Table" },
-  { key: "decoration", value: "Decoration" },
+  { key: 1, value: "Chair" },
+  { key: 2, value: "Cupboard" },
+  { key: 3, value: "Table" },
+  { key: 4, value: "Decoration" },
 ];
 
 const productsListHeading = "Total Products";

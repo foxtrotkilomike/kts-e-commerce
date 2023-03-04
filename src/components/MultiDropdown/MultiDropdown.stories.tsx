@@ -4,10 +4,10 @@ import { Option } from "@customTypes/Option";
 
 import MultiDropdown, { MultiDropdownProps } from "./MultiDropdown";
 
-const OPTIONS = [
-  { key: "msk", value: "Moscow" },
-  { key: "spb", value: "Saint Petersburg" },
-  { key: "ekb", value: "Ekaterinburg" },
+const OPTIONS: Option[] = [
+  { key: 1, value: "Moscow" },
+  { key: 2, value: "Saint Petersburg" },
+  { key: 3, value: "Ekaterinburg" },
 ];
 
 export default {
@@ -30,14 +30,16 @@ export default {
 };
 
 export const Default = (props: MultiDropdownProps) => {
-  const [value, setValue] = React.useState<Option["key"]>(props.value);
+  const [value, setValue] = React.useState<Option["key"]>(
+    props.selectedOptionKey
+  );
 
   return (
     <MultiDropdown
       disabled={props.disabled}
       options={OPTIONS}
       onChange={setValue}
-      value={value}
+      selectedOptionKey={value}
     />
   );
 };
