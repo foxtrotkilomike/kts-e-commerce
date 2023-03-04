@@ -3,6 +3,7 @@
 
 .search-filter {
   flex-basis: 190px;
+  flex-shrink: 0;
 
   @include tablet-breakpoint {
     flex-basis: auto;
