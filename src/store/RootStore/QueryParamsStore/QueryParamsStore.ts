@@ -1,5 +1,5 @@
-import GetFilteredProductsConfig from "@customTypes/GetFilteredProductsConfig";
 import QueryParams from "@customTypes/QueryParams";
+import { QueryParamsStringified } from "@customTypes/QueryParamsStringified";
 import { QueryParamValue } from "@customTypes/QueryParamValue";
 import {
   action,
@@ -13,8 +13,8 @@ import * as qs from "qs";
 type PrivateFields = "_params" | "_prevParams" | "_changedParams";
 
 export default class QueryParamsStore {
-  private _params: GetFilteredProductsConfig = {};
-  private _prevParams: GetFilteredProductsConfig = {};
+  private _params: QueryParamsStringified = {};
+  private _prevParams: QueryParamsStringified = {};
   private _changedParams: string[] = [];
   private _searchQuery: string = "";
 
@@ -34,7 +34,7 @@ export default class QueryParamsStore {
     return this._params[key];
   }
 
-  get params(): GetFilteredProductsConfig {
+  get params(): QueryParamsStringified {
     return this._params;
   }
 
@@ -72,7 +72,7 @@ export default class QueryParamsStore {
         this._searchQuery = searchQuery;
         this._params = qs.parse(searchQuery, {
           ignoreQueryPrefix: true,
-        }) as GetFilteredProductsConfig;
+        }) as QueryParamsStringified;
         this.setChangedParams();
       });
     }

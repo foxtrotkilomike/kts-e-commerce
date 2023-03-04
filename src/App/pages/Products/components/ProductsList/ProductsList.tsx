@@ -17,6 +17,7 @@ import rootStore from "@store/RootStore";
 import { checkLoadingStatus } from "@utils/checkLoadingStatus";
 import fetchFilteredProducts from "@utils/fetchFilteredProducts";
 import renderProductCards from "@utils/renderProductCards";
+import { setFilteredSearchParams } from "@utils/setFilteredSearchParams";
 import classNames from "classnames";
 import { observer } from "mobx-react-lite";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -34,10 +35,12 @@ const ProductsList = (): JSX.Element => {
     productsLoadingError,
   } = productStore;
 
+  const isOutOfOffset =
+    totalProductsCount <= (rootStore.query.getParam(QueryParams.OFFSET) || 0);
   const isEmptyProducts = products.length === 0;
   const isLoading = checkLoadingStatus(productsLoadingStatus);
   const productsCount = products.length;
-  const hasMoreProducts = productsCount < totalProductsCount;
+  const hasMoreProducts = !isOutOfOffset && productsCount < totalProductsCount;
 
   useEffect(() => {
     fetchFilteredProducts(productStore);
@@ -51,9 +54,12 @@ const ProductsList = (): JSX.Element => {
   const fetchNextProducts = useCallback(() => {
     const offset = Number(rootStore.query.getParam(QueryParams.OFFSET)) || 0;
     const nextOffset = offset + DEFAULT_PRODUCTS_LIMIT;
-    setSearchParams({
-      [QueryParams.OFFSET]: String(nextOffset),
-    });
+    setFilteredSearchParams(
+      {
+        [QueryParams.OFFSET]: nextOffset,
+      },
+      setSearchParams
+    );
   }, [setSearchParams]);
 
   const renderedProducts = useMemo(
