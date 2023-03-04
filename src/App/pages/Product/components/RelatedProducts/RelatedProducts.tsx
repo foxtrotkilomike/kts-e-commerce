@@ -5,11 +5,7 @@ import Typography, {
   TypographyTagName,
 } from "@components/Typography";
 import Wrapper from "@components/Wrapper";
-import {
-  DEFAULT_CATEGORY_ID,
-  DEFAULT_PRODUCTS_LIMIT,
-  DEFAULT_PRODUCTS_OFFSET,
-} from "@config/constants";
+import { DEFAULT_CATEGORY_ID } from "@config/constants";
 import { relatedItemsHeading } from "@config/data";
 import QueryParams from "@customTypes/QueryParams";
 import Grid from "@layouts/Grid";
@@ -29,32 +25,28 @@ const RelatedProducts = ({
   productStore,
 }: RelatedProductsProps): JSX.Element => {
   const {
-    relatedProducts,
+    products,
     selectedProduct,
-    relatedProductsLoadingStatus,
-    relatedProductsLoadingError,
+    productsLoadingStatus,
+    productsLoadingError,
   } = productStore;
   const productCategoryId = selectedProduct?.category.id || DEFAULT_CATEGORY_ID;
 
   useEffect(() => {
     if (productCategoryId !== DEFAULT_CATEGORY_ID) {
-      productStore.getProductsByCategory({
-        [QueryParams.OFFSET]: DEFAULT_PRODUCTS_OFFSET,
-        [QueryParams.LIMIT]: DEFAULT_PRODUCTS_LIMIT,
+      productStore.getFilteredProducts({
         [QueryParams.CATEGORY_ID]: productCategoryId,
       });
     }
   }, [productStore, productCategoryId]);
 
-  const isEmptyProducts = relatedProducts.length === 0;
-  const isLoading = checkLoadingStatus(relatedProductsLoadingStatus);
+  const isEmptyProducts = products.length === 0;
+  const isLoading = checkLoadingStatus(productsLoadingStatus);
 
   const renderedProducts = useMemo(
     () =>
-      !isEmptyProducts ? (
-        <Grid>{renderProductCards(relatedProducts)}</Grid>
-      ) : null,
-    [isEmptyProducts, relatedProducts]
+      !isEmptyProducts ? <Grid>{renderProductCards(products)}</Grid> : null,
+    [isEmptyProducts, products]
   );
 
   return (
@@ -70,9 +62,9 @@ const RelatedProducts = ({
         <ProductContent
           isLoading={isLoading}
           isEmpty={isEmptyProducts}
-          data={relatedProducts}
+          data={products}
           renderedContent={renderedProducts}
-          responseError={relatedProductsLoadingError}
+          responseError={productsLoadingError}
         />
       </section>
     </Wrapper>
