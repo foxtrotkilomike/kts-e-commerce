@@ -11,13 +11,13 @@ type SetURLSearchParams = (
 ) => void;
 
 export const setFilteredSearchParams = (
-  newSearchParams: GetFilteredProductsConfig,
+  nextSearchParams: GetFilteredProductsConfig,
   setSearchParams: SetURLSearchParams
 ): void => {
   const currentSearchParams = rootStore.query.params;
   const mergedSearchParams = mergeSearchParams(
     currentSearchParams,
-    newSearchParams
+    nextSearchParams
   );
 
   setSearchParams(mergedSearchParams);

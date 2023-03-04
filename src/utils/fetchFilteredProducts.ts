@@ -4,10 +4,10 @@ import rootStore from "@store/RootStore";
 
 const fetchFilteredProducts = (
   productStore: ProductStore,
-  refresh: boolean = true
+  shouldRefresh: boolean = true
 ) => {
   const queryParams = rootStore.query.params as GetFilteredProductsConfig;
-  productStore.getFilteredProducts(queryParams, refresh);
+  productStore.getFilteredProducts(queryParams, shouldRefresh);
 };
 
 export default fetchFilteredProducts;

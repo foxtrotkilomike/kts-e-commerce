@@ -1,3 +1,4 @@
+import { DEFAULT_SEARCH_VALUE } from "@config/constants";
 import QueryParams from "@customTypes/QueryParams";
 import { QueryParamsStringified } from "@customTypes/QueryParamsStringified";
 import { QueryParamValue } from "@customTypes/QueryParamValue";
@@ -16,7 +17,7 @@ export default class QueryParamsStore {
   private _params: QueryParamsStringified = {};
   private _prevParams: QueryParamsStringified = {};
   private _changedParams: string[] = [];
-  private _searchQuery: string = "";
+  private _searchQuery: string = DEFAULT_SEARCH_VALUE;
 
   constructor() {
     makeObservable<QueryParamsStore, PrivateFields>(this, {

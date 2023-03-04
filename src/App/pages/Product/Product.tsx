@@ -14,7 +14,8 @@ import RelatedProducts from "./components/RelatedProducts";
 
 const Product = (): JSX.Element => {
   const { productId } = useParams();
-  const productIdNumber = productId ? Number(productId) : DEFAULT_PRODUCT_ID;
+  const productIdNumber =
+    productId !== undefined ? Number(productId) : DEFAULT_PRODUCT_ID;
   const productStore = useLocalStore(() => new ProductStore());
   const {
     selectedProduct: product,

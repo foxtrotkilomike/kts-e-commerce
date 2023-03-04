@@ -20,8 +20,8 @@ export default class SearchOptionsStore implements ILocalStore {
       _selectedOption: observable,
       options: computed,
       selectedOption: computed,
-      _setOptions: action,
       setSelectedOption: action.bound,
+      _setOptions: action,
     });
     this._setOptions();
   }

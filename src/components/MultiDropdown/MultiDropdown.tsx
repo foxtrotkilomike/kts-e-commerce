@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+import { DEFAULT_FILTER_VALUE } from "@config/constants";
 import { Option } from "@customTypes/Option";
 import classNames from "classnames";
 
@@ -28,8 +29,9 @@ const MultiDropdown = ({
 }: MultiDropdownProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
   const selectedOptionValue =
-    options.find((option) => option.key === selectedOptionKey)?.value || "";
-  const hasSelectedOptions = selectedOptionValue.length > 0;
+    options.find((option) => option.key === selectedOptionKey)?.value ||
+    DEFAULT_FILTER_VALUE;
+  const hasSelectedOptions = selectedOptionValue !== DEFAULT_FILTER_VALUE;
 
   const multiDropDownClassName = classNames(
     classes["multi-dropdown"],

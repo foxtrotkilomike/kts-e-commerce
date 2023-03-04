@@ -3,13 +3,13 @@ import { QueryParamsStringified } from "@customTypes/QueryParamsStringified";
 
 export const mergeSearchParams = (
   currentSearchParams: QueryParamsStringified,
-  newSearchParams: GetFilteredProductsConfig
+  nextSearchParams: GetFilteredProductsConfig
 ): QueryParamsStringified => {
   const result = Object.assign({}, currentSearchParams);
-  for (let key of Object.keys(newSearchParams)) {
-    if (newSearchParams[key as keyof GetFilteredProductsConfig] !== null) {
+  for (let key of Object.keys(nextSearchParams)) {
+    if (nextSearchParams[key as keyof GetFilteredProductsConfig] !== null) {
       result[key as keyof QueryParamsStringified] = String(
-        newSearchParams[key as keyof QueryParamsStringified]
+        nextSearchParams[key as keyof GetFilteredProductsConfig]
       );
     } else {
       delete result[key as keyof QueryParamsStringified];

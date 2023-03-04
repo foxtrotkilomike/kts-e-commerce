@@ -1,7 +1,6 @@
 import { Routes } from "@config/constants";
 import HeaderNavItem from "@customTypes/HeaderNavItem";
 import HeroContent from "@customTypes/HeroContent";
-import { Option } from "@customTypes/Option";
 import Pages from "@customTypes/Pages";
 import PagesHeroContent from "@customTypes/PagesHeroContent";
 
@@ -35,12 +34,6 @@ const defaultHeroContent: HeroContent = {
 const searchInputPlaceholder = "Search";
 const searchButtonText = "Find Now";
 const searchFilterPlaceholder = "Filter";
-const searchFilterOptions: Option[] = [
-  { key: 1, value: "Chair" },
-  { key: 2, value: "Cupboard" },
-  { key: 3, value: "Table" },
-  { key: 4, value: "Decoration" },
-];
 
 const productsListHeading = "Total Products";
 
@@ -59,6 +52,13 @@ enum ErrorMessages {
   UNEXPECTED_ERR = "Sorry, an unexpected error has occurred",
 }
 
+const LOGO_TEXT = "Lalasia";
+
+enum Currency {
+  DOLLAR = "$",
+  EURO = "€",
+}
+
 export {
   headerNavItems,
   heroContent,
@@ -66,11 +66,12 @@ export {
   searchInputPlaceholder,
   searchButtonText,
   searchFilterPlaceholder,
-  searchFilterOptions,
   productsListHeading,
   relatedItemsHeading,
   ProductPageButtonsText,
   productListEndMessage,
   emptyContentTextContent,
   ErrorMessages,
+  LOGO_TEXT,
+  Currency,
 };

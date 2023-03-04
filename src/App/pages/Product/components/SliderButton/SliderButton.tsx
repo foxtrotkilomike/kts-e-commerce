@@ -1,10 +1,15 @@
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 
 import { ReactComponent as LeftArrow } from "@assets/svg/arr_left.svg";
 import { ReactComponent as RightArrow } from "@assets/svg/arr_right.svg";
 import { useSwiper } from "swiper/react";
 
 import classes from "./SliderButton.module.scss";
+
+type SliderButtonProps = {
+  type: "prev" | "next";
+  className: string;
+};
 
 const SliderButton = ({ type, className }: SliderButtonProps): JSX.Element => {
   const swiper = useSwiper();
@@ -31,9 +36,4 @@ const SliderButton = ({ type, className }: SliderButtonProps): JSX.Element => {
   );
 };
 
-type SliderButtonProps = {
-  type: "prev" | "next";
-  className: string;
-};
-
-export default SliderButton;
+export default React.memo(SliderButton);

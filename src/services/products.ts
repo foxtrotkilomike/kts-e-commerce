@@ -6,7 +6,6 @@ import {
 import ApiError from "@customTypes/ApiError";
 import GetFilteredProductsConfig from "@customTypes/GetFilteredProductsConfig";
 import GetProductByIdConfig from "@customTypes/GetProductByIdConfig";
-import GetProductsRangeConfig from "@customTypes/GetProductsRangeConfig";
 import { Product } from "@store/models/platziStore";
 import { handleApiErrors } from "@utils/handleApiErrors";
 import axios from "axios";
@@ -17,22 +16,6 @@ const getAllProducts = async (): Promise<Product[] | ApiError> => {
   return axios({
     method: "get",
     url: `${API_BASE_URL}${productsEndpoint}`,
-  })
-    .then(({ data }) => data as Product[])
-    .catch(handleApiErrors);
-};
-
-const getProductsRange = async ({
-  offset = DEFAULT_PRODUCTS_OFFSET,
-  limit = DEFAULT_PRODUCTS_LIMIT,
-}: GetProductsRangeConfig): Promise<Product[] | ApiError> => {
-  return axios({
-    method: "get",
-    url: `${API_BASE_URL}${productsEndpoint}`,
-    params: {
-      offset,
-      limit,
-    },
   })
     .then(({ data }) => data as Product[])
     .catch(handleApiErrors);
@@ -75,9 +58,4 @@ const getFilteredProducts = async ({
     .catch(handleApiErrors);
 };
 
-export {
-  getAllProducts,
-  getProductsRange,
-  getProductById,
-  getFilteredProducts,
-};
+export { getAllProducts, getProductById, getFilteredProducts };

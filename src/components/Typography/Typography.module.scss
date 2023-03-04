@@ -29,6 +29,7 @@
       font-size: $font-xl;
     }
   }
+
   &_lg {
     font-size: $font-3xl;
     font-weight: 700;
@@ -41,6 +42,7 @@
       font-size: $font-lg-p;
     }
   }
+
   &_md_p {
     font-size: $font-xl-p;
     font-weight: 700;
@@ -53,6 +55,7 @@
       font-size: $font-lg;
     }
   }
+
   &_md {
     font-size: $font-xl;
     font-weight: 700;
@@ -79,6 +82,7 @@
       font-size: $font-md;
     }
   }
+
   &_lg {
     font-size: $font-lg-p;
 
@@ -90,6 +94,7 @@
       font-size: $font-sm;
     }
   }
+
   &_md {
     font-size: $font-lg;
     line-height: 180%;
@@ -103,6 +108,7 @@
       font-size: $font-xs;
     }
   }
+
   &_sm {
     font-size: $font-sm;
   }

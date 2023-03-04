@@ -20,7 +20,6 @@ const SearchInput = ({
   onSubmit,
 }: SearchInputProps): JSX.Element => {
   const productStore = useProductStoreContext();
-
   const isLoading = checkLoadingStatus(productStore.productsLoadingStatus);
 
   return (

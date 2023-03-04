@@ -36,7 +36,8 @@ type PrivateFields =
   | "_productsLoadingStatus"
   | "_selectedProductLoadingStatus"
   | "_productsLoadingError"
-  | "_selectedProductLoadingError";
+  | "_selectedProductLoadingError"
+  | "_setStatusAndError";
 
 export default class ProductStore implements ILocalStore {
   private _products: Product[] = [];
@@ -65,6 +66,7 @@ export default class ProductStore implements ILocalStore {
       selectedProductLoadingStatus: computed,
       productsLoadingError: computed,
       selectedProductLoadingError: computed,
+      _setStatusAndError: action,
       getAllProducts: action,
       getProductById: action,
       getFilteredProducts: action,
@@ -105,7 +107,7 @@ export default class ProductStore implements ILocalStore {
     entityType: EntityType,
     loadingStatus: LoadingStatus,
     error: ApiError
-  ) {
+  ): void {
     runInAction(() => {
       switch (entityType) {
         case EntityType.PRODUCTS:
@@ -124,7 +126,7 @@ export default class ProductStore implements ILocalStore {
     });
   }
 
-  private _initializeRequest(entityType: EntityType) {
+  private _initializeRequest(entityType: EntityType): void {
     this._setStatusAndError(
       entityType,
       LoadingStatus.PENDING,
@@ -161,7 +163,6 @@ export default class ProductStore implements ILocalStore {
 
   async getAllProducts(): Promise<void> {
     this._initializeRequest(EntityType.PRODUCTS);
-    this._products = [];
 
     const response = await getAllProducts();
 
@@ -195,7 +196,7 @@ export default class ProductStore implements ILocalStore {
 
   async getFilteredProducts(
     queryParams: GetFilteredProductsConfig,
-    refresh = true
+    shouldRefresh = true
   ): Promise<void> {
     this._initializeRequest(EntityType.PRODUCTS);
 
@@ -207,7 +208,7 @@ export default class ProductStore implements ILocalStore {
       if (hasError) return;
 
       this._productsLoadingStatus = LoadingStatus.SUCCESS;
-      if (refresh) {
+      if (shouldRefresh) {
         this._products = response as Product[];
         this.getTotalProductsCount(queryParams);
       } else {
@@ -245,10 +246,11 @@ export default class ProductStore implements ILocalStore {
 
   destroy(): void {
     /**
-     * I could not solve the problem with React Strict mode, which
+     * It's not possible to solve the problem with React.StrictMode, which
      * calls this method and kills all reactions before the app even
-     * starts working... So in order to get the app working this.destroy
-     * must stay inactive for now.
+     * starts working... So in order to get the app working,
+     * React.StrictMode must stay inactive. Otherwise, not destroyed
+     * reactions will accumulate and result in dozens of unnecessary requests.
      */
     this._offsetReaction();
   }

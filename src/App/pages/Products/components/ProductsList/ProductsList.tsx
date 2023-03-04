@@ -35,10 +35,10 @@ const ProductsList = (): JSX.Element => {
     productsLoadingError,
   } = productStore;
 
-  const isOutOfOffset =
-    totalProductsCount <= (rootStore.query.getParam(QueryParams.OFFSET) || 0);
   const isEmptyProducts = products.length === 0;
   const isLoading = checkLoadingStatus(productsLoadingStatus);
+  const isOutOfOffset =
+    totalProductsCount <= (rootStore.query.getParam(QueryParams.OFFSET) || 0);
   const productsCount = products.length;
   const hasMoreProducts = !isOutOfOffset && productsCount < totalProductsCount;
 
