@@ -2,7 +2,7 @@ import { ReactComponent as SearchIcon } from "@assets/svg/search.svg";
 import Button from "@components/Button";
 import Input from "@components/Input";
 import { searchButtonText, searchInputPlaceholder } from "@config/data";
-import { useProductStoreContext } from "@context/ProductStoreContext";
+import { useProductStoreContext } from "@context/ProductStore";
 import { checkLoadingStatus } from "@utils/checkLoadingStatus";
 import { observer } from "mobx-react-lite";
 

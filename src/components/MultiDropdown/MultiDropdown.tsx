@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { DEFAULT_FILTER_VALUE } from "@config/constants";
 import { Option } from "@customTypes/Option";
@@ -33,6 +33,13 @@ const MultiDropdown = ({
     DEFAULT_FILTER_VALUE;
   const hasSelectedOptions = selectedOptionValue !== DEFAULT_FILTER_VALUE;
 
+  useEffect(() => {
+    const closeSearchFilter = () => setIsOpen(false);
+    window.addEventListener("click", closeSearchFilter);
+
+    return () => window.removeEventListener("click", closeSearchFilter);
+  }, []);
+
   const multiDropDownClassName = classNames(
     classes["multi-dropdown"],
     className
@@ -55,6 +62,7 @@ const MultiDropdown = ({
         <label
           className={classes["multi-dropdown__item"]}
           htmlFor={option.value}
+          onClick={(e) => e.stopPropagation()}
         >
           {option.value}
         </label>
@@ -77,7 +85,10 @@ const MultiDropdown = ({
       <button
         className={classes["multi-dropdown__button"]}
         disabled={disabled}
-        onClick={() => setIsOpen((isOpen) => !isOpen)}
+        onClick={(e) => {
+          e.stopPropagation();
+          setIsOpen((isOpen) => !isOpen);
+        }}
       >
         {renderButtonContent()}
       </button>

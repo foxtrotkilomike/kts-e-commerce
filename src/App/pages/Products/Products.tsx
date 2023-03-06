@@ -1,5 +1,5 @@
 import Wrapper from "@components/Wrapper";
-import ProductStoreContextProvider from "@context/ProductStoreContextProvider";
+import ProductStoreContextProvider from "@context/ProductStore";
 import Pages from "@customTypes/Pages";
 import { observer } from "mobx-react-lite";
 

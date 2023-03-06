@@ -8,7 +8,7 @@ import Typography, {
 import Wrapper from "@components/Wrapper";
 import { DEFAULT_PRODUCTS_LIMIT } from "@config/constants";
 import { productsListHeading } from "@config/data";
-import { useProductStoreContext } from "@context/ProductStoreContext";
+import { useProductStoreContext } from "@context/ProductStore";
 import QueryParams from "@customTypes/QueryParams";
 import gridClasses from "@layouts/Grid/Grid.module.scss";
 import ProductContent from "@layouts/ProductContent";
