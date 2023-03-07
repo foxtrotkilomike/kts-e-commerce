@@ -28,7 +28,7 @@ const Search = (): JSX.Element => {
   const [searchValue, setSearchValue] = useState(
     checkSearchValue(searchValueInit)
   );
-  const [_, setSearchParams] = useSearchParams();
+  const [, setSearchParams] = useSearchParams();
 
   const handleSearchSubmit = useCallback(() => {
     setFilteredSearchParams(

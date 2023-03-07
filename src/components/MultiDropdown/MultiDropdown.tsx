@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import { DEFAULT_FILTER_VALUE } from "@config/constants";
 import { Option } from "@customTypes/Option";
@@ -29,9 +29,12 @@ const MultiDropdown = ({
   className,
 }: MultiDropdownProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
-  const selectedOptionValue =
-    options.find((option) => option.key === selectedOptionKey)?.value ||
-    DEFAULT_FILTER_VALUE;
+  const selectedOptionValue = useMemo(() => {
+    return (
+      options.find((option) => option.key === selectedOptionKey)?.value ||
+      DEFAULT_FILTER_VALUE
+    );
+  }, [options, selectedOptionKey]);
   const hasSelectedOptions = selectedOptionValue !== DEFAULT_FILTER_VALUE;
 
   useEffect(() => {

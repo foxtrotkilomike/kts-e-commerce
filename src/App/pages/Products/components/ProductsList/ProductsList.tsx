@@ -27,7 +27,7 @@ import classes from "./ProductsList.module.scss";
 const ProductsList = (): JSX.Element => {
   const rootStore = useRootStore();
   const productStore = useProductStoreContext();
-  const [_, setSearchParams] = useSearchParams();
+  const [, setSearchParams] = useSearchParams();
   const offset = rootStore.query.getParam(QueryParams.OFFSET);
   const {
     products,

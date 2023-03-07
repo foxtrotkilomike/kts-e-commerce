@@ -185,7 +185,7 @@ export default class ProductStore implements ILocalStore {
     if (!response) {
       this._setStatusAndError(
         entityType,
-        LoadingStatus.FAIL,
+        LoadingStatus.FAILURE,
         API_ERRORS.serverIsNotResponding
       );
 
@@ -195,7 +195,7 @@ export default class ProductStore implements ILocalStore {
     if ("code" in response) {
       this._setStatusAndError(
         entityType,
-        LoadingStatus.FAIL,
+        LoadingStatus.FAILURE,
         API_ERRORS.fallback
       );
 

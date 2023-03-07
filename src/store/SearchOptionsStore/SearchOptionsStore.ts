@@ -55,7 +55,9 @@ export default class SearchOptionsStore implements ILocalStore {
   private async _setOptions(): Promise<void> {
     const response = await getAllCategories();
 
-    if (!response || "code" in response) return;
+    if (!response || "code" in response) {
+      return;
+    }
 
     const normalizedOptions = normalizeCategoriesToOptions(
       response as CategoryModelApi[]

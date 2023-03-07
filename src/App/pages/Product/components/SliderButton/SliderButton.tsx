@@ -16,11 +16,11 @@ const SliderButton = ({ type, className }: SliderButtonProps): JSX.Element => {
   const buttonConfig = useMemo(
     () => ({
       prev: {
-        onClick: () => swiper.slidePrev(),
+        onClick: swiper.slidePrev,
         content: <LeftArrow className={classes.icon} />,
       },
       next: {
-        onClick: () => swiper.slideNext(),
+        onClick: swiper.slideNext,
         content: <RightArrow className={classes.icon} />,
       },
     }),
@@ -30,7 +30,7 @@ const SliderButton = ({ type, className }: SliderButtonProps): JSX.Element => {
   const { onClick, content } = buttonConfig[type];
 
   return (
-    <button className={className} onClick={onClick}>
+    <button className={className} onClick={() => onClick()}>
       {content}
     </button>
   );
