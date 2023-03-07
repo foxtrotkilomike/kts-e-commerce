@@ -1,6 +1,7 @@
 import GetFilteredProductsConfig from "@customTypes/GetFilteredProductsConfig";
 import rootStore from "@store/RootStore";
 import { mergeSearchParams } from "@utils/mergeSearchParams";
+import { runInAction } from "mobx";
 import { NavigateOptions, URLSearchParamsInit } from "react-router-dom";
 
 type SetURLSearchParams = (
@@ -14,11 +15,13 @@ export const setFilteredSearchParams = (
   nextSearchParams: GetFilteredProductsConfig,
   setSearchParams: SetURLSearchParams
 ): void => {
-  const currentSearchParams = rootStore.query.params;
-  const mergedSearchParams = mergeSearchParams(
-    currentSearchParams,
-    nextSearchParams
-  );
+  runInAction(() => {
+    const currentSearchParams = rootStore.query.params;
+    const mergedSearchParams = mergeSearchParams(
+      currentSearchParams,
+      nextSearchParams
+    );
 
-  setSearchParams(mergedSearchParams);
+    setSearchParams(mergedSearchParams);
+  });
 };

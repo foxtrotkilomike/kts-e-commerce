@@ -1,7 +1,6 @@
 import Wrapper from "@components/Wrapper";
 import ProductStoreContextProvider from "@context/ProductStore";
 import Pages from "@customTypes/Pages";
-import { observer } from "mobx-react-lite";
 
 import Hero from "./components/Hero";
 import ProductsList from "./components/ProductsList";
@@ -19,4 +18,4 @@ const Products = (): JSX.Element => {
   );
 };
 
-export default observer(Products);
+export default Products;

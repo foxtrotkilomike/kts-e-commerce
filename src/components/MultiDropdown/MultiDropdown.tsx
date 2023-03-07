@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { DEFAULT_FILTER_VALUE } from "@config/constants";
 import { Option } from "@customTypes/Option";
 import classNames from "classnames";
+import { runInAction } from "mobx";
 
 import classes from "./MultiDropdown.module.scss";
 
@@ -54,7 +55,9 @@ const MultiDropdown = ({
     selectedOptionKey: Option["key"]
   ) => {
     e.stopPropagation();
-    onChange(selectedOptionKey);
+    runInAction(() => {
+      onChange(selectedOptionKey);
+    });
   };
 
   const renderDropdownOptions = (options: Option[]) => {

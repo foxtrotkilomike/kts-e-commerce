@@ -7,11 +7,11 @@ import {
   DEFAULT_SEARCH_VALUE,
 } from "@config/constants";
 import { searchFilterPlaceholder } from "@config/data";
+import { useRootStore } from "@context/RootStore";
 import QueryParams from "@customTypes/QueryParams";
 import { useLocalStore } from "@hooks/useLocalStore";
 import SearchOptionsStore from "@store/SearchOptionsStore";
-import getInitOptionValue from "@utils/getInitOptionValue";
-import getInitSearchValue from "@utils/getInitSearchValue";
+import checkSearchValue from "@utils/getInitSearchValue";
 import { setFilteredSearchParams } from "@utils/setFilteredSearchParams";
 import { observer } from "mobx-react-lite";
 import { useSearchParams } from "react-router-dom";
@@ -21,11 +21,13 @@ import SearchFilter from "../SearchFilter";
 import SearchInput from "../SearchInput";
 
 const Search = (): JSX.Element => {
-  const optionsStore = useLocalStore(
-    () => new SearchOptionsStore(getInitOptionValue())
-  );
+  const rootStore = useRootStore();
+  const searchValueInit = rootStore.query.getParam(QueryParams.TITLE);
+  const optionsStore = useLocalStore(() => new SearchOptionsStore());
   const { options, selectedOption, setSelectedOption } = optionsStore;
-  const [searchValue, setSearchValue] = useState(getInitSearchValue);
+  const [searchValue, setSearchValue] = useState(
+    checkSearchValue(searchValueInit)
+  );
   const [_, setSearchParams] = useSearchParams();
 
   const handleSearchSubmit = useCallback(() => {
@@ -52,6 +54,10 @@ const Search = (): JSX.Element => {
 
     return () => window.removeEventListener("keydown", submitSearch);
   }, [handleSearchSubmit]);
+
+  useEffect(() => {
+    setSearchValue(checkSearchValue(searchValueInit));
+  }, [searchValueInit]);
 
   return (
     <Wrapper centered>

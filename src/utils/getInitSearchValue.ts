@@ -1,11 +1,10 @@
 import { DEFAULT_SEARCH_VALUE } from "@config/constants";
-import QueryParams from "@customTypes/QueryParams";
-import rootStore from "@store/RootStore";
+import { QueryParamValue } from "@customTypes/QueryParamValue";
 
-const getInitSearchValue = (): string => {
-  const searchParam = rootStore.query.getParam(QueryParams.TITLE);
-
-  return typeof searchParam === "string" ? searchParam : DEFAULT_SEARCH_VALUE;
+const checkSearchValue = (searchValueInit: QueryParamValue): string => {
+  return typeof searchValueInit === "string"
+    ? searchValueInit
+    : DEFAULT_SEARCH_VALUE;
 };
 
-export default getInitSearchValue;
+export default checkSearchValue;

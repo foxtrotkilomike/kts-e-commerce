@@ -1,24 +1,34 @@
 import { DEFAULT_CATEGORY_ID, DEFAULT_FILTER_VALUE } from "@config/constants";
 import { ILocalStore } from "@customTypes/ILocalStore";
 import { Option } from "@customTypes/Option";
+import QueryParams from "@customTypes/QueryParams";
 import { getAllCategories } from "@services/categories";
 import {
   CategoryModelApi,
   normalizeCategoriesToOptions,
 } from "@store/models/platziStore";
-import { action, computed, makeObservable, observable } from "mobx";
+import rootStore from "@store/RootStore";
+import {
+  action,
+  computed,
+  IReactionDisposer,
+  makeObservable,
+  observable,
+  reaction,
+  runInAction,
+} from "mobx";
 
 type PrivateFields = "_options" | "_selectedOptionKey" | "_setOptions";
 
 export default class SearchOptionsStore implements ILocalStore {
   private _options: Option[] = [];
-  private _selectedOptionKey: Option["key"];
+  private _selectedOptionKey: Option["key"] = DEFAULT_CATEGORY_ID;
   private _resetOption: Option = {
     key: DEFAULT_CATEGORY_ID,
     value: DEFAULT_FILTER_VALUE,
   };
 
-  constructor(initOption: number) {
+  constructor() {
     makeObservable<SearchOptionsStore, PrivateFields>(this, {
       _options: observable.ref,
       _selectedOptionKey: observable,
@@ -27,7 +37,6 @@ export default class SearchOptionsStore implements ILocalStore {
       setSelectedOption: action.bound,
       _setOptions: action,
     });
-    this._selectedOptionKey = initOption;
     this._setOptions();
   }
 
@@ -51,8 +60,24 @@ export default class SearchOptionsStore implements ILocalStore {
     const normalizedOptions = normalizeCategoriesToOptions(
       response as CategoryModelApi[]
     );
-    this._options = [this._resetOption, ...normalizedOptions];
+    runInAction(() => {
+      this._options = [this._resetOption, ...normalizedOptions];
+    });
   }
 
-  destroy() {}
+  private _queryOptionReaction: IReactionDisposer = reaction(
+    () => rootStore.query.getParam(QueryParams.CATEGORY_ID),
+    (currentCategory) => {
+      const optionNumber = Number(currentCategory);
+      const optionValue =
+        Number.isNaN(optionNumber) || optionNumber === DEFAULT_CATEGORY_ID
+          ? DEFAULT_CATEGORY_ID
+          : optionNumber;
+      this.setSelectedOption(optionValue);
+    }
+  );
+
+  destroy() {
+    this._queryOptionReaction();
+  }
 }

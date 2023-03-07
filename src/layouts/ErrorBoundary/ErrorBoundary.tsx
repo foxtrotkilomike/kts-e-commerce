@@ -1,3 +1,5 @@
+import React from "react";
+
 import Typography, {
   TypographySize,
   TypographyTagName,
@@ -71,4 +73,4 @@ const ErrorBoundary = (): JSX.Element => {
   );
 };
 
-export default ErrorBoundary;
+export default React.memo(ErrorBoundary);
