@@ -28,8 +28,8 @@ const ProductSlider = ({ images }: ProductSliderProps): JSX.Element => {
       loop
       className={classes.slider}
       navigation={{
-        prevEl: prevButtonClassName,
-        nextEl: nextButtonClassName,
+        prevEl: CSS.escape(prevButtonClassName),
+        nextEl: CSS.escape(nextButtonClassName),
       }}
     >
       {images.map((image) => (
