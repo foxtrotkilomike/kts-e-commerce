@@ -10,6 +10,7 @@
     stroke: $color-stroke-icon;
     transition: stroke ease $transition-m;
   }
+
   &__icon:hover path {
     stroke: $color-stroke-icon-hover;
   }

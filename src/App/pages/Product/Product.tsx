@@ -1,50 +1,51 @@
-import { useCallback, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 
 import Wrapper from "@components/Wrapper";
 import { DEFAULT_PRODUCT_ID } from "@config/constants";
-import { productsMock } from "@config/data";
-import GetProductByIdConfig from "@customTypes/GetProductByIdConfig";
-import useFetchProduct from "@hooks/useFetchProduct";
+import { useLocalStore } from "@hooks/useLocalStore";
 import ProductContent from "@layouts/ProductContent";
 import ProductInfo from "@pages/Product/components/ProductInfo";
-import { getProductById } from "@services/products";
+import ProductStore from "@store/ProductStore";
+import { observer } from "mobx-react-lite";
 import { useParams } from "react-router-dom";
 
 import RelatedProducts from "./components/RelatedProducts";
 
 const Product = (): JSX.Element => {
   const { productId } = useParams();
-  const productIdNumber = productId ? Number(productId) : DEFAULT_PRODUCT_ID;
+  const productIdNumber =
+    productId !== undefined ? Number(productId) : DEFAULT_PRODUCT_ID;
+  const productStore = useLocalStore(() => new ProductStore());
+  const {
+    selectedProduct: product,
+    selectedProductLoadingError,
+    isLoadingSelectedProduct,
+    isEmptyProduct,
+  } = productStore;
 
-  const fetchConfig = useMemo(() => {
-    return { productId: productIdNumber };
-  }, [productIdNumber]);
+  useEffect(() => {
+    if (productIdNumber !== DEFAULT_PRODUCT_ID) {
+      productStore.getProductById(productIdNumber);
+    }
+  }, [productStore, productIdNumber]);
 
-  const { product, isLoading, responseError } =
-    useFetchProduct<GetProductByIdConfig>(
-      productsMock,
-      fetchConfig,
-      getProductById
-    );
-
-  const isEmptyProduct = product.id === DEFAULT_PRODUCT_ID;
-  const renderProduct = useCallback(
-    () => <ProductInfo product={product} />,
+  const renderedProduct = useMemo(
+    () => (product ? <ProductInfo product={product} /> : null),
     [product]
   );
 
   return (
     <Wrapper main>
       <ProductContent
-        isLoading={isLoading}
+        isLoading={isLoadingSelectedProduct}
         isEmpty={isEmptyProduct}
-        content={product}
-        renderContent={renderProduct}
-        responseError={responseError}
+        data={product}
+        renderedContent={renderedProduct}
+        responseError={selectedProductLoadingError}
       />
-      <RelatedProducts productCategoryId={product.category.id} />
+      <RelatedProducts productStore={productStore} />
     </Wrapper>
   );
 };
 
-export default Product;
+export default observer(Product);

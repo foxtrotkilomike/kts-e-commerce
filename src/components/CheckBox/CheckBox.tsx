@@ -21,7 +21,9 @@ const CheckBox = ({
         type="checkbox"
         className={classes.checkbox__input}
         checked={checked}
-        onChange={(e) => onChange(e.target.checked)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          onChange(e.target.checked)
+        }
         {...nativeProps}
       />
       <div className={classes.checkbox__checkmark} />

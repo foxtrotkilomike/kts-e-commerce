@@ -2,11 +2,11 @@ import React from "react";
 
 import { ReactComponent as FilterIcon } from "@assets/svg/filter.svg";
 import MultiDropdown from "@components/MultiDropdown";
-import { Option } from "@components/MultiDropdown/MultiDropdown";
 import Typography, {
   TypographySize,
   TypographyTagName,
 } from "@components/Typography";
+import { Option } from "@customTypes/Option";
 
 import classes from "./SearchFilter.module.scss";
 
@@ -14,11 +14,9 @@ type SearchFilterProps = {
   /** Массив возможных вариантов для выбора */
   options: Option[];
   /** Текущие выбранные значения поля, может быть пустым */
-  value: Option[];
+  value: Option["key"];
   /** Callback, вызываемый при выборе варианта */
-  onChange: (value: Option[]) => void;
-  /** Преобразовать выбранные значения в строку. Отображается в дропдауне в качестве выбранного значения */
-  pluralizeOptions: (value: Option[]) => string;
+  onChange: (value: Option["key"]) => void;
   /** Заблокирован ли дропдаун */
   disabled?: boolean;
   placeholder?: string;
@@ -28,7 +26,6 @@ const SearchFilter = ({
   options,
   value,
   onChange,
-  pluralizeOptions,
   disabled,
   placeholder,
 }: SearchFilterProps): JSX.Element => {
@@ -48,9 +45,8 @@ const SearchFilter = ({
     <div className={classes["search-filter"]}>
       <MultiDropdown
         options={options}
-        value={value}
+        selectedOptionKey={value}
         onChange={onChange}
-        pluralizeOptions={pluralizeOptions}
         placeholder={filterPlaceholder}
         disabled={disabled}
       />

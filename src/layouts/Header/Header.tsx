@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 import Wrapper from "@components/Wrapper";
 import BurgerBackground from "@layouts/Header/BurgerBackground";
@@ -33,4 +33,4 @@ const Header = (): JSX.Element => {
   );
 };
 
-export default Header;
+export default React.memo(Header);

@@ -1,0 +1,301 @@
+import { API_ERRORS } from "@config/api";
+import {
+  DEFAULT_MAX_PRODUCTS_LIMIT,
+  DEFAULT_PRODUCT_ID,
+  DEFAULT_PRODUCTS_OFFSET,
+  INIT_PRODUCTS_COUNT,
+} from "@config/constants";
+import ApiError from "@customTypes/ApiError";
+import EntityType from "@customTypes/EntityType";
+import GetFilteredProductsConfig from "@customTypes/GetFilteredProductsConfig";
+import { ILocalStore } from "@customTypes/ILocalStore";
+import { LoadingStatus } from "@customTypes/LoadingStatus";
+import QueryParams from "@customTypes/QueryParams";
+import {
+  getAllProducts,
+  getProductById,
+  getFilteredProducts,
+} from "@services/products";
+import { Product } from "@store/models/platziStore";
+import rootStore from "@store/RootStore";
+import { checkLoadingStatus } from "@utils/checkLoadingStatus";
+import fetchFilteredProducts from "@utils/fetchFilteredProducts";
+import shouldProductsRefresh from "@utils/shouldProductsRefresh";
+import {
+  action,
+  computed,
+  IReactionDisposer,
+  makeObservable,
+  observable,
+  reaction,
+  runInAction,
+} from "mobx";
+
+type PrivateFields =
+  | "_products"
+  | "_productsInRange"
+  | "_selectedProduct"
+  | "_totalProductsCount"
+  | "_productsLoadingStatus"
+  | "_selectedProductLoadingStatus"
+  | "_productsLoadingError"
+  | "_selectedProductLoadingError"
+  | "_setStatusAndError";
+
+export default class ProductStore implements ILocalStore {
+  private _products: Product[] = [];
+  private _selectedProduct: Product | null = null;
+  private _productsInRange: Product[] = [];
+  private _totalProductsCount: number = INIT_PRODUCTS_COUNT;
+  private _productsLoadingStatus: LoadingStatus = LoadingStatus.INITIAL;
+  private _selectedProductLoadingStatus: LoadingStatus = LoadingStatus.INITIAL;
+  private _productsLoadingError: ApiError = API_ERRORS.initial;
+  private _selectedProductLoadingError: ApiError = API_ERRORS.initial;
+
+  constructor() {
+    makeObservable<ProductStore, PrivateFields>(this, {
+      _products: observable.ref,
+      _productsInRange: observable.ref,
+      _selectedProduct: observable.ref,
+      _totalProductsCount: observable,
+      _productsLoadingStatus: observable,
+      _selectedProductLoadingStatus: observable,
+      _productsLoadingError: observable.ref,
+      _selectedProductLoadingError: observable.ref,
+      products: computed,
+      selectedProduct: computed,
+      totalProductsCount: computed,
+      productsLoadingStatus: computed,
+      selectedProductLoadingStatus: computed,
+      productsLoadingError: computed,
+      selectedProductLoadingError: computed,
+      isEmptyProducts: computed,
+      isLoadingProducts: computed,
+      isLoadingSelectedProduct: computed,
+      isOutOfOffset: computed,
+      productsCount: computed,
+      hasMoreProducts: computed,
+      _setStatusAndError: action,
+      getAllProducts: action,
+      getProductById: action,
+      getFilteredProducts: action,
+      getTotalProductsCount: action,
+      destroy: action,
+    });
+  }
+
+  get products(): Product[] {
+    return this._products;
+  }
+
+  get selectedProduct(): Product | null {
+    return this._selectedProduct;
+  }
+
+  get totalProductsCount(): number {
+    return this._totalProductsCount;
+  }
+
+  get productsLoadingStatus(): LoadingStatus {
+    return this._productsLoadingStatus;
+  }
+
+  get selectedProductLoadingStatus(): LoadingStatus {
+    return this._productsLoadingStatus;
+  }
+
+  get productsLoadingError(): ApiError {
+    return this._productsLoadingError;
+  }
+
+  get selectedProductLoadingError(): ApiError {
+    return this._productsLoadingError;
+  }
+
+  get isEmptyProducts(): boolean {
+    return this._products.length === 0;
+  }
+
+  get isEmptyProduct(): boolean {
+    if (!this.selectedProduct) {
+      return true;
+    }
+
+    return this.selectedProduct.id === DEFAULT_PRODUCT_ID;
+  }
+
+  get isLoadingProducts(): boolean {
+    return checkLoadingStatus(this._productsLoadingStatus);
+  }
+
+  get isLoadingSelectedProduct(): boolean {
+    return checkLoadingStatus(this._selectedProductLoadingStatus);
+  }
+
+  get isOutOfOffset(): boolean {
+    return (
+      this._totalProductsCount <=
+      (rootStore.query.getParam(QueryParams.OFFSET) || 0)
+    );
+  }
+
+  get productsCount(): number {
+    return this._products.length;
+  }
+
+  get hasMoreProducts(): boolean {
+    return !this.isOutOfOffset && this.productsCount < this.totalProductsCount;
+  }
+
+  private _setStatusAndError(
+    entityType: EntityType,
+    loadingStatus: LoadingStatus,
+    error: ApiError
+  ): void {
+    runInAction(() => {
+      switch (entityType) {
+        case EntityType.PRODUCTS:
+          this._productsLoadingStatus = loadingStatus;
+          this._productsLoadingError = error;
+          break;
+
+        case EntityType.SELECTED_PRODUCT:
+          this._selectedProductLoadingStatus = loadingStatus;
+          this._selectedProductLoadingError = error;
+          break;
+
+        default:
+          break;
+      }
+    });
+  }
+
+  private _initializeRequest(entityType: EntityType): void {
+    this._setStatusAndError(
+      entityType,
+      LoadingStatus.PENDING,
+      API_ERRORS.initial
+    );
+  }
+
+  private _hasResponseError(
+    response: Product[] | Product | ApiError,
+    entityType: EntityType
+  ): boolean {
+    if (!response) {
+      this._setStatusAndError(
+        entityType,
+        LoadingStatus.FAILURE,
+        API_ERRORS.serverIsNotResponding
+      );
+
+      return true;
+    }
+
+    if ("code" in response) {
+      this._setStatusAndError(
+        entityType,
+        LoadingStatus.FAILURE,
+        API_ERRORS.fallback
+      );
+
+      return true;
+    }
+
+    return false;
+  }
+
+  async getAllProducts(): Promise<void> {
+    this._initializeRequest(EntityType.PRODUCTS);
+
+    const response = await getAllProducts();
+
+    runInAction(() => {
+      const hasError = this._hasResponseError(response, EntityType.PRODUCTS);
+
+      if (!hasError) {
+        this._productsLoadingStatus = LoadingStatus.SUCCESS;
+        this._products = response as Product[];
+      }
+    });
+  }
+
+  async getProductById(productId: number): Promise<void> {
+    this._initializeRequest(EntityType.SELECTED_PRODUCT);
+
+    const response = await getProductById({ productId });
+
+    runInAction(() => {
+      const hasError = this._hasResponseError(
+        response,
+        EntityType.SELECTED_PRODUCT
+      );
+
+      if (!hasError) {
+        this._selectedProductLoadingStatus = LoadingStatus.SUCCESS;
+        this._selectedProduct = response as Product;
+      }
+    });
+  }
+
+  async getFilteredProducts(
+    queryParams: GetFilteredProductsConfig,
+    shouldRefresh = true
+  ): Promise<void> {
+    this._initializeRequest(EntityType.PRODUCTS);
+
+    const response = await getFilteredProducts(queryParams);
+
+    runInAction(() => {
+      const hasError = this._hasResponseError(response, EntityType.PRODUCTS);
+
+      if (hasError) return;
+
+      this._productsLoadingStatus = LoadingStatus.SUCCESS;
+      if (shouldRefresh) {
+        this._products = response as Product[];
+        this.getTotalProductsCount(queryParams);
+      } else {
+        this._productsInRange = response as Product[];
+        this._products = [...this._products, ...this._productsInRange];
+      }
+    });
+  }
+
+  async getTotalProductsCount(
+    queryParams: GetFilteredProductsConfig = {}
+  ): Promise<void> {
+    const response = await getFilteredProducts({
+      ...queryParams,
+      offset: DEFAULT_PRODUCTS_OFFSET,
+      limit: DEFAULT_MAX_PRODUCTS_LIMIT,
+    });
+
+    runInAction(() => {
+      const hasError = this._hasResponseError(response, EntityType.PRODUCTS);
+
+      if (!hasError) {
+        this._totalProductsCount = (response as Product[]).length;
+      }
+    });
+  }
+
+  private readonly _offsetReaction: IReactionDisposer = reaction(
+    () => rootStore.query.changedParams,
+    async (changedParams) => {
+      const shouldRefresh = shouldProductsRefresh(changedParams);
+      fetchFilteredProducts(this, shouldRefresh);
+    }
+  );
+
+  destroy(): void {
+    /**
+     * It's not possible to solve the problem with React.StrictMode, which
+     * calls this method and kills all reactions before the app even
+     * starts working... So in order to get the app working,
+     * React.StrictMode must stay inactive. Otherwise, not destroyed
+     * reactions will accumulate and result in dozens of unnecessary requests.
+     */
+    this._offsetReaction();
+  }
+}

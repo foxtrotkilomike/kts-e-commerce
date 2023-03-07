@@ -1,71 +1,86 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
+import { DEFAULT_FILTER_VALUE } from "@config/constants";
+import { Option } from "@customTypes/Option";
 import classNames from "classnames";
+import { runInAction } from "mobx";
 
 import classes from "./MultiDropdown.module.scss";
-
-/** Вариант для выбора в фильтре */
-export type Option = {
-  /** Ключ варианта, используется для отправки на бек/использования в коде */
-  key: string;
-  /** Значение варианта, отображается пользователю */
-  value: string;
-};
 
 export type MultiDropdownProps = {
   /** Массив возможных вариантов для выбора */
   options: Option[];
-  /** Текущие выбранные значения поля, может быть пустым */
-  value: Option[];
+  /** Текущее выбранное поле (ключ), может быть пустым */
+  selectedOptionKey: Option["key"];
   /** Callback, вызываемый при выборе варианта */
-  onChange: (value: Option[]) => void;
+  onChange: (value: Option["key"]) => void;
   /** Заблокирован ли дропдаун */
   disabled?: boolean;
-  /** Преобразовать выбранные значения в строку. Отображается в дропдауне в качестве выбранного значения */
-  pluralizeOptions: (value: Option[]) => string;
   placeholder?: React.ReactNode;
   className?: string;
 };
 
 const MultiDropdown = ({
   options,
-  value,
+  selectedOptionKey,
   onChange,
   disabled,
-  pluralizeOptions,
   placeholder = "",
   className,
 }: MultiDropdownProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
-  const hasSelectedOptions = value.length > 0;
+  const selectedOptionValue = useMemo(() => {
+    return (
+      options.find((option) => option.key === selectedOptionKey)?.value ||
+      DEFAULT_FILTER_VALUE
+    );
+  }, [options, selectedOptionKey]);
+  const hasSelectedOptions = selectedOptionValue !== DEFAULT_FILTER_VALUE;
+
+  useEffect(() => {
+    const closeSearchFilter = () => {
+      setIsOpen(false);
+    };
+    window.addEventListener("click", closeSearchFilter);
+
+    return () => window.removeEventListener("click", closeSearchFilter);
+  }, []);
+
   const multiDropDownClassName = classNames(
     classes["multi-dropdown"],
     className
   );
 
-  const isSelected = (selectedOption: Option) =>
-    !!value.find((option) => option.key === selectedOption.key);
-
-  const updateOptions = (selectedOption: Option) =>
-    isSelected(selectedOption)
-      ? value.filter((option) => option.key !== selectedOption.key)
-      : value.concat(selectedOption);
-
-  const onSelect = (selectedOption: Option) => {
-    const updatedOptions = updateOptions(selectedOption);
-    onChange(updatedOptions);
+  const onSelect = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.MouseEvent<HTMLLabelElement, MouseEvent>,
+    selectedOptionKey: Option["key"]
+  ) => {
+    e.stopPropagation();
+    runInAction(() => {
+      onChange(selectedOptionKey);
+    });
   };
 
   const renderDropdownOptions = (options: Option[]) => {
     return options.map((option) => (
       <li key={option.key}>
         <input
-          type="checkbox"
-          id={option.key}
-          checked={isSelected(option)}
-          onChange={() => onSelect(option)}
+          type="radio"
+          id={option.value}
+          name="multi-dropdown"
+          checked={selectedOptionKey === option.key}
+          onChange={(e) => onSelect(e, option.key)}
         />
-        <label className={classes["multi-dropdown__item"]} htmlFor={option.key}>
+        <label
+          className={classes["multi-dropdown__item"]}
+          htmlFor={option.value}
+          onClick={(e) => {
+            onSelect(e, option.key);
+            setIsOpen((isOpen) => !isOpen);
+          }}
+        >
           {option.value}
         </label>
       </li>
@@ -75,7 +90,7 @@ const MultiDropdown = ({
   const renderButtonContent = () => {
     return hasSelectedOptions ? (
       <div className={classes["multi-dropdown__summary"]}>
-        {pluralizeOptions(value)}
+        {selectedOptionValue}
       </div>
     ) : (
       placeholder
@@ -87,7 +102,11 @@ const MultiDropdown = ({
       <button
         className={classes["multi-dropdown__button"]}
         disabled={disabled}
-        onClick={() => setIsOpen((isOpen) => !isOpen)}
+        onClick={(e) => {
+          e.stopPropagation();
+          setIsOpen((isOpen) => !isOpen);
+        }}
+        onKeyDown={(e: React.KeyboardEvent) => e.stopPropagation()}
       >
         {renderButtonContent()}
       </button>

@@ -8,7 +8,7 @@ import Typography, {
 } from "@components/Typography";
 import Wrapper from "@components/Wrapper";
 import { ProductPageButtonsText } from "@config/data";
-import Product from "@customTypes/Product";
+import { Product } from "@store/models/platziStore";
 
 import classes from "./ProductInfo.module.scss";
 import ProductSlider from "../ProductSlider";
@@ -23,7 +23,7 @@ const ProductInfo = ({
   return (
     <Wrapper centered>
       <div className={classes.container}>
-        <ProductSlider image={images} />
+        <ProductSlider images={images} />
         <div className={classes["product-content"]}>
           <Typography
             className={classes.title}

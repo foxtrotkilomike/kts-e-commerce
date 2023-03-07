@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 
 import Loader, { LoaderSize } from "@components/Loader";
 import Typography, {
@@ -6,69 +6,83 @@ import Typography, {
   TypographyTagName,
 } from "@components/Typography";
 import Wrapper from "@components/Wrapper";
-import { INITIAL_PRODUCTS } from "@config/api";
-import {
-  DEFAULT_PRODUCTS_COUNT,
-  DEFAULT_PRODUCTS_LIMIT,
-  DEFAULT_PRODUCTS_OFFSET,
-  TOTAL_PRODUCTS_COUNT,
-} from "@config/constants";
+import { DEFAULT_PRODUCTS_LIMIT } from "@config/constants";
 import { productsListHeading } from "@config/data";
-import GetProductsRangeConfig from "@customTypes/GetProductsRangeConfig";
-import useFetchProducts from "@hooks/useFetchProducts";
+import { useProductStoreContext } from "@context/ProductStore";
+import { useRootStore } from "@context/RootStore";
+import QueryParams from "@customTypes/QueryParams";
 import gridClasses from "@layouts/Grid/Grid.module.scss";
 import ProductContent from "@layouts/ProductContent";
 import ProductsListEndMessage from "@pages/Products/components/ProductsListEndMessage";
-import { getProductsRange } from "@services/products";
+import fetchFilteredProducts from "@utils/fetchFilteredProducts";
 import renderProductCards from "@utils/renderProductCards";
+import { setFilteredSearchParams } from "@utils/setFilteredSearchParams";
 import classNames from "classnames";
+import { observer } from "mobx-react-lite";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { useSearchParams } from "react-router-dom";
 
 import classes from "./ProductsList.module.scss";
 
 const ProductsList = (): JSX.Element => {
-  const [offset, setOffset] = useState(DEFAULT_PRODUCTS_OFFSET);
+  const rootStore = useRootStore();
+  const productStore = useProductStoreContext();
+  const [, setSearchParams] = useSearchParams();
+  const offset = rootStore.query.getParam(QueryParams.OFFSET);
+  const {
+    products,
+    totalProductsCount,
+    productsLoadingError,
+    isEmptyProducts,
+    isLoadingProducts,
+    hasMoreProducts,
+  } = productStore;
 
-  const fetchConfig = useMemo(() => {
-    return { offset, limit: DEFAULT_PRODUCTS_LIMIT };
-  }, [offset]);
+  useEffect(() => {
+    fetchFilteredProducts(productStore);
+  }, [productStore]);
 
-  const { products, isLoading, responseError } =
-    useFetchProducts<GetProductsRangeConfig>(
-      INITIAL_PRODUCTS,
-      fetchConfig,
-      getProductsRange
-    );
-
-  const isEmptyProducts = products.length === 0;
-  const productsCount = products.length;
-  const hasMoreProducts = productsCount < TOTAL_PRODUCTS_COUNT;
   const infiniteScrollClassName = useMemo(
-    () => classNames(gridClasses.grid, classes.infiniteScroll),
+    () => classNames(gridClasses.grid, classes["infinite-scroll"]),
     []
   );
-  const fetchNextProducts = useCallback(() => {
-    setOffset((offset) => offset + DEFAULT_PRODUCTS_LIMIT);
-  }, []);
 
-  const renderProducts = useCallback(
-    () => (
-      <InfiniteScroll
-        dataLength={products.length}
-        next={fetchNextProducts}
-        hasMore={hasMoreProducts}
-        loader={
-          <div className={classes.loader}>
-            <Loader size={LoaderSize.l} />
-          </div>
-        }
-        endMessage={<ProductsListEndMessage />}
-        className={infiniteScrollClassName}
-      >
-        {renderProductCards(products)}
-      </InfiniteScroll>
-    ),
-    [products, fetchNextProducts, hasMoreProducts, infiniteScrollClassName]
+  const fetchNextProducts = useCallback(() => {
+    const offsetNumber = Number(offset) || 0;
+    const nextOffset = offsetNumber + DEFAULT_PRODUCTS_LIMIT;
+    setFilteredSearchParams(
+      {
+        [QueryParams.OFFSET]: nextOffset,
+      },
+      setSearchParams
+    );
+  }, [offset, setSearchParams]);
+
+  const renderedProducts = useMemo(
+    () =>
+      !isEmptyProducts ? (
+        <InfiniteScroll
+          dataLength={products.length}
+          next={fetchNextProducts}
+          hasMore={hasMoreProducts}
+          loader={
+            <div className={classes.loader}>
+              <Loader size={LoaderSize.l} />
+            </div>
+          }
+          endMessage={<ProductsListEndMessage />}
+          className={infiniteScrollClassName}
+        >
+          {renderProductCards(products)}
+        </InfiniteScroll>
+      ) : null,
+    [
+      isEmptyProducts,
+      products,
+      fetchNextProducts,
+      hasMoreProducts,
+      infiniteScrollClassName,
+    ]
   );
 
   return (
@@ -82,20 +96,18 @@ const ProductsList = (): JSX.Element => {
           >
             {productsListHeading}
           </Typography>
-          <div className={classes.header__counter}>
-            {productsCount ? productsCount : DEFAULT_PRODUCTS_COUNT}
-          </div>
+          <div className={classes.header__counter}>{totalProductsCount}</div>
         </div>
         <ProductContent
-          isLoading={isLoading}
+          isLoading={isLoadingProducts}
           isEmpty={isEmptyProducts}
-          content={products}
-          renderContent={renderProducts}
-          responseError={responseError}
+          data={products}
+          renderedContent={renderedProducts}
+          responseError={productsLoadingError}
         />
       </Wrapper>
     </section>
   );
 };
 
-export default ProductsList;
+export default observer(ProductsList);

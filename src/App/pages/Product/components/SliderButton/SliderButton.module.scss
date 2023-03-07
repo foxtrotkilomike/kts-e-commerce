@@ -1,0 +1,11 @@
+@import "@styles/variables";
+@import "@styles/mixins";
+
+.icon {
+  position: absolute;
+  @include centered-position;
+
+  @include mobile-breakpoint {
+    transform: translate(-50%, -50%) scale(0.7);
+  }
+}

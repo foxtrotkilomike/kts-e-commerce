@@ -4,10 +4,9 @@ import {
   DEFAULT_PRODUCTS_OFFSET,
 } from "@config/constants";
 import ApiError from "@customTypes/ApiError";
+import GetFilteredProductsConfig from "@customTypes/GetFilteredProductsConfig";
 import GetProductByIdConfig from "@customTypes/GetProductByIdConfig";
-import GetProductsByCategory from "@customTypes/GetProductsByCategory";
-import GetProductsRangeConfig from "@customTypes/GetProductsRangeConfig";
-import Product from "@customTypes/Product";
+import { Product } from "@store/models/platziStore";
 import { handleApiErrors } from "@utils/handleApiErrors";
 import axios from "axios";
 
@@ -17,22 +16,6 @@ const getAllProducts = async (): Promise<Product[] | ApiError> => {
   return axios({
     method: "get",
     url: `${API_BASE_URL}${productsEndpoint}`,
-  })
-    .then(({ data }) => data as Product[])
-    .catch(handleApiErrors);
-};
-
-const getProductsRange = async ({
-  offset = DEFAULT_PRODUCTS_OFFSET,
-  limit = DEFAULT_PRODUCTS_LIMIT,
-}: GetProductsRangeConfig): Promise<Product[] | ApiError> => {
-  return axios({
-    method: "get",
-    url: `${API_BASE_URL}${productsEndpoint}`,
-    params: {
-      offset,
-      limit,
-    },
   })
     .then(({ data }) => data as Product[])
     .catch(handleApiErrors);
@@ -49,15 +32,23 @@ const getProductById = async ({
     .catch(handleApiErrors);
 };
 
-const getProductsByCategory = async ({
+const getFilteredProducts = async ({
+  title,
+  price,
+  price_min,
+  price_max,
   categoryId,
   offset = DEFAULT_PRODUCTS_OFFSET,
   limit = DEFAULT_PRODUCTS_LIMIT,
-}: GetProductsByCategory): Promise<Product[] | ApiError> => {
+}: GetFilteredProductsConfig): Promise<Product[] | ApiError> => {
   return axios({
     method: "get",
     url: `${API_BASE_URL}${productsEndpoint}/`,
     params: {
+      title,
+      price,
+      price_min,
+      price_max,
       categoryId,
       offset,
       limit,
@@ -67,9 +58,4 @@ const getProductsByCategory = async ({
     .catch(handleApiErrors);
 };
 
-export {
-  getAllProducts,
-  getProductsRange,
-  getProductById,
-  getProductsByCategory,
-};
+export { getAllProducts, getProductById, getFilteredProducts };

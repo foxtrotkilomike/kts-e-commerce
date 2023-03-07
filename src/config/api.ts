@@ -1,7 +1,6 @@
-import { ResponseStatus } from "@config/constants";
+import { DEFAULT_ERROR_STATUS, ResponseStatus } from "@config/constants";
 import ApiError from "@customTypes/ApiError";
 import Endpoint from "@customTypes/Endpoint";
-import Product from "@customTypes/Product";
 
 const API_BASE_URL = "https://api.escuelajs.co/api/v1";
 
@@ -24,21 +23,25 @@ const ENDPOINTS: Record<string, Endpoint> = {
   },
 };
 
-const API_ERRORS: Record<string, ApiError> = {
-  serverIsNotResponding: {
+enum ERROR_TYPE {
+  SERVER_NOT_RESPONDING = "serverIsNotResponding",
+  FALLBACK = "fallback",
+  INITIAL = "initial",
+}
+
+const API_ERRORS: Record<ERROR_TYPE, ApiError> = {
+  [ERROR_TYPE.SERVER_NOT_RESPONDING]: {
     code: ResponseStatus.UNKNOWN_ERROR,
     message: "Server is not responding",
   },
-  fallbackError: {
+  [ERROR_TYPE.FALLBACK]: {
     code: ResponseStatus.UNKNOWN_ERROR,
     message: "Unknown error",
   },
+  [ERROR_TYPE.INITIAL]: {
+    code: DEFAULT_ERROR_STATUS,
+    message: "",
+  },
 };
 
-const INITIAL_ERROR: ApiError = {
-  code: 0,
-  message: "",
-};
-const INITIAL_PRODUCTS: Product[] = [];
-
-export { API_BASE_URL, ENDPOINTS, API_ERRORS, INITIAL_ERROR, INITIAL_PRODUCTS };
+export { API_BASE_URL, ENDPOINTS, API_ERRORS };

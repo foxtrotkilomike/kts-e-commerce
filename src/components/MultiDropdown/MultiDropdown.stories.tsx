@@ -1,11 +1,13 @@
 import React from "react";
 
-import MultiDropdown, { MultiDropdownProps, Option } from "./MultiDropdown";
+import { Option } from "@customTypes/Option";
 
-const OPTIONS = [
-  { key: "msk", value: "Moscow" },
-  { key: "spb", value: "Saint Petersburg" },
-  { key: "ekb", value: "Ekaterinburg" },
+import MultiDropdown, { MultiDropdownProps } from "./MultiDropdown";
+
+const OPTIONS: Option[] = [
+  { key: 1, value: "Moscow" },
+  { key: 2, value: "Saint Petersburg" },
+  { key: 3, value: "Ekaterinburg" },
 ];
 
 export default {
@@ -28,8 +30,8 @@ export default {
 };
 
 export const Default = (props: MultiDropdownProps) => {
-  const [value, setValue] = React.useState<Option[]>(
-    Array.isArray(props.value) ? props.value : []
+  const [value, setValue] = React.useState<Option["key"]>(
+    props.selectedOptionKey
   );
 
   return (
@@ -37,10 +39,7 @@ export const Default = (props: MultiDropdownProps) => {
       disabled={props.disabled}
       options={OPTIONS}
       onChange={setValue}
-      value={value}
-      pluralizeOptions={(values: Option[]) =>
-        values.length === 0 ? "Выберите город" : `Выбрано: ${values.length}`
-      }
+      selectedOptionKey={value}
     />
   );
 };

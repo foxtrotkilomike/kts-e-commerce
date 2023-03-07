@@ -3,27 +3,28 @@ import React from "react";
 import EmptyContent from "@components/EmptyContent";
 import Loader, { LoaderSize } from "@components/Loader";
 import ApiError from "@customTypes/ApiError";
-import Product from "@customTypes/Product";
+import { Product } from "@store/models/platziStore";
 
 import classes from "./ProductContent.module.scss";
 
 type ProductContentProps = {
   isLoading: boolean;
   isEmpty: boolean;
-  content: Product | Product[];
-  renderContent: () => JSX.Element;
+  data?: Product | Product[] | null;
+  renderedContent: JSX.Element | null;
   responseError: ApiError;
 };
 
 const ProductContent = ({
   isLoading,
   isEmpty,
-  content,
-  renderContent,
+  data,
+  renderedContent,
   responseError,
 }: ProductContentProps): JSX.Element => {
-  if (!isEmpty || content !== undefined) {
-    return renderContent();
+  const hasContent = (!isEmpty || !!data) && !!renderedContent;
+  if (hasContent) {
+    return renderedContent;
   }
 
   if (isLoading) {

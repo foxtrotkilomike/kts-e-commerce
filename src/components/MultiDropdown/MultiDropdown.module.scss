@@ -63,6 +63,14 @@
       width: 0;
       height: 0;
     }
+
+    li {
+      border: 1px solid transparent;
+
+      &:focus-within {
+        border-color: $color-main;
+      }
+    }
   }
 
   &__item {

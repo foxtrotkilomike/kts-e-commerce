@@ -12,9 +12,9 @@ export const handleApiErrors = (error: AxiosError): ApiError => {
         message: (response.data as ApiError).message,
       };
     } else if (request) {
-      return API_ERRORS.serverNotResponding;
+      return API_ERRORS.serverIsNotResponding;
     }
   }
 
-  return API_ERRORS.fallbackError;
+  return API_ERRORS.fallback;
 };

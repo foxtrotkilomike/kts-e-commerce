@@ -1,27 +1,45 @@
-import { ReactComponent as LeftArrow } from "@assets/svg/arr_left.svg";
-import { ReactComponent as RightArrow } from "@assets/svg/arr_right.svg";
+import SliderButton from "@pages/Product/components/SliderButton";
+import classNames from "classnames";
+import { Navigation } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 import classes from "./ProductSlider.module.scss";
 
+import "swiper/scss";
+import "swiper/scss/navigation";
+
 type ProductSliderProps = {
-  image: string[];
+  images: string[];
 };
 
-const ProductSlider = ({ image }: ProductSliderProps): JSX.Element => {
+const ProductSlider = ({ images }: ProductSliderProps): JSX.Element => {
+  const prevButtonClassName = classNames(
+    classes.slider__control,
+    classes.slider__control_prev
+  );
+  const nextButtonClassName = classNames(
+    classes.slider__control,
+    classes.slider__control_next
+  );
+
   return (
-    <div className={classes.slider}>
-      <button
-        className={`${classes.slider__control} ${classes.slider__control_left}`}
-      >
-        <LeftArrow className={classes.icon} />
-      </button>
-      <button
-        className={`${classes.slider__control} ${classes.slider__control_right}`}
-      >
-        <RightArrow className={classes.icon} />
-      </button>
-      <img className={classes.slider__image} src={image[0]} alt="" />
-    </div>
+    <Swiper
+      modules={[Navigation]}
+      loop
+      className={classes.slider}
+      navigation={{
+        prevEl: CSS.escape(prevButtonClassName),
+        nextEl: CSS.escape(nextButtonClassName),
+      }}
+    >
+      {images.map((image) => (
+        <SwiperSlide key={image}>
+          <img className={classes.slider__image} src={image} alt="" />
+        </SwiperSlide>
+      ))}
+      <SliderButton type="prev" className={prevButtonClassName} />
+      <SliderButton type="next" className={nextButtonClassName} />
+    </Swiper>
   );
 };
 

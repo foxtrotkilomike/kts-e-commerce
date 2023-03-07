@@ -1,4 +1,5 @@
 import Wrapper from "@components/Wrapper";
+import ProductStoreContextProvider from "@context/ProductStore";
 import Pages from "@customTypes/Pages";
 
 import Hero from "./components/Hero";
@@ -9,8 +10,10 @@ const Products = (): JSX.Element => {
   return (
     <Wrapper main>
       <Hero page={Pages.MAIN} />
-      <Search />
-      <ProductsList />
+      <ProductStoreContextProvider>
+        <Search />
+        <ProductsList />
+      </ProductStoreContextProvider>
     </Wrapper>
   );
 };

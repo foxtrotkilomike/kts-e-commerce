@@ -17,10 +17,7 @@
   }
 
   @include mobile-breakpoint {
-    padding: 8px 8px 8px 14px;
-  }
-
-  @include mobile-s-breakpoint {
+    padding: 8px;
     flex-wrap: wrap;
     row-gap: 10px;
   }
@@ -42,6 +39,10 @@
       flex-shrink: 1;
       min-width: 120px;
     }
+
+    @include mobile-breakpoint {
+      flex-basis: 200px;
+    }
   }
 
   &__button {
@@ -50,6 +51,11 @@
     @include tablet-breakpoint {
       padding: 10px 18px;
       font-size: $font-sm;
+    }
+
+    @include mobile-breakpoint {
+      flex-grow: 1;
+      justify-content: center;
     }
   }
 }
