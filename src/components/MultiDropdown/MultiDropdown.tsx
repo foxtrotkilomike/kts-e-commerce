@@ -34,7 +34,9 @@ const MultiDropdown = ({
   const hasSelectedOptions = selectedOptionValue !== DEFAULT_FILTER_VALUE;
 
   useEffect(() => {
-    const closeSearchFilter = () => setIsOpen(false);
+    const closeSearchFilter = () => {
+      setIsOpen(false);
+    };
     window.addEventListener("click", closeSearchFilter);
 
     return () => window.removeEventListener("click", closeSearchFilter);
@@ -45,9 +47,14 @@ const MultiDropdown = ({
     className
   );
 
-  const onSelect = (selectedOptionKey: Option["key"]) => {
+  const onSelect = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.MouseEvent<HTMLLabelElement, MouseEvent>,
+    selectedOptionKey: Option["key"]
+  ) => {
+    e.stopPropagation();
     onChange(selectedOptionKey);
-    setIsOpen((isOpen) => !isOpen);
   };
 
   const renderDropdownOptions = (options: Option[]) => {
@@ -56,13 +63,17 @@ const MultiDropdown = ({
         <input
           type="radio"
           id={option.value}
+          name="multi-dropdown"
           checked={selectedOptionKey === option.key}
-          onChange={() => onSelect(option.key)}
+          onChange={(e) => onSelect(e, option.key)}
         />
         <label
           className={classes["multi-dropdown__item"]}
           htmlFor={option.value}
-          onClick={(e) => e.stopPropagation()}
+          onClick={(e) => {
+            onSelect(e, option.key);
+            setIsOpen((isOpen) => !isOpen);
+          }}
         >
           {option.value}
         </label>
@@ -89,6 +100,7 @@ const MultiDropdown = ({
           e.stopPropagation();
           setIsOpen((isOpen) => !isOpen);
         }}
+        onKeyDown={(e: React.KeyboardEvent) => e.stopPropagation()}
       >
         {renderButtonContent()}
       </button>
