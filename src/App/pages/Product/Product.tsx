@@ -6,7 +6,6 @@ import { useLocalStore } from "@hooks/useLocalStore";
 import ProductContent from "@layouts/ProductContent";
 import ProductInfo from "@pages/Product/components/ProductInfo";
 import ProductStore from "@store/ProductStore";
-import { checkLoadingStatus } from "@utils/checkLoadingStatus";
 import { observer } from "mobx-react-lite";
 import { useParams } from "react-router-dom";
 
@@ -19,8 +18,9 @@ const Product = (): JSX.Element => {
   const productStore = useLocalStore(() => new ProductStore());
   const {
     selectedProduct: product,
-    selectedProductLoadingStatus,
     selectedProductLoadingError,
+    isLoadingSelectedProduct,
+    isEmptyProduct,
   } = productStore;
 
   useEffect(() => {
@@ -28,9 +28,6 @@ const Product = (): JSX.Element => {
       productStore.getProductById(productIdNumber);
     }
   }, [productStore, productIdNumber]);
-
-  const isEmptyProduct = product?.id === DEFAULT_PRODUCT_ID;
-  const isLoading = checkLoadingStatus(selectedProductLoadingStatus);
 
   const renderedProduct = useMemo(
     () => (product ? <ProductInfo product={product} /> : null),
@@ -40,7 +37,7 @@ const Product = (): JSX.Element => {
   return (
     <Wrapper main>
       <ProductContent
-        isLoading={isLoading}
+        isLoading={isLoadingSelectedProduct}
         isEmpty={isEmptyProduct}
         data={product}
         renderedContent={renderedProduct}

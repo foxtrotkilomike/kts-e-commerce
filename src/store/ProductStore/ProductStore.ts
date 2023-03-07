@@ -1,6 +1,7 @@
 import { API_ERRORS } from "@config/api";
 import {
   DEFAULT_MAX_PRODUCTS_LIMIT,
+  DEFAULT_PRODUCT_ID,
   DEFAULT_PRODUCTS_OFFSET,
   INIT_PRODUCTS_COUNT,
 } from "@config/constants";
@@ -9,6 +10,7 @@ import EntityType from "@customTypes/EntityType";
 import GetFilteredProductsConfig from "@customTypes/GetFilteredProductsConfig";
 import { ILocalStore } from "@customTypes/ILocalStore";
 import { LoadingStatus } from "@customTypes/LoadingStatus";
+import QueryParams from "@customTypes/QueryParams";
 import {
   getAllProducts,
   getProductById,
@@ -16,6 +18,7 @@ import {
 } from "@services/products";
 import { Product } from "@store/models/platziStore";
 import rootStore from "@store/RootStore";
+import { checkLoadingStatus } from "@utils/checkLoadingStatus";
 import fetchFilteredProducts from "@utils/fetchFilteredProducts";
 import shouldProductsRefresh from "@utils/shouldProductsRefresh";
 import {
@@ -66,6 +69,12 @@ export default class ProductStore implements ILocalStore {
       selectedProductLoadingStatus: computed,
       productsLoadingError: computed,
       selectedProductLoadingError: computed,
+      isEmptyProducts: computed,
+      isLoadingProducts: computed,
+      isLoadingSelectedProduct: computed,
+      isOutOfOffset: computed,
+      productsCount: computed,
+      hasMoreProducts: computed,
       _setStatusAndError: action,
       getAllProducts: action,
       getProductById: action,
@@ -101,6 +110,41 @@ export default class ProductStore implements ILocalStore {
 
   get selectedProductLoadingError(): ApiError {
     return this._productsLoadingError;
+  }
+
+  get isEmptyProducts(): boolean {
+    return this._products.length === 0;
+  }
+
+  get isEmptyProduct(): boolean {
+    if (!this.selectedProduct) {
+      return true;
+    }
+
+    return this.selectedProduct.id === DEFAULT_PRODUCT_ID;
+  }
+
+  get isLoadingProducts(): boolean {
+    return checkLoadingStatus(this._productsLoadingStatus);
+  }
+
+  get isLoadingSelectedProduct(): boolean {
+    return checkLoadingStatus(this._selectedProductLoadingStatus);
+  }
+
+  get isOutOfOffset(): boolean {
+    return (
+      this._totalProductsCount <=
+      (rootStore.query.getParam(QueryParams.OFFSET) || 0)
+    );
+  }
+
+  get productsCount(): number {
+    return this._products.length;
+  }
+
+  get hasMoreProducts(): boolean {
+    return !this.isOutOfOffset && this.productsCount < this.totalProductsCount;
   }
 
   private _setStatusAndError(

@@ -11,7 +11,6 @@ import QueryParams from "@customTypes/QueryParams";
 import Grid from "@layouts/Grid";
 import ProductContent from "@layouts/ProductContent";
 import ProductStore from "@store/ProductStore";
-import { checkLoadingStatus } from "@utils/checkLoadingStatus";
 import renderProductCards from "@utils/renderProductCards";
 import { observer } from "mobx-react-lite";
 
@@ -27,8 +26,9 @@ const RelatedProducts = ({
   const {
     products,
     selectedProduct,
-    productsLoadingStatus,
     productsLoadingError,
+    isEmptyProducts,
+    isLoadingSelectedProduct,
   } = productStore;
   const productCategoryId = selectedProduct?.category.id || DEFAULT_CATEGORY_ID;
 
@@ -39,9 +39,6 @@ const RelatedProducts = ({
       });
     }
   }, [productStore, productCategoryId]);
-
-  const isEmptyProducts = products.length === 0;
-  const isLoading = checkLoadingStatus(productsLoadingStatus);
 
   const renderedProducts = useMemo(
     () =>
@@ -60,7 +57,7 @@ const RelatedProducts = ({
           {relatedItemsHeading}
         </Typography>
         <ProductContent
-          isLoading={isLoading}
+          isLoading={isLoadingSelectedProduct}
           isEmpty={isEmptyProducts}
           data={products}
           renderedContent={renderedProducts}

@@ -9,12 +9,11 @@ import Wrapper from "@components/Wrapper";
 import { DEFAULT_PRODUCTS_LIMIT } from "@config/constants";
 import { productsListHeading } from "@config/data";
 import { useProductStoreContext } from "@context/ProductStore";
+import { useRootStore } from "@context/RootStore";
 import QueryParams from "@customTypes/QueryParams";
 import gridClasses from "@layouts/Grid/Grid.module.scss";
 import ProductContent from "@layouts/ProductContent";
 import ProductsListEndMessage from "@pages/Products/components/ProductsListEndMessage";
-import rootStore from "@store/RootStore";
-import { checkLoadingStatus } from "@utils/checkLoadingStatus";
 import fetchFilteredProducts from "@utils/fetchFilteredProducts";
 import renderProductCards from "@utils/renderProductCards";
 import { setFilteredSearchParams } from "@utils/setFilteredSearchParams";
@@ -26,21 +25,18 @@ import { useSearchParams } from "react-router-dom";
 import classes from "./ProductsList.module.scss";
 
 const ProductsList = (): JSX.Element => {
+  const rootStore = useRootStore();
   const productStore = useProductStoreContext();
   const [_, setSearchParams] = useSearchParams();
+  const offset = rootStore.query.getParam(QueryParams.OFFSET);
   const {
     products,
     totalProductsCount,
-    productsLoadingStatus,
     productsLoadingError,
+    isEmptyProducts,
+    isLoadingProducts,
+    hasMoreProducts,
   } = productStore;
-
-  const isEmptyProducts = products.length === 0;
-  const isLoading = checkLoadingStatus(productsLoadingStatus);
-  const isOutOfOffset =
-    totalProductsCount <= (rootStore.query.getParam(QueryParams.OFFSET) || 0);
-  const productsCount = products.length;
-  const hasMoreProducts = !isOutOfOffset && productsCount < totalProductsCount;
 
   useEffect(() => {
     fetchFilteredProducts(productStore);
@@ -52,15 +48,15 @@ const ProductsList = (): JSX.Element => {
   );
 
   const fetchNextProducts = useCallback(() => {
-    const offset = Number(rootStore.query.getParam(QueryParams.OFFSET)) || 0;
-    const nextOffset = offset + DEFAULT_PRODUCTS_LIMIT;
+    const offsetNumber = Number(offset) || 0;
+    const nextOffset = offsetNumber + DEFAULT_PRODUCTS_LIMIT;
     setFilteredSearchParams(
       {
         [QueryParams.OFFSET]: nextOffset,
       },
       setSearchParams
     );
-  }, [setSearchParams]);
+  }, [offset, setSearchParams]);
 
   const renderedProducts = useMemo(
     () =>
@@ -103,7 +99,7 @@ const ProductsList = (): JSX.Element => {
           <div className={classes.header__counter}>{totalProductsCount}</div>
         </div>
         <ProductContent
-          isLoading={isLoading}
+          isLoading={isLoadingProducts}
           isEmpty={isEmptyProducts}
           data={products}
           renderedContent={renderedProducts}

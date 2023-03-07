@@ -3,7 +3,6 @@ import Button from "@components/Button";
 import Input from "@components/Input";
 import { searchButtonText, searchInputPlaceholder } from "@config/data";
 import { useProductStoreContext } from "@context/ProductStore";
-import { checkLoadingStatus } from "@utils/checkLoadingStatus";
 import { observer } from "mobx-react-lite";
 
 import classes from "./SearchInput.module.scss";
@@ -20,7 +19,7 @@ const SearchInput = ({
   onSubmit,
 }: SearchInputProps): JSX.Element => {
   const productStore = useProductStoreContext();
-  const isLoading = checkLoadingStatus(productStore.productsLoadingStatus);
+  const isLoading = productStore.isLoadingProducts;
 
   return (
     <div className={classes["search-input"]}>
