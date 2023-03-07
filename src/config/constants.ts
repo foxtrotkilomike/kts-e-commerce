@@ -21,7 +21,7 @@ const DEFAULT_PRODUCTS_LIMIT = 9;
 const DEFAULT_MAX_PRODUCTS_LIMIT = 10000;
 const INIT_PRODUCTS_COUNT = 0;
 const DEFAULT_SEARCH_VALUE = "";
-const DEFAULT_FILTER_VALUE = "";
+const DEFAULT_FILTER_VALUE = "All";
 
 export {
   ResponseStatus,
