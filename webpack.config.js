@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const FaviconsWebpackPlugin = require("favicons-webpack-plugin")
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TsCheckerPlugin = require('fork-ts-checker-webpack-plugin');
 
 const buildPath = path.resolve(__dirname, "dist");
 const contentPath = path.resolve(__dirname, "public");
@@ -107,6 +108,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: '[name]-[hash].css'
     }),
+    new TsCheckerPlugin(),
     !isProd && new ReactRefreshWebpackPlugin()
   ].filter(Boolean),
   resolve: {
