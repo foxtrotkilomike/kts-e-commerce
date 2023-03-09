@@ -1,4 +1,4 @@
-import { ReactComponent as SearchIcon } from "@assets/svg/search.svg";
+import SearchIcon from "@assets/svg/search.svg";
 import Button from "@components/Button";
 import Input from "@components/Input";
 import { searchButtonText, searchInputPlaceholder } from "@config/data";

@@ -59,11 +59,23 @@ module.exports = {
       },
       {
         test: /\.svg$/i,
-        issuer: /\.[jt]sx?$/,
-        use: ['@svgr/webpack'],
+        oneOf: [
+          {
+            issuer: /\.[jt]sx?$/,
+            use: ["@svgr/webpack"]
+          },
+          {
+            type: "asset",
+            parser: {
+              dataUrlCondition: {
+                maxSize: 10 * 1024
+              }
+            }
+          },
+        ],
       },
       {
-        test: /\.(png|svg|ttf|woff2?|jpe?g)$/,
+        test: /\.(png|ttf|woff2?|jpe?g)$/,
         type: "asset",
         parser: {
           dataUrlCondition: {
@@ -77,7 +89,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.join(contentPath, "index.html"),
     }),
-    !isProd && new ReactRefreshWebpackPlugin(),
+    !isProd && new ReactRefreshWebpackPlugin()
   ],
   resolve: {
     extensions: ['.tsx', '.jsx', '.js', '.ts'],
