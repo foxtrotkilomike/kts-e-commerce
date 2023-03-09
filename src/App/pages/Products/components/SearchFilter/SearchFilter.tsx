@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ReactComponent as FilterIcon } from "@assets/svg/filter.svg";
+import FilterIcon from "@assets/svg/filter.svg";
 import MultiDropdown from "@components/MultiDropdown";
 import Typography, {
   TypographySize,

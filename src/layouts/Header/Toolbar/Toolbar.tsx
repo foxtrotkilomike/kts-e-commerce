@@ -1,5 +1,5 @@
-import { ReactComponent as CartIcon } from "@assets/svg/cart.svg";
-import { ReactComponent as ProfileIcon } from "@assets/svg/user.svg";
+import CartIcon from "@assets/svg/cart.svg";
+import ProfileIcon from "@assets/svg/user.svg";
 
 import classes from "./Toolbar.module.scss";
 

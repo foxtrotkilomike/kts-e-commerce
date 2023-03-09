@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 
-import { ReactComponent as LeftArrow } from "@assets/svg/arr_left.svg";
-import { ReactComponent as RightArrow } from "@assets/svg/arr_right.svg";
+import LeftArrow from "@assets/svg/arr_left.svg";
+import RightArrow from "@assets/svg/arr_right.svg";
 import { useSwiper } from "swiper/react";
 
 import classes from "./SliderButton.module.scss";
