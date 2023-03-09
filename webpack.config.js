@@ -90,7 +90,7 @@ module.exports = {
       template: path.join(contentPath, "index.html"),
     }),
     !isProd && new ReactRefreshWebpackPlugin()
-  ],
+  ].filter(Boolean),
   resolve: {
     extensions: ['.tsx', '.jsx', '.js', '.ts'],
     alias: {
