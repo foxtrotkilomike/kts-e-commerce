@@ -3,7 +3,12 @@ module.exports = (api) => {
 
   const presets = [
     "@babel/preset-env",
-    "@babel/preset-react",
+    [
+      "@babel/preset-react",
+      {
+        runtime: "automatic",
+      },
+    ],
     "@babel/preset-typescript",
   ];
 
