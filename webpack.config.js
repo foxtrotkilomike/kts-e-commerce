@@ -1,7 +1,6 @@
 const path = require("path");
 
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
-const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
 const TsCheckerPlugin = require("fork-ts-checker-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -45,6 +44,7 @@ module.exports = {
   output: {
     path: buildPath,
     filename: "[name].[contenthash].js",
+    assetModuleFilename: "assets/[name][ext]",
     clean: true,
   },
   module: {
@@ -105,7 +105,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.(png|ttf|woff2?|jpe?g)$/,
+        test: /\.(png|ttf|woff|woff2|jpe?g)$/,
         type: "asset",
         parser: {
           dataUrlCondition: {
@@ -118,19 +118,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(contentPath, "index.html"),
-    }),
-    new FaviconsWebpackPlugin({
-      logo: path.join(contentPath, "favicon.svg"),
-      favicons: {
-        icons: {
-          android: false,
-          appleIcon: false,
-          appleStartup: false,
-          favicons: true,
-          windows: true,
-          yandex: false,
-        },
-      },
+      favicon: path.join(contentPath, "favicon.ico"),
     }),
     new MiniCssExtractPlugin({
       filename: "[name]-[contenthash].css",
