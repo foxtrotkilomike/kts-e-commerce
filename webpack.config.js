@@ -41,15 +41,22 @@ const getSettingsForStyles = (withModules = false) => {
 module.exports = {
   entry: path.join(srcPath, "index.tsx"),
   target: !isProd ? "web" : "browserslist",
+  devtool: isProd ? 'hidden-source-map' : 'eval-source-map',
   output: {
     path: buildPath,
-    filename: "bundle.js",
+    filename: '[name].[contenthash].js',
+    clean: true,
   },
   module: {
     rules: [
       {
         test: /\.[tj]sx?$/,
-        use: "babel-loader",
+        use: {
+          loader: "babel-loader",
+          options: {
+            cacheDirectory: true,
+          },
+        },
       },
       {
         test: /\.module\.s?css$/,
@@ -72,8 +79,8 @@ module.exports = {
             parser: {
               dataUrlCondition: {
                 maxSize: 10 * 1024
-              }
-            }
+              },
+            },
           },
         ],
       },
@@ -106,11 +113,23 @@ module.exports = {
       },
     }),
     new MiniCssExtractPlugin({
-      filename: '[name]-[hash].css'
+      filename: '[name]-[contenthash].css'
     }),
     new TsCheckerPlugin(),
-    !isProd && new ReactRefreshWebpackPlugin()
+    !isProd && new ReactRefreshWebpackPlugin(),
   ].filter(Boolean),
+  optimization: {
+    moduleIds: "deterministic",
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "vendors",
+          chunks: "all",
+        },
+      },
+    },
+  },
   resolve: {
     extensions: ['.tsx', '.jsx', '.js', '.ts'],
     alias: {
