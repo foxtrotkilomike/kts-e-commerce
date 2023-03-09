@@ -1,7 +1,8 @@
 const path = require("path");
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+const FaviconsWebpackPlugin = require("favicons-webpack-plugin")
 
 const buildPath = path.resolve(__dirname, "dist");
 const contentPath = path.resolve(__dirname, "public");
@@ -88,6 +89,19 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(contentPath, "index.html"),
+    }),
+    new FaviconsWebpackPlugin({
+      logo: path.join(contentPath, "favicon.svg"),
+      favicons: {
+        icons: {
+          android: false,
+          appleIcon: false,
+          appleStartup: false,
+          favicons: true,
+          windows: true,
+          yandex: false,
+        },
+      },
     }),
     !isProd && new ReactRefreshWebpackPlugin()
   ].filter(Boolean),
