@@ -1,5 +1,4 @@
 /// <reference types="node" />
-import "@types/react";
 /// <reference types="react-dom" />
 
 declare module "*.jpg" {
