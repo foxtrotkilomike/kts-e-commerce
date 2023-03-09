@@ -3,6 +3,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const FaviconsWebpackPlugin = require("favicons-webpack-plugin")
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const buildPath = path.resolve(__dirname, "dist");
 const contentPath = path.resolve(__dirname, "public");
@@ -11,7 +12,7 @@ const isProd = process.env.NODE_ENV === "production";
 
 const getSettingsForStyles = (withModules = false) => {
   return [
-    "style-loader",
+    isProd ? MiniCssExtractPlugin.loader : "style-loader",
     !withModules
       ? "css-loader"
       : {
@@ -102,6 +103,9 @@ module.exports = {
           yandex: false,
         },
       },
+    }),
+    new MiniCssExtractPlugin({
+      filename: '[name]-[hash].css'
     }),
     !isProd && new ReactRefreshWebpackPlugin()
   ].filter(Boolean),
