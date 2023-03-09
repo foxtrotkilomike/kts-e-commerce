@@ -15,9 +15,8 @@
     "swiper": "^9.1.0"
   },
   "scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "test": "react-app-rewired test",
+    "start": "cross-env NODE_ENV=development npx webpack serve --mode=development",
+    "build": "cross-env NODE_ENV=production npx webpack --mode=production",
     "storybook": "start-storybook -p 6007 -s public"
   },
   "eslintConfig": {
@@ -52,6 +51,7 @@
     "@storybook/manager-webpack5": "^6.5.16",
     "@storybook/preset-create-react-app": "^4.1.2",
     "@storybook/react": "^6.5.16",
+    "@svgr/webpack": "^6.5.1",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
@@ -65,6 +65,7 @@
     "babel-loader": "^8.2.3",
     "babel-preset-mobx": "^2.0.0",
     "browserslist": "^4.18.1",
+    "cross-env": "^7.0.3",
     "css-loader": "^6.5.1",
     "eslint": "^8.3.0",
     "eslint-config-prettier": "^8.7.0",
@@ -74,8 +75,10 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-webpack-plugin": "^3.1.1",
+    "fork-ts-checker-webpack-plugin": "^8.0.0",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.4.5",
+    "postcss": "^8.4.21",
     "postcss-loader": "^6.2.1",
     "prettier": "^2.8.4",
     "react-app-rewire-alias": "^1.1.7",
